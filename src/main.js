@@ -9,10 +9,12 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import 'normalize.css'
 import ElementUI from 'element-ui'
+import echarts from 'echarts'
 import 'element-ui/lib/theme-chalk/index.css'
 
 Vue.config.productionTip = false
 
+Vue.prototype.$echarts = echarts
 Vue.use(VueAxios, axios)
 Vue.use(ElementUI)
 
