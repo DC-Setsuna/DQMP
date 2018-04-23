@@ -18,6 +18,11 @@ export default new Router({
       component: Homepage,
       children: [
         {
+          path: '/',
+          name: 'dashboard',
+          component: DashBoard
+        },
+        {
           path: '/dashboard',
           name: 'dashboard',
           component: DashBoard
