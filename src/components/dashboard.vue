@@ -17,8 +17,8 @@
       	  <el-tabs :tab-position="tabPosition" style="height: 400px;">
 		    <el-tab-pane label="Daily">
           <el-table :data="tableData" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" style="width: 90%" height="400px">
-            <el-table-column type="index" width="50"></el-table-column>
-			      <el-table-column fixed prop="Statistictime" label="Statistic time" :span="8">
+            <el-table-column fixed type="index" width="50"></el-table-column>
+			      <el-table-column prop="Statistictime" label="Statistic time" :span="8">
 			      </el-table-column>
 			      <el-table-column prop="Totalnumberoftasks" label="Total number of tasks" :span="8">
 			      </el-table-column>
@@ -28,8 +28,8 @@
 		    </el-tab-pane>
 		    <el-tab-pane label="Weekly">
           <el-table :data="tableData1" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" style="width: 90%" height="400px">
-            <el-table-column type="index" width="50"></el-table-column>
-			      <el-table-column fixed prop="Statistictime" label="Statistic time" :span="8">
+            <el-table-column fixed type="index" width="50"></el-table-column>
+			      <el-table-column prop="Statistictime" label="Statistic time" :span="8">
 			      </el-table-column>
 			      <el-table-column prop="Totalnumberoftasks" label="Total number of tasks" :span="8">
 			      </el-table-column>
@@ -39,8 +39,8 @@
 		    </el-tab-pane>
 		    <el-tab-pane label="Monthly">
 		      <el-table :data="tableData2" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" style="width: 90%" height="400px">
-            <el-table-column type="index" width="50"></el-table-column>
-			      <el-table-column fixed prop="Statistictime" label="Statistic time" :span="8">
+            <el-table-column fixed type="index" width="50"></el-table-column>
+			      <el-table-column prop="Statistictime" label="Statistic time" :span="8">
 			      </el-table-column>
 			      <el-table-column prop="Totalnumberoftasks" label="Total number of tasks" :span="8">
 			      </el-table-column>
@@ -62,133 +62,34 @@
     data () {
       return {
         tabPosition: 'left',
-        tableData: [{
-          Statistictime: '2016-05-03',
-          Totalnumberoftasks: '123',
-          Totalnumberoferrortasks: '12',
-        },{
-          Statistictime: '2016-05-03',
-          Totalnumberoftasks: '123',
-          Totalnumberoferrortasks: '12',
-        },{
-          Statistictime: '2016-05-03',
-          Totalnumberoftasks: '123',
-          Totalnumberoferrortasks: '12',
-        },{
-          Statistictime: '2016-05-03',
-          Totalnumberoftasks: '123',
-          Totalnumberoferrortasks: '12',
-        },{
-          Statistictime: '2016-05-03',
-          Totalnumberoftasks: '123',
-          Totalnumberoferrortasks: '12',
-        },{
-          Statistictime: '2016-05-03',
-          Totalnumberoftasks: '123',
-          Totalnumberoferrortasks: '12',
-        },{
-          Statistictime: '2016-05-03',
-          Totalnumberoftasks: '123',
-          Totalnumberoferrortasks: '12',
-        },{
-          Statistictime: '2016-05-03',
-          Totalnumberoftasks: '123',
-          Totalnumberoferrortasks: '12',
-        },{
-          Statistictime: '2016-05-03',
-          Totalnumberoftasks: '123',
-          Totalnumberoferrortasks: '12',
-        },{
-          Statistictime: '2016-05-03',
-          Totalnumberoftasks: '123',
-          Totalnumberoferrortasks: '12',
-        }],
-        tableData1: [{
-          Statistictime: '2016-05-03',
-          Totalnumberoftasks: '123',
-          Totalnumberoferrortasks: '12',
-        },{
-          Statistictime: '2016-05-03',
-          Totalnumberoftasks: '123',
-          Totalnumberoferrortasks: '12',
-        },{
-          Statistictime: '2016-05-03',
-          Totalnumberoftasks: '123',
-          Totalnumberoferrortasks: '12',
-        },{
-          Statistictime: '2016-05-03',
-          Totalnumberoftasks: '123',
-          Totalnumberoferrortasks: '12',
-        },{
-          Statistictime: '2016-05-03',
-          Totalnumberoftasks: '123',
-          Totalnumberoferrortasks: '12',
-        },{
-          Statistictime: '2016-05-03',
-          Totalnumberoftasks: '123',
-          Totalnumberoferrortasks: '12',
-        },{
-          Statistictime: '2016-05-03',
-          Totalnumberoftasks: '123',
-          Totalnumberoferrortasks: '12',
-        },{
-          Statistictime: '2016-05-03',
-          Totalnumberoftasks: '123',
-          Totalnumberoferrortasks: '12',
-        },{
-          Statistictime: '2016-05-03',
-          Totalnumberoftasks: '123',
-          Totalnumberoferrortasks: '12',
-        },{
-          Statistictime: '2016-05-03',
-          Totalnumberoftasks: '123',
-          Totalnumberoferrortasks: '12',
-        }],
-        tableData2: [{
-          Statistictime: '2016-05-03',
-          Totalnumberoftasks: '123',
-          Totalnumberoferrortasks: '12',
-        },{
-          Statistictime: '2016-05-03',
-          Totalnumberoftasks: '123',
-          Totalnumberoferrortasks: '12',
-        },{
-          Statistictime: '2016-05-03',
-          Totalnumberoftasks: '123',
-          Totalnumberoferrortasks: '12',
-        },{
-          Statistictime: '2016-05-03',
-          Totalnumberoftasks: '123',
-          Totalnumberoferrortasks: '12',
-        },{
-          Statistictime: '2016-05-03',
-          Totalnumberoftasks: '123',
-          Totalnumberoferrortasks: '12',
-        },{
-          Statistictime: '2016-05-03',
-          Totalnumberoftasks: '123',
-          Totalnumberoferrortasks: '12',
-        },{
-          Statistictime: '2016-05-03',
-          Totalnumberoftasks: '123',
-          Totalnumberoferrortasks: '12',
-        },{
-          Statistictime: '2016-05-03',
-          Totalnumberoftasks: '123',
-          Totalnumberoferrortasks: '12',
-        },{
-          Statistictime: '2016-05-03',
-          Totalnumberoftasks: '123',
-          Totalnumberoferrortasks: '12',
-        },{
-          Statistictime: '2016-05-03',
-          Totalnumberoftasks: '123',
-          Totalnumberoferrortasks: '12',
-        }]
+        tableData: [],
+        tableData1: [],
+        tableData2: []
       }
     },
     components: { DailyBoard , WeeklyBoard , MonthlyBoard},
-    
+    methods: {
+      getTabDailyData() {
+        this.axios.get('../../../static/dash_tab.json').then((response) => {
+          this.tableData = response.data;
+        })
+      },
+      getTabWeeklyData() {
+        this.axios.get('../../../static/dash_tab.json').then((response) => {
+          this.tableData1 = response.data;
+        })
+      },
+      getTabMonthlyData() {
+        this.axios.get('../../../static/dash_tab.json').then((response) => {
+          this.tableData2 = response.data;
+        })
+      }
+    },
+    created: function() {
+      this.getTabDailyData()
+      this.getTabWeeklyData()
+      this.getTabMonthlyData()
+    }
   }
 </script>
 <style type="text/css">

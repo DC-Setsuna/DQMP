@@ -158,64 +158,8 @@ export default {
         verify: 0,
         content: ''
       },
-      tableData: [{
-          id: '2016-05-03',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1518 弄',
-          zip: 200333
-        }, {
-          id: '2016-05-02',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1518 弄',
-          zip: 200333
-        }, {
-          id: '2016-05-04',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1518 弄',
-          zip: 200333
-        }, {
-          id: '2016-05-01',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1518 弄',
-          zip: 200333
-        }, {
-          id: '2016-05-03',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1518 弄',
-          zip: 200333
-        }, {
-          id: '2016-05-02',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1518 弄',
-          zip: 200333
-        }, {
-          id: '2016-05-04',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1518 弄',
-          zip: 200333
-        }, {
-          id: '2016-05-01',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1518 弄',
-          zip: 200333
-        }],
-        window_height: 0
+      tableData: [],
+      window_height: 0
     }
   },
   methods: {
@@ -236,6 +180,7 @@ export default {
       console.log(row.id);
     },
     Submit(file) {
+    	debugger;
       console.log(file);
     },
     refresh() {
@@ -261,10 +206,16 @@ export default {
     },
     lookdetail(row) {
       this.$router.push({name: 'viewtaskmodule', params: { data: row.id }})
+    },
+    getaccount_tab_data() {
+      this.axios.get("../../../static/account_tab.json").then((response) => {
+          this.tableData = response.data;
+        })
     }
   },
   created: function () {
-    this.getWindowSize();
+  	this.getWindowSize();
+    this.getaccount_tab_data();
   }
 }
 </script>
