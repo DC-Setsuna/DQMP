@@ -16,34 +16,37 @@
       	<div class="grid-content bg-purple-dark">
       	  <el-tabs :tab-position="tabPosition" style="height: 400px;">
 		    <el-tab-pane label="Daily">
-              <el-table :data="tableData" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" style="width: 90%" height="400px">
-			    <el-table-column fixed prop="Statistictime" label="Statistic time" :span="8">
-			    </el-table-column>
-			    <el-table-column prop="Totalnumberoftasks" label="Total number of tasks" :span="8">
-			    </el-table-column>
-			    <el-table-column prop="Totalnumberoferrortasks" label="Total number of error tasks" :span="8">
-			    </el-table-column>
-			  </el-table>
+          <el-table :data="tableData" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" style="width: 90%" height="400px">
+            <el-table-column type="index" width="50"></el-table-column>
+			      <el-table-column fixed prop="Statistictime" label="Statistic time" :span="8">
+			      </el-table-column>
+			      <el-table-column prop="Totalnumberoftasks" label="Total number of tasks" :span="8">
+			      </el-table-column>
+			      <el-table-column prop="Totalnumberoferrortasks" label="Total number of error tasks" :span="8">
+			      </el-table-column>
+			    </el-table>
 		    </el-tab-pane>
 		    <el-tab-pane label="Weekly">
-              <el-table :data="tableData1" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" style="width: 90%" height="400px">
-			    <el-table-column fixed prop="Statistictime" label="Statistic time" :span="8">
-			    </el-table-column>
-			    <el-table-column prop="Totalnumberoftasks" label="Total number of tasks" :span="8">
-			    </el-table-column>
-			    <el-table-column prop="Totalnumberoferrortasks" label="Total number of error tasks" :span="8">
-			    </el-table-column>
-			  </el-table>
+          <el-table :data="tableData1" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" style="width: 90%" height="400px">
+            <el-table-column type="index" width="50"></el-table-column>
+			      <el-table-column fixed prop="Statistictime" label="Statistic time" :span="8">
+			      </el-table-column>
+			      <el-table-column prop="Totalnumberoftasks" label="Total number of tasks" :span="8">
+			      </el-table-column>
+			      <el-table-column prop="Totalnumberoferrortasks" label="Total number of error tasks" :span="8">
+			      </el-table-column>
+			    </el-table>
 		    </el-tab-pane>
 		    <el-tab-pane label="Monthly">
 		      <el-table :data="tableData2" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" style="width: 90%" height="400px">
-			    <el-table-column fixed prop="Statistictime" label="Statistic time" :span="8">
-			    </el-table-column>
-			    <el-table-column prop="Totalnumberoftasks" label="Total number of tasks" :span="8">
-			    </el-table-column>
-			    <el-table-column prop="Totalnumberoferrortasks" label="Total number of error tasks" :span="8">
-			    </el-table-column>
-			  </el-table>	
+            <el-table-column type="index" width="50"></el-table-column>
+			      <el-table-column fixed prop="Statistictime" label="Statistic time" :span="8">
+			      </el-table-column>
+			      <el-table-column prop="Totalnumberoftasks" label="Total number of tasks" :span="8">
+			      </el-table-column>
+			      <el-table-column prop="Totalnumberoferrortasks" label="Total number of error tasks" :span="8">
+			      </el-table-column>
+			    </el-table>	
 		    </el-tab-pane>
 		  </el-tabs>
       	</div>

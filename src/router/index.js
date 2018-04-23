@@ -6,6 +6,7 @@ import Accounts from '@/components/accounts'
 import Opportunities from '@/components/opportunities'
 import Lineitmes from '@/components/lineitmes'
 import Forecast from '@/components/forecast'
+import ViewTaskModule from '@/components/viewtaskmodule'
 
 Vue.use(Router)
 
@@ -40,6 +41,11 @@ export default new Router({
           path: '/forecast',
           name: 'forecast',
           component: Forecast
+        },
+        {
+          path: '/viewtaskmodule/:data',
+          name: 'viewtaskmodule',
+          component: ViewTaskModule
         }
       ]
     }

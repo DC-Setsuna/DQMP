@@ -4,7 +4,7 @@
 	  	<el-button size="medium">RUN ALL</el-button>
 	  	<el-button size="medium" @click="dialogVisible = true">ADD TASK</el-button>
 	  	<!-- add task 模态框 -->
-	  	<el-dialog title="ADD TASK" :visible.sync="dialogVisible" width="70%" :before-close="handleClose">
+	  	<el-dialog id="1" title="ADD TASK" :visible.sync="dialogVisible" width="70%" :before-close="handleClose">
           <el-form ref="form" :model="newTaskForm" label-width="80px" size="small">
 			  <el-form-item label-width='120px' label="Task ID :">
 			    {{newTaskForm.id}}
@@ -54,7 +54,7 @@
 			  	<el-input-number class="newtask_input" v-model="newTaskForm.verify" controls-position="right" :min="1" :max="100000"></el-input-number>
 			  </el-form-item>
 			  <el-form-item label-width='120px' label="Upload :">
-			  	<el-upload class="upload-demo" :show-file-list="true" drag action="https://jsonplaceholder.typicode.com/posts/" :before-remove="Remove" :file-list="fileList"  multiple>
+			  	<el-upload class="upload-demo" ref="upload" :show-file-list="true" drag action="https://jsonplaceholder.typicode.com/posts/" :before-remove="Remove" :before-upload="Submit" :auto-upload="false" multiple>
                   <i class="el-icon-upload"></i>
                   <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
                   <div class="el-upload__tip" slot="tip">目前只能上传SQL文件</div>
@@ -103,14 +103,11 @@
 			    <el-option label="Winplan" value="Winplan"></el-option>
 		      </el-select>
             </el-col>
-            <el-col :span="4">
-	  			
-            </el-col>
           </el-form>
 	  	</el-row>
 	  	<el-row class="account-row">
 	  	  <el-table :data="tableData" border :height="window_height" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" style="width: 96%">
-            <el-table-column fixed prop="date" label="Task ID" width="200px">
+            <el-table-column fixed prop="id" label="Task ID" width="200px">
             </el-table-column>
             <el-table-column prop="name" label="Owner" width="180px">
             </el-table-column>
@@ -130,9 +127,11 @@
             </el-table-column>
             <el-table-column prop="address" label="Tptal Fail" width="120px">
             </el-table-column>
-            <el-table-column fixed="right" label="Operation">
+            <el-table-column fixed="right" width="120px" label="Operation">
               <template slot-scope="scope">
-                <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+                <el-button type="text" size="small" @click="lookdetail(scope.row)">
+                  查看
+                </el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -145,6 +144,7 @@ export default {
   data () {
     return {
       dialogVisible: false,
+      dialogVisible1: false,
       newTaskForm: {
         id: 'ACT20180420_001',
         category: '',
@@ -158,60 +158,57 @@ export default {
         verify: 0,
         content: ''
       },
-      fileList: [
-        {name:'',url:''}
-      ],
       tableData: [{
-          date: '2016-05-03',
+          id: '2016-05-03',
           name: '王小虎',
           province: '上海',
           city: '普陀区',
           address: '上海市普陀区金沙江路 1518 弄',
           zip: 200333
         }, {
-          date: '2016-05-02',
+          id: '2016-05-02',
           name: '王小虎',
           province: '上海',
           city: '普陀区',
           address: '上海市普陀区金沙江路 1518 弄',
           zip: 200333
         }, {
-          date: '2016-05-04',
+          id: '2016-05-04',
           name: '王小虎',
           province: '上海',
           city: '普陀区',
           address: '上海市普陀区金沙江路 1518 弄',
           zip: 200333
         }, {
-          date: '2016-05-01',
+          id: '2016-05-01',
           name: '王小虎',
           province: '上海',
           city: '普陀区',
           address: '上海市普陀区金沙江路 1518 弄',
           zip: 200333
         }, {
-          date: '2016-05-03',
+          id: '2016-05-03',
           name: '王小虎',
           province: '上海',
           city: '普陀区',
           address: '上海市普陀区金沙江路 1518 弄',
           zip: 200333
         }, {
-          date: '2016-05-02',
+          id: '2016-05-02',
           name: '王小虎',
           province: '上海',
           city: '普陀区',
           address: '上海市普陀区金沙江路 1518 弄',
           zip: 200333
         }, {
-          date: '2016-05-04',
+          id: '2016-05-04',
           name: '王小虎',
           province: '上海',
           city: '普陀区',
           address: '上海市普陀区金沙江路 1518 弄',
           zip: 200333
         }, {
-          date: '2016-05-01',
+          id: '2016-05-01',
           name: '王小虎',
           province: '上海',
           city: '普陀区',
@@ -227,14 +224,23 @@ export default {
         done();
       }).catch(_ => {});
     },
+    handleClose1(done) {
+      this.$confirm('确认关闭？').then(_ => {
+        done();
+      }).catch(_ => {});
+    },
     Remove(file, fileList) {
       console.log(file,fileList);
     },
     handleClick(row) {
-      console.log(row);
+      console.log(row.id);
+    },
+    Submit(file) {
+      console.log(file);
     },
     refresh() {
-      this.$confirm('确认关闭？').then(_ => {
+      this.$confirm('Are you sure refresh？').then(_ => {
+      	this.$refs.upload.submit();
         this.newTaskForm={
         id: 'ACT20180420_001',
         category: '',
@@ -252,6 +258,9 @@ export default {
     },
     getWindowSize() {
       this.window_height = window.screen.availHeight * 0.7;
+    },
+    lookdetail(row) {
+      this.$router.push({name: 'viewtaskmodule', params: { data: row.id }})
     }
   },
   created: function () {
