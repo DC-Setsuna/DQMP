@@ -74,10 +74,10 @@
 	  </el-row>
 	  <el-row class="account-row">
 	  	<el-row class="account-filters-row">
-	  	  <el-form ref="form" :model="newTaskForm" label-width="80px" size="small">
+	  	  <el-form ref="form" :model="filtrateForm" label-width="80px" size="small">
 	  	    <el-col :span="6">
 	  	      <label>Frequency :</label>
-	  	      <el-select v-model="newTaskForm.freqency">
+	  	      <el-select v-model="filtrateForm.freqency">
 			    <el-option label="Daily" value="daily"></el-option>
 			    <el-option label="Weekly" value="weekly"></el-option>
 			    <el-option label="Monthly" value="monthly"></el-option>
@@ -85,14 +85,14 @@
 	        </el-col>
             <el-col :span="6">
           	  <label>Enable :</label>
-	  	      <el-select v-model="newTaskForm.enabled">
+	  	      <el-select v-model="filtrateForm.enabled">
 			    <el-option label="YES" value="True"></el-option>
 			    <el-option label="NO" value="False"></el-option>
 			  </el-select>
             </el-col>
             <el-col :span="6">
-          	  <label>Owner :</label>
-	  	      <el-select v-model="newTaskForm.category">
+          	  <label>Category :</label>
+	  	      <el-select v-model="filtrateForm.category">
 			    <el-option label="Account" value="Account"></el-option>
 			    <el-option label="Opportunities" value="Opportunities"></el-option>
 			    <el-option label="LineItems" value="LineItems"></el-option>
@@ -107,25 +107,23 @@
 	  	</el-row>
 	  	<el-row class="account-row">
 	  	  <el-table :data="tableData" border :height="window_height" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" style="width: 96%">
-            <el-table-column fixed prop="id" label="Task ID" width="200px">
+            <el-table-column fixed prop="taskid" label="Task ID" width="180px">
             </el-table-column>
-            <el-table-column prop="name" label="Owner" width="180px">
+            <el-table-column prop="owner" label="Owner" width="150px">
             </el-table-column>
-            <el-table-column prop="province" label="Description" width="180px">
+            <el-table-column prop="description" label="Description" width="180px">
             </el-table-column>
-            <el-table-column prop="city" label="Create Date" width="200px">
+            <el-table-column prop="last_runtime" label="Last Run Date" width="180px"></el-table-column>
+            <el-table-column prop="enabled" label="Enabled" width="100px">
             </el-table-column>
-            <el-table-column prop="address" label="Last Update Date" width="200px">
+            <el-table-column prop="freqency" label="Freqency" width="120px">
             </el-table-column>
-            <el-table-column prop="zip" label="Last Run Date" width="260px">
+            <el-table-column prop="totalrun" label="Total Ran" width="100px">
             </el-table-column>
-            <el-table-column prop="name" label="Enabled" width="120px">
+            <el-table-column prop="totalfails" label="Total Fail" width="100px">
             </el-table-column>
-            <el-table-column prop="province" label="Freqency" width="120px">
-            </el-table-column>
-            <el-table-column prop="city" label="Total Ran" width="120px">
-            </el-table-column>
-            <el-table-column prop="address" label="Total Fail" width="120px">
+            <el-table-column prop="update_time" label="Last Update Date" width="180px"></el-table-column>
+            <el-table-column prop="upload_time" label="Create Date" width="180px">
             </el-table-column>
             <el-table-column fixed="right" width="120px" label="Operation">
               <template slot-scope="scope">
@@ -159,11 +157,16 @@ export default {
         threshold: 0,
         content: '',
         run_now: '',
-        file_path: '/static/uploads/test3.sql',
+        file_path: '',
         upload_user_id: 123333
       },
       tableData: [],
-      window_height: 0
+      window_height: 0,
+      filtrateForm: {
+        freqency: '',
+        enabled: '',
+        category: ''
+      }
     }
   },
   methods: {
@@ -208,7 +211,7 @@ export default {
         task_type: '',
         verify: 0,
         content: '',
-        filepath: ''
+        file_path: ''
       };
       }).catch(_ => {});
     },
@@ -216,11 +219,11 @@ export default {
       this.window_height = window.screen.availHeight * 0.7;
     },
     lookdetail(row) {
-      this.$router.push({name: 'viewtaskmodule', params: { data: row.id }})
+      this.$router.push({name: 'viewtaskmodule', params: { data: row.taskid }})
     },
     getaccount_tab_data() {
-      this.axios.get("../../../static/account_tab.json").then((response) => {
-          this.tableData = response.data;
+      this.axios.post(this.$store.state.API + 'task/task_list').then((response) => {
+          this.tableData = response.data.data;
         })
     },
     showmodule() {
@@ -248,12 +251,25 @@ export default {
         return uuid.join('');
     },
     UploadSuccess(response,file,fileList) {
-      this.newTaskForm.filepath = response.data
+      this.newTaskForm.file_path = response.data
+    },
+    filtrateTask() {
+      this.axios.post(this.$store.state.API + 'task/task_filtrate',qs.stringify(this.filtrateForm)).then((response) => {
+          this.tableData = response.data.data;
+        })
     }
   },
   created: function () {
   	this.getWindowSize();
     this.getaccount_tab_data();
+  },
+  watch: {
+    filtrateForm: {
+      handler:function(){
+        this.filtrateTask()
+      },
+      deep:true
+    }
   }
 }
 </script>

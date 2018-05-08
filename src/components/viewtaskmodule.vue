@@ -2,7 +2,7 @@
 	<div>
       <el-form ref="form" :model="newTaskForm" label-width="80px" size="small" v-bind:disabled=disable>
 		  <el-form-item label-width='120px' label="Task ID :">
-		    {{newTaskForm.id}}
+		    {{newTaskForm.taskid}}
 		  </el-form-item>
 		  <el-form-item label-width='120px' label="Category :">
 		    <el-select class="newtask_input" v-model="newTaskForm.category" placeholder="Please select a Category">
@@ -38,18 +38,18 @@
 		      <el-option label="Weekly" value="weekly"></el-option>
 		      <el-option label="Monthly" value="monthly"></el-option>
 		    </el-select>
-            <el-button  v-bind:class="{active:isActive}" class="task_button" type="primary" size="small">Manual Run</el-button>
+            <el-checkbox v-model="newTaskForm.run_now">提交后立即执行</el-checkbox>
 		  </el-form-item>
 		  <el-form-item label-width='120px' label="Task type :">
-		    <el-select class="newtask_input" v-model="newTaskForm.type" placeholder="Please select Task Type">
+		    <el-select class="newtask_input" v-model="newTaskForm.task_type" placeholder="Please select Task Type">
 		      <el-option label="SQL" value="sql"></el-option>
 		    </el-select>
 		  </el-form-item>
 		  <el-form-item label-width='120px' label="Result Verify :">
-		  	<el-input-number class="newtask_input" v-model="newTaskForm.verify" controls-position="right" :min="1" :max="100000"></el-input-number>
+		  	<el-input-number class="newtask_input" v-model="newTaskForm.threshold" controls-position="right" :min="1" :max="100000"></el-input-number>
 		  </el-form-item>
 		  <el-form-item label-width='120px' label="Upload :"  v-bind:class="{active:isActive}">
-		  	<el-upload class="upload-demo" drag action="https://jsonplaceholder.typicode.com/posts/" :before-remove="Remove" :file-list="newTaskForm.fileList" multiple>
+		  	<el-upload class="upload-demo" drag action="https://jsonplaceholder.typicode.com/posts/" :before-remove="Remove" :file-list="newTaskForm.fileList" multiple :limit='1'>
               <i class="el-icon-upload"></i>
                 <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
                 <div class="el-upload__tip" slot="tip">只能上传sql文件，且不超过500kb</div>
@@ -82,6 +82,7 @@
 	</div>
 </template>
 <script type="text/javascript">
+import qs from 'qs'
   export default {
   data () {
     return {
@@ -90,18 +91,18 @@
 	  disable: true,
 	  tableActive: false,
 	  newTaskForm: {
-        id: 'ACT20180420_001',
-        category: '1',
-        owner: '2',
-        email: '3',
-        description: '4',
-        tag: '5',
-        enabled: '6',
-        freqency: '7',
-        type: '8',
-        verify: 9,
-        content: '10',
-        fileList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}]
+        taskid: '',
+        category: '',
+        owner: '',
+        email: '',
+        description: '',
+        tag: '',
+        enabled: '',
+        freqency: '',
+        task_type: '',
+        threshold: 0,
+        content: '',
+        run_now: ''
       },
       tableData3: [{
           date: '2016-05-03',
@@ -145,7 +146,13 @@
     }
   },
   created: function(){
-  	this.data = this.$route.params.data
+  	this.axios.post(this.$store.state.API + 'task/select',qs.stringify({taskid:this.$route.params.data})).then((response) => {
+      this.newTaskForm = response.data.data[0];
+      if(this.newTaskForm.run_now === "True") this.newTaskForm.run_now = true
+      if(this.newTaskForm.run_now === "False") this.newTaskForm.run_now = false
+
+      this.newTaskForm.fileList = [{name: this.newTaskForm.filepath.substring(16,25), url: this.newTaskForm.filepath}]
+    })
   }
 }
 </script>

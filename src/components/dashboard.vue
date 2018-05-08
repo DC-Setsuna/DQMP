@@ -5,10 +5,10 @@
       	<DailyBoard :datas="chartData" class="board-board"/>
       </el-col>
       <el-col :span="8">
-      	<WeeklyBoard class="board-board"/>
+      	<WeeklyBoard :datas="chartData1" class="board-board"/>
       </el-col>
       <el-col :span="8">
-      	<MonthlyBoard class="board-board"/>
+      	<MonthlyBoard :datas="chartData2" class="board-board"/>
       </el-col>
     </el-row>
     <el-row class="table-row row-bg" justify="center">
@@ -63,6 +63,8 @@
       return {
         tabPosition: 'left',
         chartData: [],
+        chartData1: [],
+        chartData2: [],
         tableData: [],
         tableData1: [],
         tableData2: []
@@ -71,15 +73,17 @@
     components: { DailyBoard , WeeklyBoard , MonthlyBoard},
     methods: {
       getTabWeeklyData() {
-        this.axios.get('../../../static/dash_tab.json').then((response) => {
-          this.tableData1 = response.data;
+        this.axios.post(this.$store.state.API + 'board/weekly_list')
+        .then((response) => {
+          this.tableData1 = response.data.data.tabData
+          this.chartData1 = response.data.data.chartData
         })
       },
       getTabMonthlyData() {
-        this.axios.post(this.$store.state.API + 'board/weekly_list')
+        this.axios.post(this.$store.state.API + 'board/monthly_list')
         .then((response) => {
-          this.tableData = response.data.data.tabData
-          this.$store.commit('dailydata', response.data.data.chartData)
+          this.tableData2 = response.data.data.tabData
+          this.chartData2 = response.data.data.chartData
         })
       },
       init() {

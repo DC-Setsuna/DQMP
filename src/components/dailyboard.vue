@@ -86,8 +86,10 @@
 	    });
 	  }
 	},
-	mounted() {
-		this.drawLine()
+	watch: {
+		datas: function() {
+			this.drawLine()
+		}
 	}
   }
 </script>
