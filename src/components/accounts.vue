@@ -54,7 +54,7 @@
 			  	<el-input-number class="newtask_input" v-model="newTaskForm.verify" controls-position="right" :min="1" :max="100000"></el-input-number>
 			  </el-form-item>
 			  <el-form-item label-width='120px' label="Upload :">
-			  	<el-upload class="upload-demo" ref="upload" :show-file-list="true" drag action="https://jsonplaceholder.typicode.com/posts/" :before-remove="Remove" :before-upload="Submit" :auto-upload="false" multiple>
+			  	<el-upload class="upload-demo" ref="upload" :show-file-list="true" drag action="http://localhost:5000/upload" :before-remove="Remove" :before-upload="Submit" :auto-upload="true" multiple>
                   <i class="el-icon-upload"></i>
                   <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
                   <div class="el-upload__tip" slot="tip">目前只能上传SQL文件</div>
