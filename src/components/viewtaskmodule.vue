@@ -49,10 +49,10 @@
 		  	<el-input-number class="newtask_input" v-model="newTaskForm.verify" controls-position="right" :min="1" :max="100000"></el-input-number>
 		  </el-form-item>
 		  <el-form-item label-width='120px' label="Upload :"  v-bind:class="{active:isActive}">
-		  	<el-upload class="upload-demo" drag action="https://jsonplaceholder.typicode.com/posts/" :before-remove="Remove" multiple>
+		  	<el-upload class="upload-demo" drag action="https://jsonplaceholder.typicode.com/posts/" :before-remove="Remove" :file-list="newTaskForm.fileList" multiple>
               <i class="el-icon-upload"></i>
                 <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-                <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+                <div class="el-upload__tip" slot="tip">只能上传sql文件，且不超过500kb</div>
             </el-upload>
 		  </el-form-item>
 		  <el-form-item label-width='120px' label="Content :">
@@ -62,7 +62,7 @@
       <span slot="footer" class="dialog-footer">
       	<el-button>Run</el-button>
         <el-button @click="Edit()">Edit</el-button>
-        <el-button type="primary">History</el-button>
+        <el-button >History</el-button>
       </span>
       <el-table v-bind:class="{active:tableActive}" :data="tableData3" height="350px" border class="viewtask_tab">
       	<el-table-column type="index" width="50"></el-table-column>
@@ -100,7 +100,8 @@
         freqency: '7',
         type: '8',
         verify: 9,
-        content: '10'
+        content: '10',
+        fileList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}]
       },
       tableData3: [{
           date: '2016-05-03',
