@@ -2,7 +2,7 @@
   <div>
 	<el-row class="board-row row-bg" justify="center">
       <el-col :span="8">
-      	<DailyBoard class="board-board"/>
+      	<DailyBoard :datas="chartData" class="board-board"/>
       </el-col>
       <el-col :span="8">
       	<WeeklyBoard class="board-board"/>
@@ -62,6 +62,7 @@
     data () {
       return {
         tabPosition: 'left',
+        chartData: [],
         tableData: [],
         tableData1: [],
         tableData2: []
@@ -69,24 +70,28 @@
     },
     components: { DailyBoard , WeeklyBoard , MonthlyBoard},
     methods: {
-      getTabDailyData() {
-        this.axios.get('../../../static/dash_tab.json').then((response) => {
-          this.tableData = response.data;
-        })
-      },
       getTabWeeklyData() {
         this.axios.get('../../../static/dash_tab.json').then((response) => {
           this.tableData1 = response.data;
         })
       },
       getTabMonthlyData() {
-        this.axios.get('../../../static/dash_tab.json').then((response) => {
-          this.tableData2 = response.data;
+        this.axios.post(this.$store.state.API + 'board/weekly_list')
+        .then((response) => {
+          this.tableData = response.data.data.tabData
+          this.$store.commit('dailydata', response.data.data.chartData)
+        })
+      },
+      init() {
+        this.axios.post(this.$store.state.API + 'board/daily_list')
+        .then((response) => {
+          this.tableData = response.data.data.tabData
+          this.chartData = response.data.data.chartData
         })
       }
     },
     created: function() {
-      this.getTabDailyData()
+      this.init()
       this.getTabWeeklyData()
       this.getTabMonthlyData()
     }

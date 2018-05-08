@@ -18,9 +18,7 @@
         msg: 'Welcome to Your Vue.js App'
       }
     },
-    components: { HEAD },
-    method () {
-    }
+    components: { HEAD }
   }
 </script>
 <style type="text/css">
