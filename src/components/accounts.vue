@@ -66,7 +66,7 @@
 		  </el-form>
           <span slot="footer" class="dialog-footer">
           	<el-button @click="refresh">Refresh</el-button>
-            <el-button @click="dialogVisible = false">Canel</el-button>
+            <el-button @click="cancel">Canel</el-button>
             <el-button type="primary" @click="Submit()">Submit</el-button>
           </span>
         </el-dialog>
@@ -172,9 +172,39 @@ export default {
   methods: {
     handleClose(done) {
       this.$confirm('确认关闭？').then(_ => {
+        this.newTaskForm={
+          id: this.uuid(12,16),
+          category: '',
+          owner: '',
+          email: '',
+          description: '',
+          tag: '',
+          enabled: '',
+          freqency: '',
+          task_type: '',
+          verify: 0,
+          content: ''
+      };
         done();
       }).catch(_ => {});
     },
+    cancel() {
+      this.dialogVisible = false
+      this.newTaskForm={
+          id: this.uuid(12,16),
+          category: '',
+          owner: '',
+          email: '',
+          description: '',
+          tag: '',
+          enabled: '',
+          freqency: '',
+          task_type: '',
+          verify: 0,
+          content: ''
+      };
+    }
+    ,
     Change(file, fileList) {
       console.log("上传文件改变" + fileList)
     },
@@ -210,8 +240,7 @@ export default {
         freqency: '',
         task_type: '',
         verify: 0,
-        content: '',
-        file_path: ''
+        content: ''
       };
       }).catch(_ => {});
     },
