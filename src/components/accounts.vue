@@ -26,7 +26,7 @@
 			    <span>Email : </span><el-input class="newtask_row_input" v-model="newTaskForm.email"></el-input>
 			  </el-form-item>
 			  <el-form-item label-width='120px' label="Description :">
-			    <el-input class="newtask_text_input" type="textarea" :autosize="{ minRows: 3, maxRows: 5}" placeholder="请输入内容" v-model="newTaskForm.description"></el-input>
+			    <el-input class="newtask_text_input" type="textarea" :autosize="{ minRows: 3, maxRows: 5}" placeholder="Please enter content" v-model="newTaskForm.description"></el-input>
 			  </el-form-item>
 			  <el-form-item label-width='120px' label="Tag :">
 			    <el-input class="newtask_text_input" v-model="newTaskForm.tag"></el-input>
@@ -43,7 +43,7 @@
 			      <el-option label="Weekly" value="weekly"></el-option>
 			      <el-option label="Monthly" value="monthly"></el-option>
 			    </el-select>
-          <el-checkbox v-model="newTaskForm.run_now">提交后立即执行</el-checkbox>
+          <el-checkbox v-model="newTaskForm.run_now">Execute immediately after submission.</el-checkbox>
 			  </el-form-item>
 			  <el-form-item label-width='120px' label="Task type :">
 			    <el-select class="newtask_input" v-model="newTaskForm.task_type" placeholder="Please select Task Type">
@@ -51,17 +51,17 @@
 			    </el-select>
 			  </el-form-item>
 			  <el-form-item label-width='120px' label="Result Verify :">
-			  	<el-input-number class="newtask_input" v-model="newTaskForm.threshold" controls-position="right" :min="1" :max="100000"></el-input-number>
+			  	<el-input-number class="newtask_input" v-model="newTaskForm.threshold" controls-position="right" :min="0" :max="1000000000000"></el-input-number>
 			  </el-form-item>
 			  <el-form-item label-width='120px' label="Upload :">
 			  	<el-upload class="upload-demo" ref="upload" :show-file-list="true" drag action="http://localhost:5000/file/add" :on-success='UploadSuccess' :on-change="Change" :on-remove="Remove" :file-list='fileList' :multiple="false" :limit="1">
             <i class="el-icon-upload"></i>
-            <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-            <div class="el-upload__tip" slot="tip">目前只能上传SQL文件</div>
+            <div class="el-upload__text">Drag the file here, or <em>click upload</em></div>
+            <div class="el-upload__tip" slot="tip">Currently only SQL files are allowed. Upload one file</div>
           </el-upload> 
 			  </el-form-item>
 			  <el-form-item label-width='120px' label="Content :">
-			    <el-input class="newtask_text_input" type="textarea" :autosize="{ minRows: 5, maxRows: 10}" placeholder="请输入内容" v-model="newTaskForm.content"></el-input>
+			    <el-input class="newtask_text_input" v-bind:disabled=disable type="textarea" :autosize="{ minRows: 5, maxRows: 10}" placeholder="请输入内容" v-model="newTaskForm.content"></el-input>
 			  </el-form-item>
 		  </el-form>
           <span slot="footer" class="dialog-footer">
@@ -106,7 +106,7 @@
           </el-form>
 	  	</el-row>
 	  	<el-row class="account-row">
-	  	  <el-table :data="tableData" border :height="window_height" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" style="width: 96%">
+	  	  <el-table :data="tableData" border :height="window_height" :header-cell-style="{'text-align':'center'}" @row-click='showDetail' :row-style="{'text-align':'center'}" style="width: 96%">
             <el-table-column fixed prop="taskid" label="Task ID" width="180px">
             </el-table-column>
             <el-table-column prop="owner" label="Owner" width="150px">
@@ -124,13 +124,6 @@
             </el-table-column>
             <el-table-column prop="update_time" label="Last Update Date" width="180px"></el-table-column>
             <el-table-column prop="upload_time" label="Create Date" width="180px">
-            </el-table-column>
-            <el-table-column fixed="right" width="120px" label="Operation">
-              <template slot-scope="scope">
-                <el-button type="text" size="small" @click="lookdetail(scope.row)">
-                  查看
-                </el-button>
-              </template>
             </el-table-column>
           </el-table>
         </el-row>
@@ -167,7 +160,8 @@ export default {
         enabled: '',
         category: ''
       },
-      fileList: []
+      fileList: [],
+      disable: false
     }
   },
   methods: {
@@ -210,11 +204,16 @@ export default {
     }
     ,
     Change(file, fileList) {
-      console.log("上传文件改变" + fileList)
+      console.log(fileList)
+      if(fileList != '' && fileList != null){
+        this.disable = true
+      }
     },
     Remove(file, fileList) {
       this.axios.post(this.$store.state.API + 'file/remove',qs.stringify({filename:file.name})
-      )
+      ).then((response) =>{
+        this.disable = false
+      })
     },
     Submit(file) {
       if(this.newTaskForm.run_now!=true) {
@@ -276,7 +275,7 @@ export default {
     getWindowSize() {
       this.window_height = window.screen.availHeight * 0.7;
     },
-    lookdetail(row) {
+    showDetail(row, event, column) {
       this.$router.push({name: 'viewtaskmodule', params: { data: row.taskid }})
     },
     getaccount_tab_data() {

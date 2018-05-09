@@ -48,35 +48,38 @@
 		  <el-form-item label-width='120px' label="Result Verify :">
 		  	<el-input-number class="newtask_input" v-model="newTaskForm.threshold" controls-position="right" :min="1" :max="100000"></el-input-number>
 		  </el-form-item>
-		  <el-form-item label-width='120px' label="Upload :"  v-bind:class="{active:isActive}">
-		  	<el-upload class="upload-demo" drag action="https://jsonplaceholder.typicode.com/posts/" :before-remove="Remove" :file-list="newTaskForm.fileList" multiple :limit='1'>
-              <i class="el-icon-upload"></i>
-                <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-                <div class="el-upload__tip" slot="tip">只能上传sql文件，且不超过500kb</div>
-            </el-upload>
+		  <el-form-item label-width='120px' label="Upload :" v-bind:class="{active:isActive}">
+			<el-upload class="upload-demo" ref="upload" :show-file-list="true" drag action="http://localhost:5000/file/add" :on-success='UploadSuccess' :on-change="Change" :on-remove="Remove" :file-list='newTaskForm.fileList' :multiple="false" :limit="1">
+            <i class="el-icon-upload"></i>
+            <div class="el-upload__text">Drag the file here, or <em>click upload</em></div>
+            <div class="el-upload__tip" slot="tip">Currently only SQL files are allowed. Upload one file</div>
+          </el-upload> 
+			  </el-form-item>
 		  </el-form-item>
 		  <el-form-item label-width='120px' label="Content :">
 		    <el-input class="newtask_text_input" type="textarea" :autosize="{ minRows: 5, maxRows: 10}" placeholder="请输入内容" v-model="newTaskForm.content"></el-input>
 		  </el-form-item>
 	  </el-form>
       <span slot="footer" class="dialog-footer">
-      	<el-button>Run</el-button>
-        <el-button @click="Edit()">Edit</el-button>
-        <el-button >History</el-button>
+      	<el-button v-bind:class="{active:tableActive}">Run</el-button>
+        <el-button @click="Edit">Edit</el-button>
+        <el-button v-bind:class="{active:tableActive}">History</el-button>
+        <el-button v-bind:class="{active:isActive}" @click="Cancel">Cancel</el-button>
+        <el-button v-bind:class="{active:isActive}" @click="Submit">Submit</el-button>
       </span>
       <el-table v-bind:class="{active:tableActive}" :data="tableData3" height="350px" border class="viewtask_tab">
       	<el-table-column type="index" width="50"></el-table-column>
-        <el-table-column prop="date" label="Run time" width="180">
+        <el-table-column prop="run_time" label="Run time" width="180">
         </el-table-column>
-        <el-table-column prop="name" label="Total" width="180">
+        <el-table-column prop="count" label="Total" width="180">
         </el-table-column>
-        <el-table-column prop="address" label="Result">
+        <el-table-column prop="result" label="Result">
         </el-table-column>
-        <el-table-column prop="date" label="Running status" width="180">
+        <el-table-column prop="status" label="Running status" width="180">
         </el-table-column>
-        <el-table-column prop="name" label="Duration" width="180">
+        <el-table-column prop="duration" label="Duration" width="180">
         </el-table-column>
-        <el-table-column prop="address" label="Comments">
+        <el-table-column prop="" label="Comments">
         </el-table-column>
       </el-table>
 	</div>
@@ -102,37 +105,12 @@ import qs from 'qs'
         task_type: '',
         threshold: 0,
         content: '',
-        run_now: ''
+        run_now: '',
+        file_path: '',
+        upload_user_id: '1233333',
+        fileList: []
       },
-      tableData3: [{
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-08',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-06',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-07',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }]
+      tableData3: []
 	}
   },
   methods: {
@@ -143,16 +121,49 @@ import qs from 'qs'
       this.isActive = false
 	  this.disable = false
 	  this.tableActive = true
+    },
+    Cancel() {
+      this.isActive = true
+	  this.disable = true
+	  this.tableActive = false
+    },
+    Change(file, fileList) {
+      console.log(fileList)
+      if(fileList != '' && fileList != null){
+        
+      }
+    },
+    UploadSuccess(response,file,fileList) {
+      this.newTaskForm.file_path = response.data
+    },
+    Remove(file, fileList) {
+      this.axios.post(this.$store.state.API + 'file/remove',qs.stringify({filename:file.name})
+      ).then((response) =>{
+        
+      })
+    },
+    init() {
+      this.axios.post(this.$store.state.API + 'task/select',qs.stringify({taskid:this.$route.params.data})).then((response) => {
+      	if(response.data.code == 200) {
+          this.newTaskForm = response.data.data[0];
+          if(this.newTaskForm.run_now === "True") this.newTaskForm.run_now = true
+          if(this.newTaskForm.run_now === "False") this.newTaskForm.run_now = false
+          this.file_path = this.newTaskForm.filepath.substring(16,25)
+          this.newTaskForm.fileList = [{name: this.newTaskForm.filepath.substring(16,25), url: this.newTaskForm.filepath}]
+        }
+      })
+      this.axios.post(this.$store.state.API + 'task/selctTaskLogById',qs.stringify({taskid:this.$route.params.data})).then((response) => {
+        if(response.data.code == 200) {
+        	this.tableData3 = response.data.data
+        }
+      })
+    },
+    Submit() {
+    	console.log('Here Will Submit')
     }
   },
   created: function(){
-  	this.axios.post(this.$store.state.API + 'task/select',qs.stringify({taskid:this.$route.params.data})).then((response) => {
-      this.newTaskForm = response.data.data[0];
-      if(this.newTaskForm.run_now === "True") this.newTaskForm.run_now = true
-      if(this.newTaskForm.run_now === "False") this.newTaskForm.run_now = false
-
-      this.newTaskForm.fileList = [{name: this.newTaskForm.filepath.substring(16,25), url: this.newTaskForm.filepath}]
-    })
+  	this.init()
   }
 }
 </script>
