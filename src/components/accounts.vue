@@ -54,19 +54,11 @@
 			  	<el-input-number class="newtask_input" v-model="newTaskForm.threshold" controls-position="right" :min="1" :max="100000"></el-input-number>
 			  </el-form-item>
 			  <el-form-item label-width='120px' label="Upload :">
-<<<<<<< HEAD
-			  	<el-upload class="upload-demo" ref="upload" :show-file-list="true" drag action="http://localhost:5000/upload" :before-remove="Remove" :before-upload="Submit" :auto-upload="true" multiple>
-                  <i class="el-icon-upload"></i>
-                  <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-                  <div class="el-upload__tip" slot="tip">目前只能上传SQL文件</div>
-                </el-upload>
-=======
 			  	<el-upload class="upload-demo" ref="upload" :show-file-list="true" drag action="http://localhost:5000/file/add" :on-success='UploadSuccess' :on-change="Change" :on-remove="Remove" :multiple="false" :limit="1">
             <i class="el-icon-upload"></i>
             <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
             <div class="el-upload__tip" slot="tip">目前只能上传SQL文件</div>
           </el-upload> 
->>>>>>> 1469b257e5ea2c3e0b989d9fda1d76cddb490b55
 			  </el-form-item>
 			  <el-form-item label-width='120px' label="Content :">
 			    <el-input class="newtask_text_input" type="textarea" :autosize="{ minRows: 5, maxRows: 10}" placeholder="请输入内容" v-model="newTaskForm.content"></el-input>
@@ -167,7 +159,7 @@ export default {
         threshold: 0,
         content: '',
         run_now: '',
-        file_path: '/static/uploads/test3.sql',
+        file_path: '',
         upload_user_id: 123333
       },
       tableData: [],
@@ -191,6 +183,7 @@ export default {
       if(this.newTaskForm.run_now!=true) {
         this.newTaskForm.run_now = 'False'
       } else {this.newTaskForm.run_now = 'True'}
+      console.log("+++++++"+this.newTaskForm.file_path)
       this.axios.post(this.$store.state.API + 'task/add/',qs.stringify(this.newTaskForm)).then((response) => {
       })
     },
@@ -215,8 +208,7 @@ export default {
         freqency: '',
         task_type: '',
         verify: 0,
-        content: '',
-        filepath: ''
+        content: ''
       };
       }).catch(_ => {});
     },
@@ -256,7 +248,7 @@ export default {
         return uuid.join('');
     },
     UploadSuccess(response,file,fileList) {
-      this.newTaskForm.filepath = response.data
+      this.newTaskForm.file_path = response.data
     }
   },
   created: function () {
