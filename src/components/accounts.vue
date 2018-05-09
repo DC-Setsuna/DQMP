@@ -54,7 +54,7 @@
 			  	<el-input-number class="newtask_input" v-model="newTaskForm.threshold" controls-position="right" :min="1" :max="100000"></el-input-number>
 			  </el-form-item>
 			  <el-form-item label-width='120px' label="Upload :">
-			  	<el-upload class="upload-demo" ref="upload" :show-file-list="true" drag action="http://localhost:5000/file/add" :on-success='UploadSuccess' :on-change="Change" :on-remove="Remove" :multiple="false" :limit="1">
+			  	<el-upload class="upload-demo" ref="upload" :show-file-list="true" drag action="http://localhost:5000/file/add" :on-success='UploadSuccess' :on-change="Change" :on-remove="Remove" :file-list='fileList' :multiple="false" :limit="1">
             <i class="el-icon-upload"></i>
             <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
             <div class="el-upload__tip" slot="tip">目前只能上传SQL文件</div>
@@ -158,7 +158,7 @@ export default {
         content: '',
         run_now: '',
         file_path: '',
-        upload_user_id: 123333
+        upload_user_id: '1233333'
       },
       tableData: [],
       window_height: 0,
@@ -166,14 +166,15 @@ export default {
         freqency: '',
         enabled: '',
         category: ''
-      }
+      },
+      fileList: []
     }
   },
   methods: {
     handleClose(done) {
       this.$confirm('确认关闭？').then(_ => {
         this.newTaskForm={
-          id: this.uuid(12,16),
+          taskid: '',
           category: '',
           owner: '',
           email: '',
@@ -182,8 +183,11 @@ export default {
           enabled: '',
           freqency: '',
           task_type: '',
-          verify: 0,
-          content: ''
+          threshold: 0,
+          content: '',
+          run_now: '',
+          file_path: '',
+          upload_user_id: ''
       };
         done();
       }).catch(_ => {});
@@ -217,6 +221,28 @@ export default {
         this.newTaskForm.run_now = 'False'
       } else {this.newTaskForm.run_now = 'True'}
       this.axios.post(this.$store.state.API + 'task/add/',qs.stringify(this.newTaskForm)).then((response) => {
+        if(response.data.code == 200) {
+          this.newTaskForm={
+            id: '',
+            taskid: '',
+            category: '',
+            owner: '',
+            email: '',
+            description: '',
+            tag: '',
+            enabled: '',
+            freqency: '',
+            task_type: '',
+            threshold: 0,
+            content: '',
+            run_now: '',
+            file_path: '',
+            upload_user_id: ''
+          };
+          this.fileList = []
+          this.dialogVisible = false
+          this.getaccount_tab_data()
+        }
       })
     },
     Run() {
@@ -239,8 +265,11 @@ export default {
         enabled: '',
         freqency: '',
         task_type: '',
-        verify: 0,
-        content: ''
+        threshold: 0,
+        content: '',
+        run_now: '',
+        file_path: '',
+        upload_user_id: ''
       };
       }).catch(_ => {});
     },
