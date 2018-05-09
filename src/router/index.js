@@ -7,6 +7,7 @@ import Opportunities from '@/components/opportunities'
 import Lineitmes from '@/components/lineitmes'
 import Forecast from '@/components/forecast'
 import ViewTaskModule from '@/components/viewtaskmodule'
+import History from '@/components/history'
 
 Vue.use(Router)
 
@@ -51,6 +52,11 @@ export default new Router({
           path: '/viewtaskmodule/:data',
           name: 'viewtaskmodule',
           component: ViewTaskModule
+        },
+        {
+          path: '/history/:data',
+          name: 'history',
+          component: History
         }
       ]
     }

@@ -63,7 +63,7 @@
       <span slot="footer" class="dialog-footer">
       	<el-button v-bind:class="{active:tableActive}">Run</el-button>
         <el-button @click="Edit">Edit</el-button>
-        <el-button v-bind:class="{active:tableActive}">History</el-button>
+        <el-button v-bind:class="{active:tableActive}" @click="History">History</el-button>
         <el-button v-bind:class="{active:isActive}" @click="Cancel">Cancel</el-button>
         <el-button v-bind:class="{active:isActive}" @click="Submit">Submit</el-button>
       </span>
@@ -160,6 +160,9 @@ import qs from 'qs'
     },
     Submit() {
     	console.log('Here Will Submit')
+    },
+    History() {
+        this.$router.push({name: 'history', params: { data: this.newTaskForm.taskid }})
     }
   },
   created: function(){

@@ -204,7 +204,6 @@ export default {
     }
     ,
     Change(file, fileList) {
-      console.log(fileList)
       if(fileList != '' && fileList != null){
         this.disable = true
       }
