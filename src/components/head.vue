@@ -6,7 +6,7 @@
         <el-menu-item class="el-menu-demo-item" index="/opportunities">Opportunities</el-menu-item>
         <el-menu-item class="el-menu-demo-item" index="/lineitmes">Lineitmes</el-menu-item>
         <el-menu-item class="el-menu-demo-item" index="/forecast">Forecast</el-menu-item>
-        <el-menu-item class="el-menu-demo-item" index="/task">Add Task</el-menu-item>
+        <!-- <el-menu-item class="el-menu-demo-item" index="/task">Add Task</el-menu-item> -->
       </el-menu>
 	</div>
 </template>
