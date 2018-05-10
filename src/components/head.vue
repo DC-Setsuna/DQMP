@@ -29,10 +29,11 @@
       padding: 0px;
 	}
 	.el-menu-demo {
-      background-color: #417690;
+      background-color: #555555;
+      padding:0 2%;
 	}
 	.el-menu--horizontal>.el-menu-item{
-	  background-color: #417690;
+	  background-color: #555555;
       color: #FFF;
       height: 50px;
       line-height: 50px;

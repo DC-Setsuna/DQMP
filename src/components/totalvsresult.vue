@@ -1,5 +1,5 @@
 <template>
-	<div id="histogram" class="instrument_table" :style="{width: '90%', height: '350px'}">
+	<div id="histogram" class="instrument_table" :style="{width: '90%', height: '250px'}">
     </div>
 </template>
 <script type="text/javascript">
@@ -17,7 +17,10 @@
 	  	let histogram = this.$echarts.init(document.getElementById('histogram'))
 	    histogram.setOption({
 			title: {
-			  text: 'Total vs Result'
+			  text: 'Total vs Result',
+			  textStyle: {
+			  	fontSize: 15
+			  }
 			},
 		    tooltip : {
 			  trigger: 'axis',
@@ -43,6 +46,13 @@
 	          left: '5%',
 	          right: '5%',
 	          containLabel: true
+	        },
+	        legend: {
+	          data:['Growth', 'Totals', 'Result'],
+	          itemGap: 5,
+              textStyle: {
+			    fontSize: 12
+			  }
 	        },
 	        xAxis: [
 	          {

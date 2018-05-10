@@ -1,10 +1,10 @@
 <template>
   <div>
 	  <el-container>
-        <el-header>
+        <el-header class="header">
           <HEAD/>
         </el-header>
-        <el-main>
+        <el-main class="home_main">
           <router-view class="main-view"></router-view>
         </el-main>
       </el-container>
@@ -22,4 +22,7 @@
   }
 </script>
 <style type="text/css">
+  .home_main {
+    padding: 0 2%;
+  }
 </style>

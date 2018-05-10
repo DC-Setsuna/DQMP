@@ -1,6 +1,6 @@
 <template>
   <div class="grid-content bg-purple">
-    <div id="histogram3" class="instrument_table" :style="{width: '95%', height: '450px'}">
+    <div id="histogram3" class="instrument_table" :style="{width: '95%', height: '250px'}">
     </div>
   </div>
 </template>
@@ -12,7 +12,10 @@
 	  	let histogram3 = this.$echarts.init(document.getElementById('histogram3'))
 	    histogram3.setOption({
 	      title: {
-            text: 'Monthly'
+            text: 'Monthly',
+            textStyle: {
+			  fontSize: 15
+			}
           },
 	      tooltip : {
 	        trigger: 'axis',
@@ -37,9 +40,9 @@
 	        legend: {
 	          data:['Growth', 'Totals tasks', 'Fail tasks'],
 	          itemGap: 5,
-	          left: 70,
-	          itemWidth : 15,
-	          itemHeight : 15
+              textStyle: {
+			    fontSize: 12
+			  }
 	        },
 	        grid: {
 	          top: '12%',

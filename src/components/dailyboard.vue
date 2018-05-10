@@ -1,6 +1,6 @@
 <template>
   <div class="grid-content bg-purple">
-    <div id="histogram1" class="instrument_table" :style="{width: '95%', height: '450px'}">
+    <div id="histogram1" class="instrument_table" :style="{width: '96%', height: '250px'}">
     </div>
   </div>
 </template>
@@ -17,7 +17,10 @@
 	  	let histogram1 = this.$echarts.init(document.getElementById('histogram1'))
 	    histogram1.setOption({
 			title: {
-			  text: 'Daily'
+			  text: 'Daily',
+			  textStyle: {
+			  	fontSize: 15
+			  }
 			},
 		    tooltip : {
 			  trigger: 'axis',
@@ -42,9 +45,9 @@
 	        legend: {
 	          data:['Growth', 'Totals tasks', 'Fail tasks'],
 	          itemGap: 5,
-	          left: 60,
-	          itemWidth : 15,
-	          itemHeight : 15
+              textStyle: {
+			    fontSize: 12
+			  }
 	        },
 	        grid: {
 	          top: '12%',
