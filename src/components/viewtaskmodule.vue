@@ -128,7 +128,6 @@ import qs from 'qs'
 	  this.tableActive = false
     },
     Change(file, fileList) {
-      console.log(fileList)
       if(fileList != '' && fileList != null){
         
       }
@@ -143,7 +142,7 @@ import qs from 'qs'
       })
     },
     init() {
-      this.axios.post(this.$store.state.API + 'task/select',qs.stringify({taskid:this.$route.params.data})).then((response) => {
+      this.axios.post(this.$store.state.API + 'TaskLog/select',qs.stringify({taskid:this.$route.params.data})).then((response) => {
       	if(response.data.code == 200) {
           this.newTaskForm = response.data.data[0];
           if(this.newTaskForm.run_now === "True") this.newTaskForm.run_now = true
@@ -152,7 +151,7 @@ import qs from 'qs'
           this.newTaskForm.fileList = [{name: this.newTaskForm.filepath.substring(16,25), url: this.newTaskForm.filepath}]
         }
       })
-      this.axios.post(this.$store.state.API + 'task/selctTaskLogById',qs.stringify({taskid:this.$route.params.data})).then((response) => {
+      this.axios.post(this.$store.state.API + 'TaskLog/selctTaskLogById',qs.stringify({taskid:this.$route.params.data})).then((response) => {
         if(response.data.code == 200) {
         	this.tableData3 = response.data.data
         }

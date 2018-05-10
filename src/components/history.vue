@@ -41,12 +41,12 @@
 		components:{ Resultchart, Totalvsresult},
 		methods:{
 	      init() {
-			this.axios.post(this.$store.state.API + 'task/selctTaskLogById',qs.stringify({taskid:this.$route.params.data})).then((response) => {
+			this.axios.post(this.$store.state.API + 'TaskLog/selctTaskLogById',qs.stringify({taskid:this.$route.params.data})).then((response) => {
               if(response.data.code == 200) {
         	    this.tableData3 = response.data.data
               }
             })
-            this.axios.post(this.$store.state.API + 'task/select',qs.stringify({taskid:this.$route.params.data})).then((response) => {
+            this.axios.post(this.$store.state.API + 'TaskLog/select',qs.stringify({taskid:this.$route.params.data})).then((response) => {
               if(response.data.code == 200) {
         	    this.task = response.data.data
               }
