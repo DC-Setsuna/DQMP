@@ -1,23 +1,23 @@
 <template>
-  <div class="grid-content bg-purple">
-    <div id="histogram1" class="instrument_table" :style="{width: '96%', height: '250px'}">
+	<div id="histogram1" class="instrument_table" :style="{width: '90%', height: '250px'}">
     </div>
-  </div>
 </template>
 <script type="text/javascript">
   export default {
-  	props:['datas'],
   	data() {
-  		return {
-  			dailydata: []
-  		}
+        return {
+          
+        }
   	},
-	methods: {
+  	mounted: function() {
+       this.drawLine()
+  	},
+  	methods:{
 	  drawLine(){
 	  	let histogram1 = this.$echarts.init(document.getElementById('histogram1'))
 	    histogram1.setOption({
 			title: {
-			  text: 'Daily',
+			  text: 'Result',
 			  textStyle: {
 			  	fontSize: 15
 			  }
@@ -41,24 +41,23 @@
 	            saveAsImage : {show: true}
 	          }
 	        },
-	        calculable : true,
+	        grid: {
+	          top: '12%',
+	          left: '5%',
+	          right: '5%',
+	          containLabel: true
+	        },
 	        legend: {
-	          data:['Growth', 'Totals tasks', 'Fail tasks'],
+	          data:['Growth', 'Result'],
 	          itemGap: 5,
               textStyle: {
 			    fontSize: 12
 			  }
 	        },
-	        grid: {
-	          top: '12%',
-	          left: '1%',
-	          right: '10%',
-	          containLabel: true
-	        },
 	        xAxis: [
 	          {
 	            type : 'category',
-	            data : this.datas[0]
+	            data : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 	          }
 	        ],
 	        yAxis: {},
@@ -74,25 +73,18 @@
 	            end: 100
 	          }
 	        ],
-	        series : [
-	          {
-	            name: 'Totals tasks',
-	            type: 'bar',
-	            data: this.datas[1]
-	          },
-	          {
-	            name: 'Fail tasks',
-	            type: 'bar',
-	            data: this.datas[2]
-	          }
-	        ]
+	        series: [{
+	        	name: 'Result',
+		        data: [820, 932, 901, 934, 1290, 1330, 1320],
+		        type: 'line'
+		    }]
 	    });
 	  }
-	},
-	watch: {
-		datas: function() {
-			this.drawLine()
-		}
 	}
   }
 </script>
+<style type="text/css">
+	.instrument_table {
+		margin-top: 20px
+	}
+</style>

@@ -6,6 +6,7 @@
         <el-menu-item class="el-menu-demo-item" index="/opportunities">Opportunities</el-menu-item>
         <el-menu-item class="el-menu-demo-item" index="/lineitmes">Lineitmes</el-menu-item>
         <el-menu-item class="el-menu-demo-item" index="/forecast">Forecast</el-menu-item>
+        <el-menu-item class="el-menu-demo-item" index="/task">Task</el-menu-item>
       </el-menu>
 	</div>
 </template>
@@ -28,10 +29,11 @@
       padding: 0px;
 	}
 	.el-menu-demo {
-      background-color: #417690;
+      background-color: #555555;
+      padding:0 2%;
 	}
 	.el-menu--horizontal>.el-menu-item{
-	  background-color: #417690;
+	  background-color: #555555;
       color: #FFF;
       height: 50px;
       line-height: 50px;

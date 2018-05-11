@@ -1,17 +1,21 @@
 <template>
   <div class="grid-content bg-purple">
-    <div id="histogram2" class="instrument_table" :style="{width: '95%', height: '450px'}">
+    <div id="histogram2" class="instrument_table" :style="{width: '95%', height: '250px'}">
     </div>
   </div>
 </template>
 <script type="text/javascript">
   export default {
+  	props:['datas'],
 	methods: {
 	  drawLine(){
 	  	let histogram2 = this.$echarts.init(document.getElementById('histogram2'))
 	    histogram2.setOption({
 	      title: {
-            text: 'Weekly'
+            text: 'Weekly',
+            textStyle: {
+			  fontSize: 15
+			}
           },
 	      tooltip : {
 	        trigger: 'axis',
@@ -36,9 +40,9 @@
 	        legend: {
 	          data:['Growth', 'Totals tasks', 'Fail tasks'],
 	          itemGap: 5,
-	          left: 70,
-	          itemWidth : 15,
-	          itemHeight : 15
+              textStyle: {
+			    fontSize: 12
+			  }
 	        },
 	        grid: {
 	          top: '12%',
@@ -49,7 +53,7 @@
 	        xAxis: [
 	          {
 	            type : 'category',
-	            data : ["One","Two","Thr","Fou","Fiv","Six","Sev","Eig","Nin","Ten","Ele","Twe"]
+	            data : this.datas[0]
 	          }
 	        ],
 	        yAxis: {},
@@ -69,19 +73,21 @@
 	          {
 	            name: 'Totals tasks',
 	            type: 'bar',
-	            data: [100,123,131,132,1231,1231,123,43,544,54,234,142]
+	            data: this.datas[1]
 	          },
 	          {
 	            name: 'Fail tasks',
 	            type: 'bar',
-	            data: [230,123,111,13,123,123,12,43,54,54,24,42]
+	            data: this.datas[2]
 	          }
 	        ]
 	    });
 	  }
 	},
-	mounted() {
-		this.drawLine()
+	watch: {
+		datas: function() {
+			this.drawLine()
+		}
 	}
   }
 </script>

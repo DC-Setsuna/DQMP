@@ -1,23 +1,23 @@
 <template>
-  <div class="grid-content bg-purple">
-    <div id="histogram1" class="instrument_table" :style="{width: '96%', height: '250px'}">
+	<div id="histogram" class="instrument_table" :style="{width: '90%', height: '250px'}">
     </div>
-  </div>
 </template>
 <script type="text/javascript">
   export default {
-  	props:['datas'],
   	data() {
-  		return {
-  			dailydata: []
-  		}
+        return {
+          
+        }
   	},
-	methods: {
+  	mounted: function() {
+       this.drawLine()
+  	},
+  	methods:{
 	  drawLine(){
-	  	let histogram1 = this.$echarts.init(document.getElementById('histogram1'))
-	    histogram1.setOption({
+	  	let histogram = this.$echarts.init(document.getElementById('histogram'))
+	    histogram.setOption({
 			title: {
-			  text: 'Daily',
+			  text: 'Total vs Result',
 			  textStyle: {
 			  	fontSize: 15
 			  }
@@ -41,24 +41,23 @@
 	            saveAsImage : {show: true}
 	          }
 	        },
-	        calculable : true,
+	        grid: {
+	          top: '12%',
+	          left: '5%',
+	          right: '5%',
+	          containLabel: true
+	        },
 	        legend: {
-	          data:['Growth', 'Totals tasks', 'Fail tasks'],
+	          data:['Growth', 'Totals', 'Result'],
 	          itemGap: 5,
               textStyle: {
 			    fontSize: 12
 			  }
 	        },
-	        grid: {
-	          top: '12%',
-	          left: '1%',
-	          right: '10%',
-	          containLabel: true
-	        },
 	        xAxis: [
 	          {
 	            type : 'category',
-	            data : this.datas[0]
+	            data : ['one','two','three','four','five','six']
 	          }
 	        ],
 	        yAxis: {},
@@ -76,23 +75,19 @@
 	        ],
 	        series : [
 	          {
-	            name: 'Totals tasks',
+	            name: 'Totals',
 	            type: 'bar',
-	            data: this.datas[1]
+	            data: [100,12,152,125,102,35]
 	          },
 	          {
-	            name: 'Fail tasks',
+	            name: 'Result',
 	            type: 'bar',
-	            data: this.datas[2]
+	            data: [10,5,15,26,57,30]
 	          }
 	        ]
 	    });
 	  }
-	},
-	watch: {
-		datas: function() {
-			this.drawLine()
-		}
 	}
   }
 </script>
+<style type="text/css"></style>
