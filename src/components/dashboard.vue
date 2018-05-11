@@ -106,17 +106,19 @@
         })
       },
       init() {
-        this.axios.post(this.$store.state.API + 'board/daily_list')
+        this.axios.get(this.$store.state.API + 'board/daily_list')
         .then((response) => {
           this.tableData = response.data.data.tabData
           this.chartData = response.data.data.chartData
+        }).catch((error) => {
+          console.log(error)
         })
       }
     },
     created: function() {
       this.init()
-      this.getTabWeeklyData()
-      this.getTabMonthlyData()
+      // this.getTabWeeklyData()
+      // this.getTabMonthlyData()
     }
   }
 </script>
