@@ -83,7 +83,11 @@
       </el-table-column>
       <el-table-column prop="duration" label="Duration" width="180">
       </el-table-column>
-      <el-table-column prop="" label="Comments">
+      <el-table-column label="Comments">
+        <template slot-scope="scope">
+          <el-input v-model="scope.row.comments" @change='commentSubmit(scope.row)' placeholder="Please enter content">
+          </el-input>
+        </template>
       </el-table-column>
     </el-table>
 	</div>
@@ -93,11 +97,11 @@ import qs from 'qs'
   export default {
   data () {
     return {
-	  data: '',
-	  isActive: true,
-	  disable: true,
-	  tableActive: false,
-	  newTaskForm: {
+	    data: '',
+	    isActive: true,
+	    disable: true,
+	    tableActive: false,
+	    newTaskForm: {
         taskid: '',
         category: '',
         owner: '',
@@ -114,8 +118,12 @@ import qs from 'qs'
         upload_user_id: '1233333',
         fileList: []
       },
-      tableData3: []
-	}
+      tableData3: [],
+      commentsForm: {
+        id:'',
+        comment:''
+      }
+	  }
   },
   methods: {
   	Remove(file, fileList) {
@@ -146,7 +154,7 @@ import qs from 'qs'
       })
     },
     init() {
-      this.axios.post(this.$store.state.API + 'tasklog/select',qs.stringify({taskid:this.$route.params.data})).then((response) => {
+      this.axios.post(this.$store.state.API + 'log/select',qs.stringify({taskid:this.$route.params.data})).then((response) => {
       	if(response.data.code == 200) {
           this.newTaskForm = response.data.data[0];
           if(this.newTaskForm.run_now === "True") this.newTaskForm.run_now = true
@@ -155,9 +163,9 @@ import qs from 'qs'
           this.newTaskForm.fileList = [{name: this.newTaskForm.filepath.substring(16,25), url: this.newTaskForm.filepath}]
         }
       })
-      this.axios.post(this.$store.state.API + 'tasklog/selctTaskLogById',qs.stringify({taskid:this.$route.params.data})).then((response) => {
+      this.axios.post(this.$store.state.API + 'log/selctTaskLogById',qs.stringify({taskid:this.$route.params.data})).then((response) => {
         if(response.data.code == 200) {
-        	this.tableData3 = response.data.data
+        	this.tableData3 = response.data.data.tab_data
         }
       })
     },
@@ -166,6 +174,19 @@ import qs from 'qs'
     },
     History() {
         this.$router.push({name: 'history', params: { data: this.newTaskForm.taskid }})
+    },
+    commentSubmit(row) {
+      this.axios.post(this.$store.state.API + 'log/updateComment',
+        qs.stringify({id: row.id , comments: row.comments})
+      ).then((response) => {
+        if(response.data.code == 200){
+          this.$message({
+          message: 'Comments add success',
+          type: 'success',
+          duration:2000
+        });
+        }
+      })
     }
   },
   created: function(){
