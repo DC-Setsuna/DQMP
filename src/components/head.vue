@@ -1,6 +1,6 @@
 <template>
 	<div class="head_all">
-	  <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" :router="true">
+	  <el-menu :default-active="activeIndex" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" class="el-menu-demo" mode="horizontal" :router="true">
         <el-menu-item class="el-menu-demo-item" index="/dashboard">Dash board</el-menu-item>
         <el-menu-item class="el-menu-demo-item" index="/accounts">Accounts</el-menu-item>
         <el-menu-item class="el-menu-demo-item" index="/opportunities">Opportunities</el-menu-item>
@@ -29,12 +29,9 @@
       padding: 0px;
 	}
 	.el-menu-demo {
-      background-color: #555555;
       padding:0 2%;
 	}
 	.el-menu--horizontal>.el-menu-item{
-	  background-color: #555555;
-      color: #FFF;
       height: 50px;
       line-height: 50px;
 	}

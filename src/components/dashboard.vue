@@ -92,14 +92,14 @@
     components: { DailyBoard , WeeklyBoard , MonthlyBoard},
     methods: {
       getTabWeeklyData() {
-        this.axios.post(this.$store.state.API + 'board/weekly_list')
+        this.axios.get(this.$store.state.API + 'board/weekly_list')
         .then((response) => {
           this.tableData1 = response.data.data.tabData
           this.chartData1 = response.data.data.chartData
         })
       },
       getTabMonthlyData() {
-        this.axios.post(this.$store.state.API + 'board/monthly_list')
+        this.axios.get(this.$store.state.API + 'board/monthly_list')
         .then((response) => {
           this.tableData2 = response.data.data.tabData
           this.chartData2 = response.data.data.chartData

@@ -280,12 +280,12 @@ export default {
         this.$router.push({name: 'viewtaskmodule', params: { data: row.taskid }})
       },
       getaccount_tab_data() {
-        this.axios.post(this.$store.state.API + 'TaskLog/list').then((response) => {
+        this.axios.post(this.$store.state.API + 'log/list').then((response) => {
           this.tableData = response.data.data;
         })
       },
       filtrateTask() {
-        this.axios.post(this.$store.state.API + 'TaskLog/filtrate',qs.stringify(this.filtrateForm)).then((response) => {
+        this.axios.post(this.$store.state.API + 'log/filtrate',qs.stringify(this.filtrateForm)).then((response) => {
           this.tableData = response.data.data;
         })
       },

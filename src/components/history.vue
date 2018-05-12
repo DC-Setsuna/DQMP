@@ -14,8 +14,8 @@
         <el-table-column type="index" width="50"></el-table-column>
         <el-table-column prop="run_time" label="Run time" width="180">
         </el-table-column>
-        <el-table-column prop="count" label="Total" width="180">
-        </el-table-column>
+        <!-- <el-table-column prop="count" label="Total" width="180">
+        </el-table-column> -->
         <el-table-column prop="result" label="Result">
         </el-table-column>
         <el-table-column prop="status" label="Running status" width="180">
@@ -23,14 +23,15 @@
         <el-table-column prop="duration" label="Duration" width="180">
         </el-table-column>
         <el-table-column prop="" label="Comments">
+          <template slot-scope="scope">
+            <el-input v-model="scope.row.comments" @change='commentSubmit(scope.row)' placeholder="Please enter content">
+            </el-input>
+        </template>
         </el-table-column>
       </el-table>
     </el-card>
     <el-card class="box-card">
-      <Resultchart />
-    </el-card>
-    <el-card class="box-card">
-      <Totalvsresult />
+      <Resultchart :datas="chart_data"/>
     </el-card>
   </div>
 </template>
@@ -42,26 +43,45 @@
 		data() {
 		  return {
             tableData3: [],
-            task: []
+            task: [],
+            chart_data: [],
+            commentsForm: {
+              id:'',
+              comment:''
+            }
 		  }
 		},
 		components:{ Resultchart, Totalvsresult},
 		methods:{
-	  init() {
-			this.axios.post(this.$store.state.API + 'TaskLog/selctTaskLogById',qs.stringify({taskid:this.$route.params.data})).then((response) => {
-              if(response.data.code == 200) {
-        	    this.tableData3 = response.data.data
-              }
-            })
-            this.axios.post(this.$store.state.API + 'TaskLog/select',qs.stringify({taskid:this.$route.params.data})).then((response) => {
-              if(response.data.code == 200) {
-        	    this.task = response.data.data
-              }
-            })
-		  },
-		  Jump() {
-		  	this.$router.push({name: 'viewtaskmodule', params: { data: this.$route.params.data }})
-		  }
+  	  init() {
+  			this.axios.post(this.$store.state.API + 'log/selctTaskLogById',qs.stringify({taskid:this.$route.params.data})).then((response) => {
+                if(response.data.code == 200) {
+          	    this.tableData3 = response.data.data.tab_data
+                this.chart_data = response.data.data.chart_data
+                }
+              })
+        this.axios.post(this.$store.state.API + 'log/select',qs.stringify({taskid:this.$route.params.data})).then((response) => {
+            if(response.data.code == 200) {
+    	        this.task = response.data.data
+            }
+          })
+  		},
+  		Jump() {
+  		  this.$router.push({name: 'viewtaskmodule', params: { data: this.$route.params.data }})
+  		},
+      commentSubmit(row) {
+        this.axios.post(this.$store.state.API + 'log/updateComment',
+          qs.stringify({id: row.id , comments: row.comments})
+        ).then((response) => {
+          if(response.data.code == 200){
+            this.$message({
+              message: 'Comments add success',
+              type: 'success',
+              duration: 1000
+          });
+          }
+        })
+      }
 		},
 		created: function() {
 		  this.init()

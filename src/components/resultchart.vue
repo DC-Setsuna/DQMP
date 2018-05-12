@@ -1,13 +1,12 @@
 <template>
-	<div id="histogram1" class="instrument_table" :style="{width: '90%', height: '250px'}">
+	<div id="histogram1" class="instrument_table" :style="{width: '96%', height: '250px'}">
     </div>
 </template>
 <script type="text/javascript">
   export default {
+  	props:['datas'],
   	data() {
-        return {
-          
-        }
+      return {}
   	},
   	mounted: function() {
        this.drawLine()
@@ -57,7 +56,7 @@
 	        xAxis: [
 	          {
 	            type : 'category',
-	            data : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+	            data : this.datas['run_time']
 	          }
 	        ],
 	        yAxis: {},
@@ -75,7 +74,7 @@
 	        ],
 	        series: [{
 	        	name: 'Result',
-		        data: [820, 932, 901, 934, 1290, 1330, 1320],
+		        data: this.datas['result'],
 		        type: 'line'
 		    }]
 	    });
