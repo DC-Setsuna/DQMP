@@ -6,11 +6,14 @@
         <el-button size="medium" @click="showmodule()">ADD TASK</el-button>
         <!-- add task 模态框 -->
         <el-dialog id="1" title="ADD TASK" :visible.sync="dialogVisible" width="70%" :before-close="handleClose">
-          <el-form ref="form" :model="newTaskForm" label-width="80px" size="small">
+          <el-form :model="newTaskForm" :rules="rules" ref="newTaskForm" label-width="80px" size="small">
             <el-form-item label-width='120px' label="Task ID :">
              {{newTaskForm.taskid}}
             </el-form-item>
-            <el-form-item label-width='120px' label="Category :">
+            <el-form-item label-width='120px' label="Task Name :" prop="taskname">
+              <el-input class="newtask_row_input" v-model="newTaskForm.taskname"></el-input>
+            </el-form-item>
+            <el-form-item label-width='120px' label="Category :" prop="category">
               <el-select class="newtask_input" v-model="newTaskForm.category" placeholder="Please select a Category">
                 <el-option label="Account" value="Account"></el-option>
                 <el-option label="Opportunities" value="Opportunities"></el-option>
@@ -22,23 +25,23 @@
                 <el-option label="Winplan" value="Winplan"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label-width='120px' label="Owner :">
+            <el-form-item label-width='120px' label="Owner :" prop="owner">
               <el-input class="newtask_row_input" v-model="newTaskForm.owner"></el-input>
-              <span>Email : </span><el-input class="newtask_row_input" v-model="newTaskForm.email"></el-input>
+              <span>Email : </span><el-input class="newtask_row_input" v-model="newTaskForm.email" prop="email"></el-input>
             </el-form-item>
-            <el-form-item label-width='120px' label="Description :">
+            <el-form-item label-width='120px' label="Description :" prop="description">
               <el-input class="newtask_text_input" type="textarea" :autosize="{ minRows: 3, maxRows: 5}" placeholder="Please enter content" v-model="newTaskForm.description"></el-input>
               </el-form-item>
-              <el-form-item label-width='120px' label="Tag :">
+              <el-form-item label-width='120px' label="Tag :" prop="tag">
               <el-input class="newtask_text_input" v-model="newTaskForm.tag"></el-input>
             </el-form-item>
-            <el-form-item label-width='120px' label="Enabled :">
+            <el-form-item label-width='120px' label="Enabled :" prop="enabled">
               <el-select class="newtask_input" v-model="newTaskForm.enabled" placeholder="Please select a Enabled">
                 <el-option label="YES" value="True"></el-option>
                 <el-option label="NO" value="False"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label-width='120px' label="Freqency :">
+            <el-form-item label-width='120px' label="Freqency :" prop="freqency">
               <el-select class="newtask_input" v-model="newTaskForm.freqency" placeholder="Please select Freqency ">
                 <el-option label="Daily" value="daily"></el-option>
                 <el-option label="Weekly" value="weekly"></el-option>
@@ -46,27 +49,27 @@
               </el-select>
               <el-checkbox v-model="newTaskForm.run_now">Execute immediately after submission.</el-checkbox>
             </el-form-item>
-            <el-form-item label-width='120px' label="Task type :">
+            <el-form-item label-width='120px' label="Task type :" prop="task_type">
               <el-select class="newtask_input" v-model="newTaskForm.task_type" placeholder="Please select Task Type">
                 <el-option label="SQL" value="sql"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label-width='120px' label="Result Verify :">
+            <el-form-item label-width='120px' label="Result Verify :" prop="threshold">
               <el-input-number class="newtask_input" v-model="newTaskForm.threshold" controls-position="right" :min="0" :max="1000000000000"></el-input-number>
             </el-form-item>
             <el-form-item label-width='120px' label="Upload :">
-              <el-upload class="upload-demo" ref="upload" :show-file-list="true" drag action="http://localhost:5000/file/add" :on-success='UploadSuccess' :on-change="Change" :on-remove="Remove" :file-list='fileList' :multiple="false" :limit="1">
+              <el-upload class="upload-demo" ref="upload" :show-file-list="true" drag action="http://192.168.1.106:5000/file/add" :on-success='UploadSuccess' :on-change="Change" :on-remove="Remove" :file-list='fileList' :multiple="false" :limit="1">
                <i class="el-icon-upload"></i>
                <div class="el-upload__text">Drag the file here, or <em>click upload</em></div>
                <div class="el-upload__tip" slot="tip">Currently only SQL files are allowed. Upload one file</div>
               </el-upload> 
             </el-form-item>
-            <el-form-item label-width='120px' label="Content :">
+            <el-form-item label-width='120px' label="Content :" prop="content">
               <el-input class="newtask_text_input" v-bind:disabled=disable type="textarea" :autosize="{ minRows: 5, maxRows: 10}" placeholder="请输入内容" v-model="newTaskForm.content"></el-input>
             </el-form-item>
           </el-form>
           <span slot="footer" class="dialog-footer">
-            <el-button @click="refresh">Refresh</el-button>
+            <el-button @click="resetForm('newTaskForm')">Refresh</el-button>
             <el-button @click="cancel">Canel</el-button>
             <el-button type="primary" @click="Submit()">Submit</el-button>
           </span>
@@ -141,6 +144,7 @@ export default {
       dialogVisible1: false,
       newTaskForm: {
         taskid: '',
+        taskname: '',
         category: '',
         owner: '',
         email: '',
@@ -163,7 +167,37 @@ export default {
         category: ''
       },
       fileList: [],
-      disable: false
+      disable: false,
+      rules: {
+          taskname: [
+            { required: true, message: 'Please fill in a Task Name', trigger: 'blur' }
+          ],
+          category: [
+            { required: true, message: 'Please select a Category', trigger: 'change' }
+          ],
+          owner: [
+            { required: true, message: 'Please fill in Owner and Email', trigger: 'blur' }
+          ],
+          email: [
+            { required: true, message: 'Please fill in Email', trigger: 'blur' }
+          ],
+          enabled: [
+            { required: true, message: 'Please select a Enabled', trigger: 'blur' }
+          ],
+          freqency: [
+            { required: true, message: 'Please select a Freqency', trigger: 'change' }
+          ],
+          task_type: [
+            { required: true, message: 'Please select a Type', trigger: 'change' }
+          ],
+          threshold: [
+            { type:'number', required: true, message: 'Please select a Verify', trigger: 'blur' },
+            { type:'number', min: 1, message: 'Verify cannot be less than 0', trigger: 'change' }
+          ],
+          file_path: [
+            { required: true, message: 'Please select a File', trigger: 'blur' }
+          ]
+        }
     }
   },
   methods: {
@@ -171,6 +205,7 @@ export default {
       this.$confirm('确认关闭？').then(_ => {
         this.newTaskForm={
           taskid: '',
+          taskname: '',
           category: '',
           owner: '',
           email: '',
@@ -191,18 +226,21 @@ export default {
     cancel() {
       this.dialogVisible = false
       this.newTaskForm={
-        id: this.uuid(12,16),
-        category: '',
-        owner: '',
-        email: '',
-        description: '',
-        tag: '',
-        enabled: '',
-        freqency: '',
-        task_type: '',
-        verify: 0,
-        content: ''
-      };
+          taskid: this.uuid(12,16),
+          taskname: '',
+          category: '',
+          owner: '',
+          email: '',
+          description: '',
+          tag: '',
+          enabled: '',
+          freqency: '',
+          task_type: '',
+          threshold: 0,
+          content: '',
+          run_now: '',
+          upload_user_id: ''
+        };
     }
     ,
     Change(file, fileList) {
@@ -215,113 +253,111 @@ export default {
         ).then((response) =>{
           this.disable = false
         })
-      },
-      Submit(file) {
-        if(this.newTaskForm.run_now!=true) {
-          this.newTaskForm.run_now = 'False'
-        } else {this.newTaskForm.run_now = 'True'}
-        this.axios.post(this.$store.state.API + 'task/add/',qs.stringify(this.newTaskForm)).then((response) => {
-          if(response.data.code == 200) {
-            this.newTaskForm={
-              id: '',
-              taskid: '',
-              category: '',
-              owner: '',
-              email: '',
-              description: '',
-              tag: '',
-              enabled: '',
-              freqency: '',
-              task_type: '',
-              threshold: 0,
-              content: '',
-              run_now: '',
-              file_path: '',
-              upload_user_id: ''
-            };
-            this.fileList = []
-            this.dialogVisible = false
-            this.getaccount_tab_data()
-          }
-        })
-      },
-      Run() {
-        this.axios.get(this.$store.state.API + 'add_task').then((response) => {
-          if (response.data.code === 200) {
+    },
+    Submit(file) {
+      if(!this.newTaskForm.taskid || !this.newTaskForm.taskname ||
+          !this.newTaskForm.category || !this.newTaskForm.owner ||
+          !this.newTaskForm.email || !this.newTaskForm.enabled ||
+          !this.newTaskForm.freqency || !this.newTaskForm.task_type ||
+          this.newTaskForm.threshold == 0 ||
+          !this.newTaskForm.upload_user_id || !this.newTaskForm.file_path) {
+        this.$message({
+          showClose: true,
+          message: 'You have some information not added.',
+          type: 'warning'
+        });
+        return
+      }
+      if(this.newTaskForm.run_now!=true) {
+        this.newTaskForm.run_now = 'False'
+      } else {this.newTaskForm.run_now = 'True'}
+      this.axios.post(this.$store.state.API + 'task/add/',qs.stringify(this.newTaskForm)).then((response) => {
+        if(response.data.code == 200) {
+          this.newTaskForm={
+            taskid: this.uuid(12,16),
+            taskname: '',
+            category: '',
+            owner: '',
+            email: '',
+            description: '',
+            tag: '',
+            enabled: '',
+            freqency: '',
+            task_type: '',
+            threshold: 0,
+            content: '',
+            run_now: '',
+            upload_user_id: ''
+          };
+          this.fileList = []
+          this.dialogVisible = false
+          this.getaccount_tab_data()
+        }
+      })
+    },
+    Run() {
+      this.axios.get(this.$store.state.API + 'add_task').then((response) => {
+        if (response.data.code === 200) {
 
-          }
-        })
-      },
-      refresh() {
-        this.$confirm('Are you sure refresh？').then(_ => {
-         this.$refs.upload.submit();
-         this.newTaskForm={
-          id: this.uuid(12,16),
-          category: '',
-          owner: '',
-          email: '',
-          description: '',
-          tag: '',
-          enabled: '',
-          freqency: '',
-          task_type: '',
-          threshold: 0,
-          content: '',
-          run_now: '',
-          file_path: '',
-          upload_user_id: ''
-        };
-      }).catch(_ => {});
-      },
-      getWindowSize() {
-        this.window_height = window.screen.availHeight * 0.8;
-      },
-      showDetail(row, event, column) {
-        this.$router.push({name: 'viewtaskmodule', params: { data: row.taskid }})
-      },
-      getaccount_tab_data() {
-        this.axios.post(this.$store.state.API + 'log/list').then((response) => {
-          this.tableData = response.data.data;
-        })
-      },
-      filtrateTask() {
-        this.axios.post(this.$store.state.API + 'log/filtrate',qs.stringify(this.filtrateForm)).then((response) => {
-          this.tableData = response.data.data;
-        })
-      },
-      showmodule() {
-        this.newTaskForm.taskid = this.uuid(12,16)
-        this.dialogVisible = true
-      },
-      uuid(len, radix) {
-        var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');
-        var uuid = [], i;
-        radix = radix || chars.length;
-        if (len) {
-          // Compact form
-          for (i = 0; i < len; i++) uuid[i] = chars[0 | Math.random()*radix];
-        } else {
-          var r;
-          uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-';
-          uuid[14] = '4';
-          for (i = 0; i < 36; i++) {
-            if (!uuid[i]) {
-              r = 0 | Math.random()*16;
-              uuid[i] = chars[(i == 19) ? (r & 0x3) | 0x8 : r];
-            }
+        }
+      })
+    },
+    resetForm(formName) {
+      this.$confirm('Are you sure refresh？').then(_ => {
+       this.$refs[formName].resetFields()
+       this.newTaskForm.email = ''
+       this.newTaskForm.taskid = this.uuid(12,16)
+    }).catch(_ => {});
+    },
+    getWindowSize() {
+      this.window_height = window.screen.availHeight * 0.8;
+    },
+    showDetail(row, event, column) {
+      this.$router.push({name: 'viewtaskmodule', params: { data: row.taskid }})
+    },
+    getaccount_tab_data() {
+      this.axios.post(this.$store.state.API + 'log/list').then((response) => {
+        this.tableData = response.data.data;
+      })
+    },
+    filtrateTask() {
+      this.axios.post(this.$store.state.API + 'log/filtrate',qs.stringify(this.filtrateForm)).then((response) => {
+        this.tableData = response.data.data;
+      })
+    },
+    showmodule() {
+      this.newTaskForm.taskid = this.uuid(12,16)
+      this.dialogVisible = true
+    },
+    uuid(len, radix) {
+      var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');
+      var uuid = [], i;
+      radix = radix || chars.length;
+      if (len) {
+        // Compact form
+        for (i = 0; i < len; i++) uuid[i] = chars[0 | Math.random()*radix];
+      } else {
+        var r;
+        uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-';
+        uuid[14] = '4';
+        for (i = 0; i < 36; i++) {
+          if (!uuid[i]) {
+            r = 0 | Math.random()*16;
+            uuid[i] = chars[(i == 19) ? (r & 0x3) | 0x8 : r];
           }
         }
-        return uuid.join('');
-      },
-      UploadSuccess(response,file,fileList) {
-        this.newTaskForm.file_path = response.data
-      },
+      }
+      return uuid.join('');
     },
-    created: function () {
-     this.getWindowSize();
-     this.getaccount_tab_data();
-   },
-   watch: {
+    UploadSuccess(response,file,fileList) {
+      this.newTaskForm.file_path = response.data
+    }
+  },
+  created: function () {
+   this.getWindowSize();
+   this.getaccount_tab_data();
+  },
+  watch: {
     filtrateForm: {
       handler:function(){
         this.filtrateTask()
