@@ -30,6 +30,46 @@
         <el-card class="box-card-right" shadow="hover"></el-card>
       </el-col>
     </el-row>
+
+    <el-row>
+      <el-col :span="8">
+        <el-card class="middle-card" shadow="hover">
+          <div slot="header" class="clearfix">
+            <span>Job in queue</span>
+          </div>
+          <el-table :data="tableData3" height="270" border :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center','height':'5px'}" :cell-style="{'height':'10px'}" style="width: 100%" @row-click='showDetail'>
+            <el-table-column type="index" :span="2"></el-table-column>
+            <el-table-column prop="taskid" label="taskid" :span="11"></el-table-column>
+            <el-table-column prop="freqency" label="freqency"></el-table-column>
+          </el-table>
+        </el-card>
+      </el-col>
+      <el-col :span="8">
+        <el-card class="middle-card" shadow="hover">
+          <div slot="header" class="clearfix">
+            <span>The job being performed</span>
+          </div>
+          <el-table :data="tableData4" height="270" border :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center','height':'5px'}" :cell-style="{'height':'10px'}" style="width: 100%" @row-click='showDetail'>
+            <el-table-column type="index" :span="2"></el-table-column>
+            <el-table-column prop="taskid" label="taskid" :span="11"></el-table-column>
+            <el-table-column prop="freqency" label="freqency"></el-table-column>
+          </el-table>
+        </el-card>
+      </el-col>
+      <el-col :span="8">
+        <el-card class="middle-card" shadow="hover">
+          <div slot="header" class="clearfix">
+            <span>Job execution results</span>
+          </div>
+          <el-table :data="tableData5" height="270" border :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center','height':'5px'}" :cell-style="{'height':'10px'}" style="width: 100%" @row-click='showDetail'>
+            <el-table-column type="index" :span="2"></el-table-column>
+            <el-table-column prop="taskid" label="taskid" :span="11"></el-table-column>
+            <el-table-column prop="freqency" label="freqency"></el-table-column>
+          </el-table>
+        </el-card>
+      </el-col>
+    </el-row>
+
     <el-row class="table-row row-bg" justify="center">
       <el-col :span="24">
       	<div class="el-card is-hover-shadow grid-content bg-purple-dark">
@@ -86,7 +126,73 @@
         chartData2: [],
         tableData: [],
         tableData1: [],
-        tableData2: []
+        tableData2: [],
+        tableData3: [{
+          taskid: '234',
+          freqency: 'daily'
+        },{
+          taskid: '938302F6E93D',
+          freqency: 'daily'
+        },{
+          taskid: '938302F6E93E',
+          freqency: 'weekly'
+        },{
+          taskid: '938302F6E93F',
+          freqency: 'monthly'
+        },{
+          taskid: '938302F6E93F',
+          freqency: 'monthly'
+        },{
+          taskid: '938302F6E93F',
+          freqency: 'monthly'
+        },{
+          taskid: '938302F6E93F',
+          freqency: 'monthly'
+        }],
+        tableData4: [{
+          taskid: '234',
+          freqency: 'daily'
+        },{
+          taskid: '938302F6E93D',
+          freqency: 'daily'
+        },{
+          taskid: '938302F6E93E',
+          freqency: 'weekly'
+        },{
+          taskid: '938302F6E93F',
+          freqency: 'monthly'
+        },{
+          taskid: '938302F6E93F',
+          freqency: 'monthly'
+        },{
+          taskid: '938302F6E93F',
+          freqency: 'monthly'
+        },{
+          taskid: '938302F6E93F',
+          freqency: 'monthly'
+        }],
+        tableData5: [{
+          taskid: '234',
+          freqency: 'daily'
+        },{
+          taskid: '938302F6E93D',
+          freqency: 'daily'
+        },{
+          taskid: '938302F6E93E',
+          freqency: 'weekly'
+        },{
+          taskid: '938302F6E93F',
+          freqency: 'monthly'
+        },{
+          taskid: '938302F6E93F',
+          freqency: 'monthly'
+        },{
+          taskid: '938302F6E93F',
+          freqency: 'monthly'
+        },{
+          taskid: '938302F6E93F',
+          freqency: 'monthly'
+        }]
       }
     },
     components: { DailyBoard , WeeklyBoard , MonthlyBoard},
@@ -111,6 +217,9 @@
           this.tableData = response.data.data.tabData
           this.chartData = response.data.data.chartData
         })
+      },
+      showDetail(row, event, column) {
+        this.$router.push({name: 'viewtaskmodule', params: { data: row.taskid }})
       }
     },
     created: function() {
@@ -145,5 +254,9 @@
   }
   .instrument_table {
     margin-top: 10px
+  }
+  .middle-card {
+    margin: 1%;
+    height:350px;
   }
 </style>
