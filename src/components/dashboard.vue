@@ -117,8 +117,8 @@
     },
     created: function() {
       this.init()
-      // this.getTabWeeklyData()
-      // this.getTabMonthlyData()
+      this.getTabWeeklyData()
+      this.getTabMonthlyData()
     }
   }
 </script>
