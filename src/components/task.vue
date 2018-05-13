@@ -55,10 +55,10 @@
               </el-select>
             </el-form-item>
             <el-form-item label-width='120px' label="Result Verify :" prop="threshold">
-              <el-input-number class="newtask_input" v-model="newTaskForm.threshold" controls-position="right" :min="0" :max="1000000000000"></el-input-number>
+              <el-input-number class="newtask_input" v-model="newTaskForm.threshold" controls-position="right" :step='100' :min="100" :max="1000000000000"></el-input-number>
             </el-form-item>
             <el-form-item label-width='120px' label="Upload :">
-              <el-upload class="upload-demo" ref="upload" :show-file-list="true" drag action="http://192.168.1.106:5000/file/add" :on-success='UploadSuccess' :on-change="Change" :on-remove="Remove" :file-list='fileList' :multiple="false" :limit="1">
+              <el-upload class="upload-demo" ref="upload" :show-file-list="true" drag action="http://localhost:5000/file/add" :on-success='UploadSuccess' :on-change="Change" :on-remove="Remove" :file-list='fileList' :multiple="false" :limit="1">
                <i class="el-icon-upload"></i>
                <div class="el-upload__text">Drag the file here, or <em>click upload</em></div>
                <div class="el-upload__tip" slot="tip">Currently only SQL files are allowed. Upload one file</div>
@@ -191,8 +191,8 @@ export default {
             { required: true, message: 'Please select a Type', trigger: 'change' }
           ],
           threshold: [
-            { type:'number', required: true, message: 'Please select a Verify', trigger: 'blur' },
-            { type:'number', min: 1, message: 'Verify cannot be less than 0', trigger: 'change' }
+            { type:'number', required: true, message: 'Please select a Verify', trigger: 'blue' },
+            { type:'number', min: 0, message: 'Verify cannot be less than 0', trigger: 'change' }
           ],
           file_path: [
             { required: true, message: 'Please select a File', trigger: 'blur' }
@@ -218,7 +218,7 @@ export default {
           content: '',
           run_now: '',
           file_path: '',
-          upload_user_id: ''
+          upload_user_id: '1233333'
         };
         done();
       }).catch(_ => {});
@@ -239,7 +239,7 @@ export default {
           threshold: 0,
           content: '',
           run_now: '',
-          upload_user_id: ''
+          upload_user_id: '1233333'
         };
     }
     ,
@@ -259,8 +259,7 @@ export default {
           !this.newTaskForm.category || !this.newTaskForm.owner ||
           !this.newTaskForm.email || !this.newTaskForm.enabled ||
           !this.newTaskForm.freqency || !this.newTaskForm.task_type ||
-          this.newTaskForm.threshold == 0 ||
-          !this.newTaskForm.upload_user_id || !this.newTaskForm.file_path) {
+          this.newTaskForm.threshold == 0 || !this.newTaskForm.file_path) {
         this.$message({
           showClose: true,
           message: 'You have some information not added.',
@@ -287,7 +286,8 @@ export default {
             threshold: 0,
             content: '',
             run_now: '',
-            upload_user_id: ''
+            file_path: '',
+            upload_user_id: '1233333'
           };
           this.fileList = []
           this.dialogVisible = false
