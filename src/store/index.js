@@ -9,7 +9,8 @@ const debug = process.env.NODE_ENV !== 'production'
 export default new Vuex.Store({
 	state: {
 	  dailydata: [],
-      API: 'http://localhost:5000/',
+      // API: 'http://192.168.1.106:5000/',
+      API: 'http://localhost:5000/'
 	},
 	mutations: {
       dailydata(state, dailydata) {
