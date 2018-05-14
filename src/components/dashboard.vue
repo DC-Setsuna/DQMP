@@ -195,6 +195,8 @@
         .then((response) => {
           this.tableData = response.data.data.tabData
           this.chartData = response.data.data.chartData
+        }).catch((error) => {
+          console.log(error)
         })
       },
       showDetail(row, event, column) {
