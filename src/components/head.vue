@@ -3,14 +3,17 @@
     <div class="Vheader-con">
       <div class="Vheader-nav">
         <el-menu class="el-menu-demo" text-color="#a4a4a4" mode="horizontal" style="background-color: transparent;" :router="true">
-        <el-menu-item index="/dashboard">Dash board</el-menu-item>
-        <el-menu-item index="/accounts">Accounts</el-menu-item>
-        <el-menu-item index="/opportunities">Opportunities</el-menu-item>
-        <el-menu-item index="/lineitmes">Lineitmes</el-menu-item>
-        <el-menu-item index="/forecast">Forecast</el-menu-item>
-        <el-menu-item index="/task">Task</el-menu-item>
+          <el-menu-item index="/dashboard">Dash board</el-menu-item>
+          <el-menu-item index="/accounts">Accounts</el-menu-item>
+          <el-menu-item index="/opportunities">Opportunities</el-menu-item>
+          <el-menu-item index="/lineitmes">Lineitmes</el-menu-item>
+          <el-menu-item index="/forecast">Forecast</el-menu-item>
+          <el-menu-item index="/task">Task</el-menu-item>
         </el-menu>
       </div>
+      <span class="el-dropdown-link user_img">
+        <img class="user-logo" src="../../static/user_img.jpeg">
+      </span>
     </div>
   </div>
 </template>
@@ -59,6 +62,17 @@ export default {
 }
 .el-header {
   padding: 0px;
+}
+.user-logo {
+  position: absolute;
+  top: 3px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+}
+.user_img {
+  position: absolute;
+  right: 50px;
 }
 </style>
 <!-- <template>
