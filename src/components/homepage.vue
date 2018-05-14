@@ -1,7 +1,7 @@
 <template>
   <div>
 	  <el-container>
-        <el-header class="header">
+        <el-header class="header" height='40px'>
           <HEAD/>
         </el-header>
         <el-main class="home_main">

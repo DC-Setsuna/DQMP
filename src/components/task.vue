@@ -17,9 +17,9 @@
               <el-select class="newtask_input" v-model="newTaskForm.category" placeholder="Please select a Category">
                 <el-option label="Account" value="Account"></el-option>
                 <el-option label="Opportunities" value="Opportunities"></el-option>
-                <el-option label="LineItems" value="LineItems"></el-option>
-                <el-option label="Forcast" value="Forcast"></el-option>
-                <el-option label="MgrForcast" value="MgrForcast"></el-option>
+                <el-option label="LineItmes" value="LineItmes"></el-option>
+                <el-option label="Forecast" value="Forecast"></el-option>
+                <el-option label="MgrForecast" value="MgrForecast"></el-option>
                 <el-option label="Leads" value="Leads"></el-option>
                 <el-option label="Contacts" value="Contacts"></el-option>
                 <el-option label="Winplan" value="Winplan"></el-option>
@@ -99,9 +99,9 @@
               <el-select v-model="filtrateForm.category" placeholder="Please select">
                <el-option label="Account" value="Account"></el-option>
                <el-option label="Opportunities" value="Opportunities"></el-option>
-               <el-option label="LineItems" value="LineItems"></el-option>
-               <el-option label="Forcast" value="Forcast"></el-option>
-               <el-option label="MgrForcast" value="MgrForcast"></el-option>
+               <el-option label="LineItmes" value="LineItmes"></el-option>
+               <el-option label="Forecast" value="Forecast"></el-option>
+               <el-option label="MgrForecast" value="MgrForecast"></el-option>
                <el-option label="Leads" value="Leads"></el-option>
                <el-option label="Contacts" value="Contacts"></el-option>
                <el-option label="Winplan" value="Winplan"></el-option>
