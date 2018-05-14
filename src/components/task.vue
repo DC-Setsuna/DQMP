@@ -293,12 +293,8 @@ export default {
             threshold: 0,
             content: '',
             run_now: '',
-<<<<<<< HEAD
-            upload_user_id: '123'
-=======
             file_path: '',
             upload_user_id: '1233333'
->>>>>>> f585e741ecaad81d94e583172c5c38cb770b70f1
           };
           this.fileList = []
           this.dialogVisible = false
