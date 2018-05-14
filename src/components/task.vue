@@ -110,7 +110,8 @@
           </el-form>
         </el-row>
         <el-row class="account-row">
-          <el-table :data="tableData" border :height="window_height" :header-cell-style="{'text-align':'center'}" @row-click='showDetail' :row-style="{'text-align':'center'}" style="width: 96%">
+          <el-table :data="tableData" border :height="window_height" :header-cell-style="{'text-align':'center'}" @row-click='showDetail' :row-style="{'text-align':'center'}" style="width: 96%" @selection-change="handleSelectionChange">
+            <el-table-column type="selection" width="55"></el-table-column>
             <el-table-column fixed prop="taskid" label="Task ID" width="180px">
             </el-table-column>
             <el-table-column prop="owner" label="Owner" width="150px">
@@ -128,6 +129,11 @@
             </el-table-column>
             <el-table-column prop="update_time" label="Last Update Date" width="180px"></el-table-column>
             <el-table-column prop="upload_time" label="Create Date" width="180px">
+            </el-table-column>
+            <el-table-column label="操作" fixed="right" width="100px">
+                <template slot-scope="scope">
+                  <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button>
+                </template>
             </el-table-column>
           </el-table>
         </el-row>
@@ -168,6 +174,7 @@ export default {
       },
       fileList: [],
       disable: false,
+      multipleSelection: [],
       rules: {
           taskname: [
             { required: true, message: 'Please fill in a Task Name', trigger: 'blur' }
@@ -351,7 +358,16 @@ export default {
     },
     UploadSuccess(response,file,fileList) {
       this.newTaskForm.file_path = response.data
+    },
+
+    handleSelectionChange(val) {
+      this.multipleSelection = val;
+      console.log(this.multipleSelection)
+    },
+    handleDelete(row) {
+      console.log(row)
     }
+
   },
   created: function () {
    this.getWindowSize();
