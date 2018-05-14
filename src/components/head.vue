@@ -72,7 +72,7 @@ export default {
 }
 .user_img {
   position: absolute;
-  right: 50px;
+  right: 60px;
 }
 </style>
 <!-- <template>

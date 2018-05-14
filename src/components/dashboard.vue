@@ -7,7 +7,16 @@
         </el-card>
       </el-col>
       <el-col :span="8">
-        <el-card class="box-card box-card-right" shadow="hover"></el-card>
+        <el-card class="box-card box-card-right" shadow="hover">
+          <el-table :data="tableData6" style="width: 100%" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" >
+            <el-table-column prop="result_time" label="Result_Time" :span='8'>
+            </el-table-column>
+            <el-table-column prop="taskname" label="TaskName" :span='8'>
+            </el-table-column>
+            <el-table-column prop="status" label="Status" :span='8'>
+            </el-table-column>
+          </el-table>
+        </el-card>
       </el-col>
     </el-row>
     <el-row class="board-row row-bg" justify="center">
@@ -17,7 +26,16 @@
         </el-card>
       </el-col>
       <el-col :span="8">
-        <el-card class="box-card-right" shadow="hover"></el-card>
+        <el-card class="box-card-right" shadow="hover">
+          <el-table :data="tableData7" style="width: 100%" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" >
+            <el-table-column prop="result_time" label="Result_Time" :span='8'>
+            </el-table-column>
+            <el-table-column prop="taskname" label="TaskName" :span='8'>
+            </el-table-column>
+            <el-table-column prop="status" label="Status" :span='8'>
+            </el-table-column>
+          </el-table>
+        </el-card>
       </el-col>
     </el-row>
     <el-row class="board-row row-bg" justify="center">
@@ -27,7 +45,16 @@
         </el-card>
       </el-col>
       <el-col :span="8">
-        <el-card class="box-card-right" shadow="hover"></el-card>
+        <el-card class="box-card-right" shadow="hover">
+          <el-table :data="tableData8" style="width: 100%" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" >
+            <el-table-column prop="result_time" label="Result_Time" :span='8'>
+            </el-table-column>
+            <el-table-column prop="taskname" label="TaskName" :span='8'>
+            </el-table-column>
+            <el-table-column prop="status" label="Status" :span='8'>
+            </el-table-column>
+          </el-table>
+        </el-card>
       </el-col>
     </el-row>
 
@@ -171,7 +198,10 @@
         },{
           taskid: '938302F6E93F',
           freqency: 'monthly'
-        }]
+        }],
+        tableData6:[],
+        tableData7:[],
+        tableData8:[]
       }
     },
     components: { DailyBoard , WeeklyBoard , MonthlyBoard},
@@ -207,6 +237,27 @@
         .then((response) => {
           this.tableData3 = response.data
         })
+      },
+      get_fail_daily() {
+        this.axios.get(this.$store.state.API + 'board/daily_fail_list')
+        .then((response) => {
+          if(response.data.code == 200)
+            this.tableData6 = response.data.data
+        })
+      },
+      get_fail_weekly() {
+        this.axios.get(this.$store.state.API + 'board/weekly_fail_list')
+        .then((response) => {
+          if(response.data.code == 200)
+            this.tableData7 = response.data.data
+        })
+      },
+      get_fail_monthly() {
+        this.axios.get(this.$store.state.API + 'board/monthly_fail_list')
+        .then((response) => {
+          if(response.data.code == 200)
+            this.tableData8 = response.data.data
+        })
       }
     },
     created: function() {
@@ -214,6 +265,9 @@
       this.getTabWeeklyData()
       this.getTabMonthlyData()
       this.get_job_tab()
+      this.get_fail_daily()
+      this.get_fail_weekly()
+      this.get_fail_monthly()
     }
   }
 </script>
