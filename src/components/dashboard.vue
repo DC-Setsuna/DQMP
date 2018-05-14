@@ -39,8 +39,8 @@
           </div>
           <el-table :data="tableData3" height="270" border :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center','height':'5px'}" :cell-style="{'height':'10px'}" style="width: 100%" @row-click='showDetail'>
             <el-table-column type="index" :span="2"></el-table-column>
-            <el-table-column prop="taskid" label="taskid" :span="11"></el-table-column>
-            <el-table-column prop="freqency" label="freqency"></el-table-column>
+            <el-table-column prop="id" label="Task Id" :span="11"></el-table-column>
+            <el-table-column prop="name" label="Task Name"></el-table-column>
           </el-table>
         </el-card>
       </el-col>
@@ -127,28 +127,7 @@
         tableData: [],
         tableData1: [],
         tableData2: [],
-        tableData3: [{
-          taskid: '234',
-          freqency: 'daily'
-        },{
-          taskid: '938302F6E93D',
-          freqency: 'daily'
-        },{
-          taskid: '938302F6E93E',
-          freqency: 'weekly'
-        },{
-          taskid: '938302F6E93F',
-          freqency: 'monthly'
-        },{
-          taskid: '938302F6E93F',
-          freqency: 'monthly'
-        },{
-          taskid: '938302F6E93F',
-          freqency: 'monthly'
-        },{
-          taskid: '938302F6E93F',
-          freqency: 'monthly'
-        }],
+        tableData3: [],
         tableData4: [{
           taskid: '234',
           freqency: 'daily'
@@ -221,13 +200,20 @@
         })
       },
       showDetail(row, event, column) {
-        this.$router.push({name: 'viewtaskmodule', params: { data: row.taskid }})
+        this.$router.push({name: 'viewtaskmodule', params: { data: row.id }})
+      },
+      get_job_tab() {
+        this.axios.get(this.$store.state.API + 'scheduler/jobs')
+        .then((response) => {
+          this.tableData3 = response.data
+        })
       }
     },
     created: function() {
       this.init()
       this.getTabWeeklyData()
       this.getTabMonthlyData()
+      this.get_job_tab()
     }
   }
 </script>

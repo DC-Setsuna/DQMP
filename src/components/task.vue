@@ -17,9 +17,9 @@
               <el-select class="newtask_input" v-model="newTaskForm.category" placeholder="Please select a Category">
                 <el-option label="Account" value="Account"></el-option>
                 <el-option label="Opportunities" value="Opportunities"></el-option>
-                <el-option label="LineItems" value="LineItems"></el-option>
-                <el-option label="Forcast" value="Forcast"></el-option>
-                <el-option label="MgrForcast" value="MgrForcast"></el-option>
+                <el-option label="LineItmes" value="LineItmes"></el-option>
+                <el-option label="Forecast" value="Forecast"></el-option>
+                <el-option label="MgrForecast" value="MgrForecast"></el-option>
                 <el-option label="Leads" value="Leads"></el-option>
                 <el-option label="Contacts" value="Contacts"></el-option>
                 <el-option label="Winplan" value="Winplan"></el-option>
@@ -55,7 +55,7 @@
               </el-select>
             </el-form-item>
             <el-form-item label-width='120px' label="Result Verify :" prop="threshold">
-              <el-input-number class="newtask_input" v-model="newTaskForm.threshold" controls-position="right" :min="0" :max="1000000000000"></el-input-number>
+              <el-input-number class="newtask_input" v-model="newTaskForm.threshold" controls-position="right" :step='100' :min="100" :max="1000000000000"></el-input-number>
             </el-form-item>
             <el-form-item label-width='120px' label="Upload :">
               <el-upload class="upload-demo" ref="upload" :show-file-list="true" drag action="http://localhost:5000/file/add" :on-success='UploadSuccess' :on-change="Change" :on-remove="Remove" :file-list='fileList' :multiple="false" :limit="1">
@@ -99,9 +99,9 @@
               <el-select v-model="filtrateForm.category" placeholder="Please select">
                <el-option label="Account" value="Account"></el-option>
                <el-option label="Opportunities" value="Opportunities"></el-option>
-               <el-option label="LineItems" value="LineItems"></el-option>
-               <el-option label="Forcast" value="Forcast"></el-option>
-               <el-option label="MgrForcast" value="MgrForcast"></el-option>
+               <el-option label="LineItmes" value="LineItmes"></el-option>
+               <el-option label="Forecast" value="Forecast"></el-option>
+               <el-option label="MgrForecast" value="MgrForecast"></el-option>
                <el-option label="Leads" value="Leads"></el-option>
                <el-option label="Contacts" value="Contacts"></el-option>
                <el-option label="Winplan" value="Winplan"></el-option>
@@ -110,7 +110,8 @@
           </el-form>
         </el-row>
         <el-row class="account-row">
-          <el-table :data="tableData" border :height="window_height" :header-cell-style="{'text-align':'center'}" @row-click='showDetail' :row-style="{'text-align':'center'}" style="width: 96%">
+          <el-table :data="tableData" border :height="window_height" :header-cell-style="{'text-align':'center'}" @row-click='showDetail' :row-style="{'text-align':'center'}" style="width: 96%" @selection-change="handleSelectionChange">
+            <el-table-column type="selection" width="55"></el-table-column>
             <el-table-column fixed prop="taskid" label="Task ID" width="180px">
             </el-table-column>
             <el-table-column prop="owner" label="Owner" width="150px">
@@ -128,6 +129,11 @@
             </el-table-column>
             <el-table-column prop="update_time" label="Last Update Date" width="180px"></el-table-column>
             <el-table-column prop="upload_time" label="Create Date" width="180px">
+            </el-table-column>
+            <el-table-column label="操作" fixed="right" width="100px">
+                <template slot-scope="scope">
+                  <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button>
+                </template>
             </el-table-column>
           </el-table>
         </el-row>
@@ -168,6 +174,7 @@ export default {
       },
       fileList: [],
       disable: false,
+      multipleSelection: [],
       rules: {
           taskname: [
             { required: true, message: 'Please fill in a Task Name', trigger: 'blur' }
@@ -191,8 +198,8 @@ export default {
             { required: true, message: 'Please select a Type', trigger: 'change' }
           ],
           threshold: [
-            { type:'number', required: true, message: 'Please select a Verify', trigger: 'blur' },
-            { type:'number', min: 1, message: 'Verify cannot be less than 0', trigger: 'change' }
+            { type:'number', required: true, message: 'Please select a Verify', trigger: 'blue' },
+            { type:'number', min: 0, message: 'Verify cannot be less than 0', trigger: 'change' }
           ],
           file_path: [
             { required: true, message: 'Please select a File', trigger: 'blur' }
@@ -218,7 +225,7 @@ export default {
           content: '',
           run_now: '',
           file_path: '',
-          upload_user_id: ''
+          upload_user_id: '1233333'
         };
         done();
       }).catch(_ => {});
@@ -239,7 +246,7 @@ export default {
           threshold: 0,
           content: '',
           run_now: '',
-          upload_user_id: ''
+          upload_user_id: '1233333'
         };
     }
     ,
@@ -286,7 +293,12 @@ export default {
             threshold: 0,
             content: '',
             run_now: '',
+<<<<<<< HEAD
             upload_user_id: '123'
+=======
+            file_path: '',
+            upload_user_id: '1233333'
+>>>>>>> f585e741ecaad81d94e583172c5c38cb770b70f1
           };
           this.fileList = []
           this.dialogVisible = false
@@ -350,7 +362,16 @@ export default {
     },
     UploadSuccess(response,file,fileList) {
       this.newTaskForm.file_path = response.data
+    },
+
+    handleSelectionChange(val) {
+      this.multipleSelection = val;
+      console.log(this.multipleSelection)
+    },
+    handleDelete(row) {
+      console.log(row)
     }
+
   },
   created: function () {
    this.getWindowSize();
