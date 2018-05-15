@@ -11,6 +11,9 @@
 		    <el-form-item label-width='120px' label="Task ID :">
 		    {{newTaskForm.taskid}}
 		    </el-form-item>
+        <el-form-item label-width='120px' label="Task Name :" prop="taskname">
+          <el-input class="newtask_row_input" v-model="newTaskForm.taskname"></el-input>
+        </el-form-item>
   		  <el-form-item label-width='120px' label="Category :">
   		    <el-select class="newtask_input" v-model="newTaskForm.category" placeholder="Please select a Category">
   		      <el-option label="Account" value="Account"></el-option>
