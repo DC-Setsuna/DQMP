@@ -78,7 +78,7 @@
           </div>
           <el-table :data="tableData4" height="270" border :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center','height':'5px'}" :cell-style="{'height':'10px'}" style="width: 100%" @row-click='showDetail'>
             <el-table-column type="index" :span="2"></el-table-column>
-            <el-table-column prop="taskid" label="taskid" :span="11"></el-table-column>
+            <el-table-column prop="id" label="taskid" :span="11"></el-table-column>
             <el-table-column prop="freqency" label="freqency"></el-table-column>
           </el-table>
         </el-card>
@@ -90,7 +90,7 @@
           </div>
           <el-table :data="tableData5" height="270" border :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center','height':'5px'}" :cell-style="{'height':'10px'}" style="width: 100%" @row-click='showDetail'>
             <el-table-column type="index" :span="2"></el-table-column>
-            <el-table-column prop="taskid" label="taskid" :span="11"></el-table-column>
+            <el-table-column prop="id" label="taskid" :span="11"></el-table-column>
             <el-table-column prop="freqency" label="freqency"></el-table-column>
           </el-table>
         </el-card>
@@ -156,47 +156,47 @@
         tableData2: [],
         tableData3: [],
         tableData4: [{
-          taskid: '234',
+          id: '8B25DD386C5F',
           freqency: 'daily'
         },{
-          taskid: '938302F6E93D',
+          id: '8B25DD386C4E',
           freqency: 'daily'
         },{
-          taskid: '938302F6E93E',
+          id: 'AB25DWER6C4E',
           freqency: 'weekly'
         },{
-          taskid: '938302F6E93F',
+          id: 'AB25DWER6CDW',
           freqency: 'monthly'
         },{
-          taskid: '938302F6E93F',
+          id: '8B25DD386C4F',
           freqency: 'monthly'
         },{
-          taskid: '938302F6E93F',
+          id: '8B25DD386CSD',
           freqency: 'monthly'
         },{
-          taskid: '938302F6E93F',
+          id: 'CD5DWER6CDSS',
           freqency: 'monthly'
         }],
         tableData5: [{
-          taskid: '234',
+          id: '8B25DD386C5F',
           freqency: 'daily'
         },{
-          taskid: '938302F6E93D',
+          id: '8B25DD386C4E',
           freqency: 'daily'
         },{
-          taskid: '938302F6E93E',
+          id: 'AB25DWER6C4E',
           freqency: 'weekly'
         },{
-          taskid: '938302F6E93F',
+          id: 'AB25DWER6CDW',
           freqency: 'monthly'
         },{
-          taskid: '938302F6E93F',
+          id: '8B25DD386C4F',
           freqency: 'monthly'
         },{
-          taskid: '938302F6E93F',
+          id: '8B25DD386CSD',
           freqency: 'monthly'
         },{
-          taskid: '938302F6E93F',
+          id: 'CD5DWER6CDSS',
           freqency: 'monthly'
         }],
         tableData6:[],

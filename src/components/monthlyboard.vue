@@ -31,7 +31,7 @@
 	          show : true,
 	          feature : {
 	            mark : {show: true},
-	            dataView : {show: true, readOnly: false},
+	            dataView : {show: false, readOnly: false},
 	            magicType: {show: true, type: ['line', 'bar']},
 	            restore : {show: true},
 	            saveAsImage : {show: true}
@@ -47,8 +47,8 @@
 	        },
 	        grid: {
 	          top: '12%',
-	          left: '1%',
-	          right: '10%',
+	          left: '2%',
+	          right: '1%',
 	          containLabel: true
 	        },
 	        xAxis: [

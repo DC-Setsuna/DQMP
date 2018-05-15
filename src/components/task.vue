@@ -209,7 +209,7 @@ export default {
   },
   methods: {
     handleClose(done) {
-      this.$confirm('确认关闭？').then(_ => {
+      this.$confirm('Confirm close?').then(_ => {
         this.newTaskForm={
           taskid: '',
           taskname: '',
