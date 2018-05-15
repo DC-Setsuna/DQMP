@@ -17,6 +17,7 @@
 			  fontSize: 15
 			}
           },
+          color: ['#003366','#e5323e'],
 	      tooltip : {
 	        trigger: 'axis',
 	        axisPointer: {

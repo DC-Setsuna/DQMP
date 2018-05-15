@@ -65,7 +65,7 @@
               </el-upload> 
             </el-form-item>
             <el-form-item label-width='120px' label="Content :" prop="content">
-              <el-input class="newtask_text_input" v-bind:disabled=disable type="textarea" :autosize="{ minRows: 5, maxRows: 10}" placeholder="请输入内容" v-model="newTaskForm.content"></el-input>
+              <el-input class="newtask_text_input" v-bind:disabled=disable type="textarea" :autosize="{ minRows: 5, maxRows: 10}" placeholder="Please enter content" v-model="newTaskForm.content"></el-input>
             </el-form-item>
           </el-form>
           <span slot="footer" class="dialog-footer">
@@ -130,7 +130,7 @@
             <el-table-column prop="update_time" label="Last Update Date" width="180px"></el-table-column>
             <el-table-column prop="upload_time" label="Create Date" width="180px">
             </el-table-column>
-            <el-table-column label="操作" fixed="right" width="100px">
+            <el-table-column label="Operation" fixed="right" width="100px">
                 <template slot-scope="scope">
                   <el-button size="mini" type="danger" @click="handleDelete(scope.row)">Delete</el-button>
                 </template>
