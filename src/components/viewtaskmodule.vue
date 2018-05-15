@@ -1,5 +1,11 @@
 <template>
 	<div>
+      <div class='crumbs'>
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+          <el-breadcrumb-item>Task</el-breadcrumb-item>
+          <el-breadcrumb-item>Detail</el-breadcrumb-item>
+        </el-breadcrumb>
+      </div>
     <el-card class="box-card">
       <el-form ref="form" :model="newTaskForm" label-width="80px" size="small" v-bind:disabled=disable>
 		    <el-form-item label-width='120px' label="Task ID :">
@@ -74,8 +80,6 @@
     <el-table v-bind:class="{active:tableActive}" :data="tableData3" height="350px" border class="viewtask_tab">
       <el-table-column type="index" width="50"></el-table-column>
       <el-table-column prop="run_time" label="Run time" width="180">
-      </el-table-column>
-      <el-table-column prop="count" label="Total" width="180">
       </el-table-column>
       <el-table-column prop="result" label="Result">
       </el-table-column>
@@ -230,5 +234,8 @@ import qs from 'qs'
   }
   .clearfix:after {
     clear: both
+  }
+  .crumbs {
+    margin: 10px 0px;
   }
 </style>

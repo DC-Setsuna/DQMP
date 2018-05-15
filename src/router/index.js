@@ -9,6 +9,7 @@ import Forecast from '@/components/forecast'
 import ViewTaskModule from '@/components/viewtaskmodule'
 import History from '@/components/history'
 import Task from '@/components/task'
+import Errortask from '@/components/errortask'
 
 Vue.use(Router)
 
@@ -63,6 +64,11 @@ export default new Router({
           path: '/task',
           name: 'task',
           component: Task
+        },
+        {
+          path: '/errortask',
+          name: 'errortask',
+          component: Errortask
         }
       ]
     }

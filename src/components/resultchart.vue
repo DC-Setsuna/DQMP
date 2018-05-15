@@ -8,9 +8,14 @@
   	data() {
       return {}
   	},
-  	mounted: function() {
-       this.drawLine()
-  	},
+  	watch: {
+      datas: {
+        handler:function(){
+          this.drawLine()
+        },
+        deep:true
+      }
+    },
   	methods:{
 	  drawLine(){
 	  	let histogram1 = this.$echarts.init(document.getElementById('histogram1'))

@@ -1,15 +1,21 @@
 <template>
   <div>
+    <div class='crumbs'>
+      <el-breadcrumb separator-class="el-icon-arrow-right">
+        <el-breadcrumb-item>Task</el-breadcrumb-item>
+        <el-breadcrumb-item>History</el-breadcrumb-item>
+      </el-breadcrumb>
+    </div>
     <el-card class="history-box-card">
       <div slot="header" class="clearfix">
        <div>Task ID：
           <a href="javascript:void(0);" @click="Jump">
-            <span>{{task[0].taskid}}</span>
+            <span>{{taskid}}</span>
           </a>
         </div>
       </div>
-      <div class="history_title">Business Area：<span>{{task[0].category}}</span></div>
-      <div class="history_title">Description：<span>{{task[0].description}}</span></div>
+      <div class="history_title">Business Area：<span>{{category}}</span></div>
+      <div class="history_title">Description：<span>{{description}}</span></div>
       <el-table :data="tableData3" height="350px" border class="viewtask_tab">
         <el-table-column type="index" width="50"></el-table-column>
         <el-table-column prop="run_time" label="Run time" width="180">
@@ -48,7 +54,10 @@
             commentsForm: {
               id:'',
               comment:''
-            }
+            },
+            taskid:'',
+            category:'',
+            description:''
 		  }
 		},
 		components:{ Resultchart, Totalvsresult},
@@ -63,6 +72,9 @@
         this.axios.post(this.$store.state.API + 'log/select',qs.stringify({taskid:this.$route.params.data})).then((response) => {
             if(response.data.code == 200) {
     	        this.task = response.data.data
+              this.taskid = this.task[0].taskid
+              this.category = this.task[0].category
+              this.description = this.task[0].description
             }
           })
   		},
@@ -98,5 +110,8 @@
 	}
   .history-box-card {
     margin-top: 15px;
+  }
+  .crumbs {
+    margin: 10px 0px;
   }
 </style>

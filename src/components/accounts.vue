@@ -8,7 +8,7 @@
 			</el-col>
 			<el-col :span="8">
 				<el-card class="box-card box-card-right" shadow="hover">
-					<el-table :data="tableData6" style="width: 100%" height="255px" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" >
+					<el-table :data="tableData6" style="width: 100%" height="255px" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" @row-click='Jump'>
 			            <el-table-column prop="result_time" label="Result_Time" :span='8'>
 			            </el-table-column>
 			            <el-table-column prop="taskname" label="TaskName" :span='8'>
@@ -27,7 +27,7 @@
 			</el-col>
 			<el-col :span="8">
 				<el-card class="box-card-right" shadow="hover">
-					<el-table :data="tableData7" style="width: 100%" height="255px" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" >
+					<el-table :data="tableData7" style="width: 100%" height="255px" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" @row-click='Jump'>
 			            <el-table-column prop="result_time" label="Result_Time" :span='8'>
 			            </el-table-column>
 			            <el-table-column prop="taskname" label="TaskName" :span='8'>
@@ -46,7 +46,7 @@
 			</el-col>
 			<el-col :span="8">
 				<el-card class="box-card-right" shadow="hover">
-					<el-table :data="tableData8" style="width: 100%" height="255px" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" >
+					<el-table :data="tableData8" style="width: 100%" height="255px" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" @row-click='Jump'>
 			            <el-table-column prop="result_time" label="Result_Time" :span='8'>
 			            </el-table-column>
 			            <el-table-column prop="taskname" label="TaskName" :span='8'>
@@ -190,7 +190,10 @@ export default {
 			  if(response.data.code == 200)
 			    this.tableData8 = response.data.data
 			})
-		}
+		},
+        Jump(row, event, column) {
+          this.$router.push({name: 'viewtaskmodule', params: { data: row.taskid }})
+        }
 	},
 	created: function() {
 		this.init()
