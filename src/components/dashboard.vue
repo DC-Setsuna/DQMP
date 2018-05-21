@@ -8,7 +8,7 @@
       </el-col>
       <el-col :span="8">
         <el-card class="box-card box-card-right" shadow="hover">
-          <el-table :data="tableData6" style="width: 100%" height="255px" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" @row-click='Jump'>
+          <el-table :data="tableData6" style="width: 100%" height="260px" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" @row-click='Jump'>
             <el-table-column prop="result_time" label="Result_Time" :span='8'>
             </el-table-column>
             <el-table-column prop="taskname" label="TaskName" :span='8'>
@@ -27,7 +27,7 @@
       </el-col>
       <el-col :span="8">
         <el-card class="box-card-right" shadow="hover">
-          <el-table :data="tableData7" style="width: 100%" height="255px" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" @row-click='Jump'>
+          <el-table :data="tableData7" style="width: 100%" height="260px" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" @row-click='Jump'>
             <el-table-column prop="result_time" label="Result_Time" :span='8'>
             </el-table-column>
             <el-table-column prop="taskname" label="TaskName" :span='8'>
@@ -46,7 +46,7 @@
       </el-col>
       <el-col :span="8">
         <el-card class="box-card-right" shadow="hover">
-          <el-table :data="tableData8" style="width: 100%" height="255px" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" @row-click='Jump'>
+          <el-table :data="tableData8" style="width: 100%" height="260px" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" @row-click='Jump'>
             <el-table-column prop="result_time" label="Result_Time" :span='8'>
             </el-table-column>
             <el-table-column prop="taskname" label="TaskName" :span='8'>
@@ -63,7 +63,7 @@
         <div class="el-card is-hover-shadow grid-content bg-purple-dark">
           <el-tabs :tab-position="tabPosition" style="height: 400px;">
             <el-tab-pane label="Daily">
-              <el-table :data="tableData" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" style="width: 90%" height="400px">
+              <el-table :data="tableData" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" style="width: 95%" height="400px">
                 <el-table-column fixed type="index" width="50"></el-table-column>
                 <el-table-column prop="Statistictime" label="Statistic time" :span="8">
                 </el-table-column>
@@ -79,7 +79,7 @@
               </el-table>
             </el-tab-pane>
             <el-tab-pane label="Weekly">
-              <el-table :data="tableData1" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" style="width: 90%" height="400px">
+              <el-table :data="tableData1" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" style="width: 95%" height="400px">
                 <el-table-column fixed type="index" width="50"></el-table-column>
                 <el-table-column prop="Statistictime" label="Statistic time" :span="8">
                 </el-table-column>
@@ -95,7 +95,7 @@
               </el-table>
             </el-tab-pane>
             <el-tab-pane label="Monthly">
-              <el-table :data="tableData2" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" style="width: 90%" height="400px">
+              <el-table :data="tableData2" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" style="width: 95%" height="400px">
                 <el-table-column fixed type="index" width="50"></el-table-column>
                 <el-table-column prop="Statistictime" label="Statistic time" :span="8">
                 </el-table-column>
@@ -315,14 +315,14 @@
   }
   .box-card-right {
     width: 100%;
-    height:280px;
+    height:310px;
     margin-bottom: 10px;
   }
   .el-card__body {
-    padding: 10px;
+    padding: 20px;
   }
   .instrument_table {
-    margin-top: 10px
+    margin-top: 20px
   }
   .middle-card {
     margin: 1%;

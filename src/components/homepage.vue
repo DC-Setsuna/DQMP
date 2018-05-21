@@ -1,8 +1,8 @@
 <template>
   <div>
 	  <el-container>
-        <el-header class="header" height='40px'>
-          <HEAD/>
+        <el-header id="header" height='40px'>
+          <HEAD />
         </el-header>
         <el-main class="home_main">
           <router-view class="main-view"></router-view>
@@ -24,5 +24,8 @@
 <style type="text/css">
   .home_main {
     padding: 0 2%;
+  }
+  #header {
+    padding: 0px;
   }
 </style>
