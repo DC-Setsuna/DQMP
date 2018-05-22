@@ -6,12 +6,12 @@
       </span>
       <div class="Vheader-nav">
         <el-menu class="el-menu-demo" text-color="#a4a4a4" mode="horizontal" style="background-color: transparent;" :router="true">
-          <el-menu-item index="/dashboard">Dash board</el-menu-item>
-          <el-menu-item index="/accounts">Accounts</el-menu-item>
-          <el-menu-item index="/opportunities">Opportunities</el-menu-item>
-          <el-menu-item index="/lineitmes">Lineitmes</el-menu-item>
-          <el-menu-item index="/forecast">Forecast</el-menu-item>
-          <el-menu-item index="/task">Task</el-menu-item>
+          <el-menu-item style="height: 40px;line-height: 40px;" index="/dashboard">Dash board</el-menu-item>
+          <el-menu-item style="height: 40px;line-height: 40px;" index="/accounts">Accounts</el-menu-item>
+          <el-menu-item style="height: 40px;line-height: 40px;" index="/opportunities">Opportunities</el-menu-item>
+          <el-menu-item style="height: 40px;line-height: 40px;" index="/lineitmes">Lineitmes</el-menu-item>
+          <el-menu-item style="height: 40px;line-height: 40px;" index="/forecast">Forecast</el-menu-item>
+          <el-menu-item style="height: 40px;line-height: 40px;" index="/task">Task</el-menu-item>
         </el-menu>
       </div>
       <span class="el-dropdown-link user_img">
@@ -47,11 +47,6 @@ export default {
   margin-right: 150px;
   padding: 0 30px;
 }
-.el-menu--horizontal>.el-menu-item {
-    float: left;
-    height: 40px;
-    line-height: 40px;
-}
 .el-dropdown-menu__item--divided:before, .el-menu, .el-menu--horizontal>.el-menu-item:not(.is-disabled):focus, .el-menu--horizontal>.el-menu-item:not(.is-disabled):hover, .el-menu--horizontal>.el-submenu .el-submenu__title:hover {
   background-color: transparent;
   color: #fff;
@@ -62,9 +57,6 @@ export default {
   /*border-bottom: none;*/
   color: #fff;
   background-color: transparent;
-}
-.el-header {
-  padding: 0px;
 }
 .user-logo {
   position: absolute;

@@ -217,11 +217,6 @@ export default {
 	width: 98%;
 	margin-bottom: 10px;
 }
-.box-card-right {
-	width: 100%;
-	height:280px;
-	margin-bottom: 10px;
-}
 .el-card__body {
 	padding: 10px;
 }
