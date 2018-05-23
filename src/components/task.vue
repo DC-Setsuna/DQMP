@@ -67,7 +67,7 @@
               <el-input-number class="newtask_input" v-model="newTaskForm.threshold" controls-position="right" :step='100' :min="100" :max="1000000000000"></el-input-number>
             </el-form-item>
             <el-form-item label-width='120px' label="Upload :">
-              <el-upload class="upload-demo" ref="upload" :show-file-list="true" drag action="http://9.112.216.244:5000/file/add" :on-success='UploadSuccess' :on-change="Change" :on-remove="Remove" :file-list='fileList' :multiple="false" :limit="1">
+              <el-upload class="upload-demo" ref="upload" :show-file-list="true" drag action="/file/add" :on-success='UploadSuccess' :on-change="Change" :on-remove="Remove" :file-list='fileList' :multiple="false" :limit="1">
                <i class="el-icon-upload"></i>
                <div class="el-upload__text">Drag the file here, or <em>click upload</em></div>
                <div class="el-upload__tip" slot="tip">Currently only SQL files are allowed. Upload one file</div>
