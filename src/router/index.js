@@ -10,6 +10,7 @@ import ViewTaskModule from '@/components/viewtaskmodule'
 import History from '@/components/history'
 import Task from '@/components/task'
 import Errortask from '@/components/errortask'
+import updatetask from '@/components/updateTask'
 
 Vue.use(Router)
 
@@ -69,6 +70,11 @@ export default new Router({
           path: '/errortask',
           name: 'errortask',
           component: Errortask
+        },
+        {
+          path: '/updatetask',
+          name: 'updatetask',
+          component: updatetask
         }
       ]
     }

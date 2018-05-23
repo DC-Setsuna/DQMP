@@ -7,9 +7,13 @@
         </el-breadcrumb>
       </div>
     <el-card class="box-card">
-      <el-form ref="form" :model="newTaskForm" label-width="80px" size="small" v-bind:disabled=disable>
+      <label>Enabled :</label>
+      <el-switch style="display: block" v-model="value4" active-color="#ff4949"
+        inactive-color="#13ce66" active-text="NO" inactive-text="YES">
+      </el-switch>
+      <el-form ref="form" :model="newTaskForm" label-width="80px" size="small" v-bind:disabled='true'>
 		    <el-form-item label-width='120px' label="Task ID :">
-		    {{newTaskForm.taskid}}
+		      {{newTaskForm.taskid}}
 		    </el-form-item>
         <el-form-item label-width='120px' label="Task Name :" prop="taskname">
           <el-input class="newtask_row_input" v-model="newTaskForm.taskname"></el-input>
@@ -36,19 +40,12 @@
   		  <el-form-item label-width='120px' label="Tag :">
   		    <el-input class="newtask_text_input" v-model="newTaskForm.tag"></el-input>
   		  </el-form-item>
-  		  <el-form-item label-width='120px' label="Enabled :">
-  		    <el-select class="newtask_input" v-model="newTaskForm.enabled" placeholder="Please select a Enabled">
-  		      <el-option label="YES" value="YES"></el-option>
-  		      <el-option label="NO" value="NO"></el-option>
-  		    </el-select>
-  		  </el-form-item>
   		  <el-form-item label-width='120px' label="Freqency :">
   		    <el-select class="newtask_input" v-model="newTaskForm.freqency" placeholder="Please select Freqency ">
   		      <el-option label="Daily" value="daily"></el-option>
   		      <el-option label="Weekly" value="weekly"></el-option>
   		      <el-option label="Monthly" value="monthly"></el-option>
   		    </el-select>
-              <el-checkbox v-model="newTaskForm.run_now">提交后立即执行</el-checkbox>
   		  </el-form-item>
   		  <el-form-item label-width='120px' label="Task type :">
   		    <el-select class="newtask_input" v-model="newTaskForm.task_type" placeholder="Please select Task Type">
@@ -59,7 +56,7 @@
   		  	<el-input-number class="newtask_input" v-model="newTaskForm.threshold" controls-position="right" :min="1" :max="100000"></el-input-number>
   		  </el-form-item>
   		  <el-form-item label-width='120px' label="Upload :" v-bind:class="{active:isActive}">
-  			<el-upload class="upload-demo" ref="upload" :show-file-list="true" drag action="/file/add" :on-success='UploadSuccess' :on-change="Change" :on-remove="Remove" :file-list='newTaskForm.fileList' :multiple="false" :limit="1">
+  			<el-upload class="upload-demo" ref="upload" :show-file-list="true" drag action="/file/add" :file-list='newTaskForm.fileList' :multiple="false" :limit="1">
               <i class="el-icon-upload"></i>
               <div class="el-upload__text">Drag the file here, or <em>click upload</em></div>
               <div class="el-upload__tip" slot="tip">Currently only SQL files are allowed. Upload one file</div>
@@ -72,15 +69,13 @@
 	    </el-form>
       <div class="clearfix">
         <span class="dialog-footer">
-          <el-button v-bind:class="{active:tableActive}">Run</el-button>
+          <el-button>Run</el-button>
           <el-button @click="Edit">Edit</el-button>
-          <el-button v-bind:class="{active:tableActive}" @click="History">History</el-button>
-          <el-button v-bind:class="{active:isActive}" @click="Cancel">Cancel</el-button>
-          <el-button v-bind:class="{active:isActive}" @click="Submit">Submit</el-button>
+          <el-button @click="History">History</el-button>
         </span>
       </div>
     </el-card>
-    <el-table v-bind:class="{active:tableActive}" :data="tableData3" height="350px" border class="viewtask_tab">
+    <el-table :data="tableData3" height="350px" border class="viewtask_tab">
       <el-table-column type="index" width="50"></el-table-column>
       <el-table-column prop="run_time" label="Run time" width="180">
       </el-table-column>
@@ -105,9 +100,8 @@ import qs from 'qs'
   data () {
     return {
 	    data: '',
+      value4:true,
 	    isActive: true,
-	    disable: true,
-	    tableActive: false,
 	    newTaskForm: {
         taskid: '',
         category: '',
@@ -136,30 +130,6 @@ import qs from 'qs'
   	Remove(file, fileList) {
       console.log(file,fileList)
     },
-    Edit() {
-      this.isActive = false
-	  this.disable = false
-	  this.tableActive = true
-    },
-    Cancel() {
-      this.isActive = true
-	  this.disable = true
-	  this.tableActive = false
-    },
-    Change(file, fileList) {
-      if(fileList != '' && fileList != null){
-        
-      }
-    },
-    UploadSuccess(response,file,fileList) {
-      this.newTaskForm.file_path = response.data
-    },
-    Remove(file, fileList) {
-      this.axios.post(this.$store.state.API + 'file/remove',qs.stringify({filename:file.name})
-      ).then((response) =>{
-        
-      })
-    },
     init() {
       this.axios.post(this.$store.state.API + 'log/select',qs.stringify({taskid:this.$route.params.data})).then((response) => {
       	if(response.data.code == 200) {
@@ -176,11 +146,11 @@ import qs from 'qs'
         }
       })
     },
-    Submit() {
-    	console.log('Here Will Submit')
+    Edit() {
+      this.$router.push({name: 'updatetask', params: { data: this.newTaskForm}})
     },
     History() {
-        this.$router.push({name: 'history', params: { data: this.newTaskForm.taskid }})
+      this.$router.push({name: 'history', params: { data: this.newTaskForm.taskid }})
     },
     commentSubmit(row) {
       this.axios.post(this.$store.state.API + 'log/updateComment',
@@ -198,6 +168,11 @@ import qs from 'qs'
   },
   created: function(){
   	this.init()
+  },
+  watch: {
+    value4: function() {
+      console.log("+++"+this.value4)
+    }
   }
 }
 </script>

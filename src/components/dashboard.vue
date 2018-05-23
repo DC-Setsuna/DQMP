@@ -8,14 +8,15 @@
       </el-col>
       <el-col :span="8">
         <el-card class="box-card box-card-right" shadow="hover">
-          <el-table :data="tableData6" style="width: 100%" height="260px" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" @row-click='Jump'>
-            <el-table-column prop="result_time" label="Result_Time" :span='8'>
-            </el-table-column>
-            <el-table-column prop="taskname" label="TaskName" :span='8'>
-            </el-table-column>
-            <el-table-column prop="status" label="Status" :span='8'>
-            </el-table-column>
-          </el-table>
+          <span height="15px">Results this day</span><hr>
+            <el-table :data="tableData6" style="width: 100%" height="245px" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" @row-click='Jump' border :stripe="true">
+              <el-table-column prop="result_time" label="Result_Time" :span='8'>
+              </el-table-column>
+              <el-table-column prop="taskname" label="TaskName" :span='8'>
+              </el-table-column>
+              <el-table-column prop="status" label="Status">
+              </el-table-column>
+            </el-table>
         </el-card>
       </el-col>
     </el-row>
@@ -27,7 +28,8 @@
       </el-col>
       <el-col :span="8">
         <el-card class="box-card-right" shadow="hover">
-          <el-table :data="tableData7" style="width: 100%" height="260px" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" @row-click='Jump'>
+          <span height="15px">Results this week</span><hr>
+          <el-table :data="tableData7" style="width: 100%" height="245px" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" @row-click='Jump' border :stripe="true">
             <el-table-column prop="result_time" label="Result_Time" :span='8'>
             </el-table-column>
             <el-table-column prop="taskname" label="TaskName" :span='8'>
@@ -46,7 +48,8 @@
       </el-col>
       <el-col :span="8">
         <el-card class="box-card-right" shadow="hover">
-          <el-table :data="tableData8" style="width: 100%" height="260px" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" @row-click='Jump'>
+          <span height="15px">Results this month</span><hr>
+          <el-table :data="tableData8" style="width: 100%" height="245px" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" @row-click='Jump' border :stripe="true">
             <el-table-column prop="result_time" label="Result_Time" :span='8'>
             </el-table-column>
             <el-table-column prop="taskname" label="TaskName" :span='8'>
@@ -135,8 +138,8 @@
           </div>
           <el-table :data="tableData4" height="270" border :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center','height':'5px'}" :cell-style="{'height':'10px'}" style="width: 100%" @row-click='showDetail'>
             <el-table-column type="index" :span="2"></el-table-column>
-            <el-table-column prop="id" label="taskid" :span="11"></el-table-column>
-            <el-table-column prop="freqency" label="freqency"></el-table-column>
+            <el-table-column prop="taskid" label="taskid" :span="11"></el-table-column>
+            <el-table-column prop="result" label="freqency"></el-table-column>
           </el-table>
         </el-card>
       </el-col>
@@ -170,28 +173,7 @@
         tableData1: [],
         tableData2: [],
         tableData3: [],
-        tableData4: [{
-          id: '8B25DD386C5F',
-          freqency: 'daily'
-        },{
-          id: '8B25DD386C4E',
-          freqency: 'daily'
-        },{
-          id: 'AB25DWER6C4E',
-          freqency: 'weekly'
-        },{
-          id: 'AB25DWER6CDW',
-          freqency: 'monthly'
-        },{
-          id: '8B25DD386C4F',
-          freqency: 'monthly'
-        },{
-          id: '8B25DD386CSD',
-          freqency: 'monthly'
-        },{
-          id: 'CD5DWER6CDSS',
-          freqency: 'monthly'
-        }],
+        tableData4: [],
         tableData5: [{
           id: '8B25DD386C5F',
           freqency: 'daily'
@@ -256,22 +238,29 @@
       get_fail_daily() {
         this.axios.get(this.$store.state.API + 'board/daily_fail_list')
         .then((response) => {
-          if(response.data.code == 200)
+          if(response.data.code === 200)
             this.tableData6 = response.data.data
         })
       },
       get_fail_weekly() {
         this.axios.get(this.$store.state.API + 'board/weekly_fail_list')
         .then((response) => {
-          if(response.data.code == 200)
+          if(response.data.code === 200)
             this.tableData7 = response.data.data
         })
       },
       get_fail_monthly() {
         this.axios.get(this.$store.state.API + 'board/monthly_fail_list')
         .then((response) => {
-          if(response.data.code == 200)
+          if(response.data.code === 200)
             this.tableData8 = response.data.data
+        })
+      },
+      get_being_perform() {
+        this.axios.get(this.$store.state.API + 'board/being_performed')
+        ,then((response) => {
+          if(response.data.code === 200)
+            this.tableData4 = response.data.data
         })
       },
       DailyJump(date) {
@@ -329,6 +318,6 @@
     height:350px;
   }
   .error_link {
-
+    text-decoration:none;
   }
 </style>
