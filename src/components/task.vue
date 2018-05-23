@@ -52,12 +52,12 @@
               </el-select>
               <el-checkbox v-model="newTaskForm.run_now">Execute immediately after submission.</el-checkbox>
             </el-form-item>
-            <el-form-item label-width='120px'  label="Time Range :">
+            <!-- <el-form-item label-width='120px'  label="Time Range :">
               <el-date-picker v-model="newTaskForm.date" type="datetimerange"
                 :picker-options="pickerOptions2" range-separator="To" start-placeholder="Start date" end-placeholder="End date"
                 align="right" value-format="yyyy-MM-dd HH:mm:ss">
               </el-date-picker>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item label-width='120px' label="Task type :" prop="task_type">
               <el-select class="newtask_input" v-model="newTaskForm.task_type" placeholder="Please select Task Type">
                 <el-option label="SQL" value="sql"></el-option>
@@ -71,7 +71,7 @@
                <i class="el-icon-upload"></i>
                <div class="el-upload__text">Drag the file here, or <em>click upload</em></div>
                <div class="el-upload__tip" slot="tip">Currently only SQL files are allowed. Upload one file</div>
-              </el-upload> 
+              </el-upload>
             </el-form-item>
             <el-form-item label-width='120px' label="Content :" prop="content">
               <el-input class="newtask_text_input" v-bind:disabled=disable type="textarea" :autosize="{ minRows: 5, maxRows: 10}" placeholder="Please enter content" v-model="newTaskForm.content"></el-input>
@@ -180,7 +180,7 @@ export default {
         content: '',
         run_now: '',
         file_path: '',
-        date:'',
+        // date:'',
         upload_user_id: '1233333'
       },
       tableData: [],
@@ -270,7 +270,7 @@ export default {
           content: '',
           run_now: '',
           file_path: '',
-          date:'',
+          // date:'',
           upload_user_id: '1233333'
         };
         done();
@@ -292,7 +292,7 @@ export default {
           threshold: 0,
           content: '',
           run_now: '',
-          date:'',
+          // date:'',
           upload_user_id: '1233333'
         };
     },
