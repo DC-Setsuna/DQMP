@@ -2,7 +2,7 @@
   <div class="Vheader">
     <div class="Vheader-con">
       <span class="title">
-        Data Monitor Platform
+        Data Quality Monitor Platform
       </span>
       <div class="Vheader-nav">
         <el-menu class="el-menu-demo" text-color="#a4a4a4" mode="horizontal" style="background-color: transparent;" :router="true">

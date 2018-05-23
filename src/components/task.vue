@@ -26,8 +26,11 @@
               </el-select>
             </el-form-item>
             <el-form-item label-width='120px' label="Owner :" prop="owner">
-              <el-input class="newtask_row_input" v-model="newTaskForm.owner"></el-input>
-              <span>Email : </span><el-input class="newtask_row_input" v-model="newTaskForm.email" prop="email"></el-input>
+              <el-input class="newtask_row_input" id="el-input" v-model="newTaskForm.owner"></el-input>
+            </el-form-item>
+            <el-form-item label-width='120px' label="Email :" prop="email">
+              <el-input class="newtask_row_input" v-model="newTaskForm.email">
+              </el-input>
             </el-form-item>
             <el-form-item label-width='120px' label="Description :" prop="description">
               <el-input class="newtask_text_input" type="textarea" :autosize="{ minRows: 3, maxRows: 5}" placeholder="Please enter content" v-model="newTaskForm.description"></el-input>
@@ -49,16 +52,22 @@
               </el-select>
               <el-checkbox v-model="newTaskForm.run_now">Execute immediately after submission.</el-checkbox>
             </el-form-item>
+            <el-form-item label-width='120px'  label="Time Range :">
+              <el-date-picker v-model="newTaskForm.date" type="datetimerange"
+                :picker-options="pickerOptions2" range-separator="To" start-placeholder="Start date" end-placeholder="End date"
+                align="right" value-format="yyyy-MM-dd HH:mm:ss">
+              </el-date-picker>
+            </el-form-item>
             <el-form-item label-width='120px' label="Task type :" prop="task_type">
               <el-select class="newtask_input" v-model="newTaskForm.task_type" placeholder="Please select Task Type">
                 <el-option label="SQL" value="sql"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label-width='120px' label="Result Verify :" prop="threshold">
+            <el-form-item label-width='125px' label="Result Verify :" prop="threshold">
               <el-input-number class="newtask_input" v-model="newTaskForm.threshold" controls-position="right" :step='100' :min="100" :max="1000000000000"></el-input-number>
             </el-form-item>
             <el-form-item label-width='120px' label="Upload :">
-              <el-upload class="upload-demo" ref="upload" :show-file-list="true" drag action="/file/add" :on-success='UploadSuccess' :on-change="Change" :on-remove="Remove" :file-list='fileList' :multiple="false" :limit="1">
+              <el-upload class="upload-demo" ref="upload" :show-file-list="true" drag action="http://9.112.216.244:5000/file/add" :on-success='UploadSuccess' :on-change="Change" :on-remove="Remove" :file-list='fileList' :multiple="false" :limit="1">
                <i class="el-icon-upload"></i>
                <div class="el-upload__text">Drag the file here, or <em>click upload</em></div>
                <div class="el-upload__tip" slot="tip">Currently only SQL files are allowed. Upload one file</div>
@@ -82,6 +91,7 @@
             <el-col :span="7">
               <label>Frequency :</label>
               <el-select v-model="filtrateForm.freqency" placeholder="Please select">
+                <el-option label="ALL" value=""></el-option>                
                 <el-option label="Daily" value="daily"></el-option>
                 <el-option label="Weekly" value="weekly"></el-option>
                 <el-option label="Monthly" value="monthly"></el-option>
@@ -90,6 +100,7 @@
             <el-col :span="7">
               <label>Enable :</label>
               <el-select v-model="filtrateForm.enabled" placeholder="Please select">
+              <el-option label="ALL" value=""></el-option>
                <el-option label="YES" value="1"></el-option>
                <el-option label="NO" value="0"></el-option>
               </el-select>
@@ -97,6 +108,7 @@
             <el-col :span="7">
               <label>Category :</label>
               <el-select v-model="filtrateForm.category" placeholder="Please select">
+               <el-option label="ALL" value=""></el-option>
                <el-option label="Account" value="Account"></el-option>
                <el-option label="Opportunities" value="Opportunities"></el-option>
                <el-option label="LineItmes" value="LineItmes"></el-option>
@@ -110,9 +122,14 @@
           </el-form>
         </el-row>
         <el-row class="account-row">
-          <el-table :data="tableData" border :height="window_height" :header-cell-style="{'text-align':'center'}" @row-click='showDetail' :row-style="{'text-align':'center'}" style="width: 96%" @selection-change="handleSelectionChange">
+          <el-table :data="tableData" border :height="window_height" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" style="width: 96%" @selection-change="handleSelectionChange">
             <el-table-column type="selection" width="55"></el-table-column>
-            <el-table-column fixed prop="taskid" label="Task ID" width="180px">
+            <el-table-column fixed label="Task ID" width="180px">
+              <template slot-scope="scope">
+                <span>
+                  <a class="error_link" href="javascript:void(0);" @click="showDetail(scope.row.taskid)">{{scope.row.taskid}}</a>
+                </span>
+              </template>
             </el-table-column>
             <el-table-column prop="owner" label="Owner" width="150px">
             </el-table-column>
@@ -163,6 +180,7 @@ export default {
         content: '',
         run_now: '',
         file_path: '',
+        date:'',
         upload_user_id: '1233333'
       },
       tableData: [],
@@ -204,6 +222,33 @@ export default {
           file_path: [
             { required: true, message: 'Please select a File', trigger: 'blur' }
           ]
+      },
+      pickerOptions2: {
+          shortcuts: [{
+            text: 'Last week',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              end.setTime(start.getTime() + 3600 * 1000 * 24 * 7);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: 'Last month',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              end.setTime(start.getTime() + 3600 * 1000 * 24 * 30);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: 'Last 3 months',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              end.setTime(start.getTime() + 3600 * 1000 * 24 * 90);
+              picker.$emit('pick', [start, end]);
+            }
+          }]
         }
     }
   },
@@ -225,6 +270,7 @@ export default {
           content: '',
           run_now: '',
           file_path: '',
+          date:'',
           upload_user_id: '1233333'
         };
         done();
@@ -246,10 +292,10 @@ export default {
           threshold: 0,
           content: '',
           run_now: '',
+          date:'',
           upload_user_id: '1233333'
         };
-    }
-    ,
+    },
     Change(file, fileList) {
       if(fileList != '' && fileList != null){
         this.disable = true
@@ -319,8 +365,8 @@ export default {
     getWindowSize() {
       this.window_height = window.screen.availHeight * 0.8;
     },
-    showDetail(row, event, column) {
-      this.$router.push({name: 'viewtaskmodule', params: { data: row.taskid }})
+    showDetail(taskid) {
+      this.$router.push({name: 'viewtaskmodule', params: { data: taskid }})
     },
     getaccount_tab_data() {
       this.axios.post(this.$store.state.API + 'log/list').then((response) => {
@@ -365,9 +411,18 @@ export default {
       console.log(this.multipleSelection)
     },
     handleDelete(row) {
-      console.log(row)
-    }
-
+      this.axios.post(this.$store.state.API + 'task/delete/',qs.stringify({
+      taskid:row.taskid})).then((response) => {
+          if(response.data.code === 200) {
+            this.$message({
+              showClose: true,
+              message: 'Delect Success',
+              type: 'success'
+            })
+            this.getaccount_tab_data();
+          }
+        });
+      }
   },
   created: function () {
    this.getWindowSize();
@@ -414,5 +469,8 @@ export default {
 }
 .clearfix:after {
   clear: both
+}
+.error_link {
+  text-decoration:none;
 }
 </style>

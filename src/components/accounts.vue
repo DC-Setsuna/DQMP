@@ -220,12 +220,6 @@ export default {
 	width: 98%;
 	margin-bottom: 10px;
 }
-.el-card__body {
-	padding: 10px;
-}
-.instrument_table {
-	margin-top: 10px
-}
 .middle-card {
 	margin: 1%;
 	height:350px;
