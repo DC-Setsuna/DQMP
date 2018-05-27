@@ -11,13 +11,14 @@ import History from '@/components/history'
 import Task from '@/components/task'
 import Errortask from '@/components/errortask'
 import updatetask from '@/components/updateTask'
+import Login from '@/components/login'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
-      path: '/',
+      path: '/homeapge',
       name: 'homepage',
       component: Homepage,
       children: [
@@ -77,6 +78,11 @@ export default new Router({
           component: updatetask
         }
       ]
+    },
+    {
+      path: '/',
+      name: 'login',
+      component: Login,
     }
   ]
 })

@@ -181,14 +181,15 @@ export default {
         run_now: '',
         file_path: '',
         // date:'',
-        upload_user_id: '1233333'
+        upload_user_id: ''
       },
       tableData: [],
       window_height: 0,
       filtrateForm: {
         freqency: '',
         enabled: '',
-        category: ''
+        category: '',
+        sessionid: ''
       },
       fileList: [],
       disable: false,
@@ -223,6 +224,7 @@ export default {
             { required: true, message: 'Please select a File', trigger: 'blur' }
           ]
       },
+      sessionid: '',
       pickerOptions2: {
           shortcuts: [{
             text: 'Last week',
@@ -271,8 +273,9 @@ export default {
           run_now: '',
           file_path: '',
           // date:'',
-          upload_user_id: '1233333'
+          upload_user_id: this.sessionid
         };
+        this.fileList = []
         done();
       }).catch(_ => {});
     },
@@ -293,8 +296,9 @@ export default {
           content: '',
           run_now: '',
           // date:'',
-          upload_user_id: '1233333'
+          upload_user_id: this.sessionid
         };
+        this.fileList = []
     },
     Change(file, fileList) {
       if(fileList != '' && fileList != null){
@@ -308,6 +312,9 @@ export default {
         })
     },
     Submit(file) {
+      console.log(this.fileList)
+      // this.newTaskForm.file_path = this.fileList[0]
+      this.newTaskForm.upload_user_id = this.sessionid
       if(!this.newTaskForm.taskid || !this.newTaskForm.taskname ||
           !this.newTaskForm.category || !this.newTaskForm.owner ||
           !this.newTaskForm.email || !this.newTaskForm.enabled ||
@@ -340,7 +347,7 @@ export default {
             content: '',
             run_now: '',
             file_path: '',
-            upload_user_id: '1233333'
+            upload_user_id: this.sessionid
           };
           this.fileList = []
           this.dialogVisible = false
@@ -369,11 +376,16 @@ export default {
       this.$router.push({name: 'viewtaskmodule', params: { data: taskid }})
     },
     getaccount_tab_data() {
-      this.axios.post(this.$store.state.API + 'log/list').then((response) => {
+      this.axios.get(this.$store.state.API + 'log/list',{
+        params: {
+              sessionid:this.sessionid
+          }
+        }).then((response) => {
         this.tableData = response.data.data;
       })
     },
     filtrateTask() {
+      this.filtrateForm.sessionid = this.sessionid
       this.axios.post(this.$store.state.API + 'log/filtrate',qs.stringify(this.filtrateForm)).then((response) => {
         this.tableData = response.data.data;
       })
@@ -421,12 +433,30 @@ export default {
             })
             this.getaccount_tab_data();
           }
-        });
+      });
+    },
+    //获取cookie
+    getCookie(cname) {
+      var name = cname + "=";
+      var ca = document.cookie.split(';');
+      for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+          while (c.charAt(0) == ' ') 
+            c = c.substring(1);
+          if (c.indexOf(name) != -1) 
+            return c.substring(name.length, c.length);
       }
+      return "";
+    }
   },
   created: function () {
-   this.getWindowSize();
-   this.getaccount_tab_data();
+    if(this.getCookie('sessionid')){
+      this.sessionid = this.getCookie('sessionid')
+      this.getWindowSize();
+      this.getaccount_tab_data();
+    } else {
+      this.$router.push({name: 'login'})
+    }
   },
   watch: {
     filtrateForm: {

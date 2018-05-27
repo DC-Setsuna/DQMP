@@ -32,12 +32,20 @@
       data() {
       	return {
           tableData: [],
-          window_height: 0
+          window_height: 0,
+          sessionId:''
       	}
       },
       methods:{
       	init() {
-	      this.axios.post(this.$store.state.API + 'log/error_list',qs.stringify({date:this.$route.params.data, fre:this.$route.params.fre})).then((response) => {
+	      this.axios.post(this.$store.state.API + 'log/error_list',qs.stringify({date:this.$route.params.data, fre:this.$route.params.fre,sessionid:this.sessionId}))
+	      .then((response) => {
+	        this.tableData = response.data.data;
+	      })
+      	},
+      	speinit() {
+      	  this.axios.post(this.$store.state.API + 'log/spe_error_list',qs.stringify({date:this.$route.params.data, fre:this.$route.params.fre, module:this.$route.params.module,sessionid:this.sessionId}))
+      	  .then((response) => {
 	        this.tableData = response.data.data;
 	      })
       	},
@@ -46,11 +54,28 @@
 	    },
 	    getWindowSize() {
 	      this.window_height = window.screen.availHeight * 0.83;
-	    }
+	    },
+		//获取cookie
+		getCookie(cname) {
+		  var name = cname + "=";
+		  var ca = document.cookie.split(';');
+		  for (var i = 0; i < ca.length; i++) {
+		      var c = ca[i];
+		      while (c.charAt(0) == ' ') 
+		          c = c.substring(1);
+		      if (c.indexOf(name) != -1) 
+		          return c.substring(name.length, c.length);
+		  }
+		  return "";
+		}
       },
       created: function() {
-        this.init()
-        this.getWindowSize()
+        this.sessionId = this.getCookie('sessionid')
+		if(this.$route.params.specific == '0')
+		  this.init()
+		else
+		  this.speinit()
+		this.getWindowSize()
       }
 	}
 </script>

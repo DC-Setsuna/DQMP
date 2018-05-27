@@ -10,8 +10,7 @@ export default new Vuex.Store({
 	state: {
 	  dailydata: [],
       // API: 'http://192.168.1.106:5000/',
-      // API: 'http://localhost:5000/',
->>>>>>> 9b18f344b35af00d66c4c3202272fd2220f4a7a1
+      // API: 'http://localhost:5000/'
       API: '/'
 	},
 	mutations: {

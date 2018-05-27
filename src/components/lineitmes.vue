@@ -8,7 +8,8 @@
 			</el-col>
 			<el-col :span="8">
 				<el-card class="box-card box-card-right" shadow="hover">
-					<el-table :data="tableData6" style="width: 100%" height="255px" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" >
+					<span height="15px">Results of today</span><hr>
+					<el-table :data="tableData6" style="width: 100%" height="255px" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" border :stripe="true" @row-click='Jump'>
 			            <el-table-column prop="result_time" label="Result_Time" :span='8'>
 			            </el-table-column>
 			            <el-table-column prop="taskname" label="TaskName" :span='8'>
@@ -27,7 +28,8 @@
 			</el-col>
 			<el-col :span="8">
 				<el-card class="box-card-right" shadow="hover">
-					<el-table :data="tableData7" style="width: 100%" height="255px" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" >
+					<span height="15px">Results this week</span><hr>
+					<el-table :data="tableData7" style="width: 100%" height="255px" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" border :stripe="true" @row-click='Jump'>
 			            <el-table-column prop="result_time" label="Result_Time" :span='8'>
 			            </el-table-column>
 			            <el-table-column prop="taskname" label="TaskName" :span='8'>
@@ -46,7 +48,8 @@
 			</el-col>
 			<el-col :span="8">
 				<el-card class="box-card-right" shadow="hover">
-					<el-table :data="tableData8" style="width: 100%" height="255px" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" >
+					<span height="15px">Results this month</span><hr>
+					<el-table :data="tableData8" style="width: 100%" height="255px" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" border :stripe="true" @row-click='Jump'>
 			            <el-table-column prop="result_time" label="Result_Time" :span='8'>
 			            </el-table-column>
 			            <el-table-column prop="taskname" label="TaskName" :span='8'>
@@ -69,8 +72,13 @@
 								</el-table-column>
 								<el-table-column prop="Totalnumberoftasks" label="Total number of tasks" :span="8">
 								</el-table-column>
-								<el-table-column prop="Totalnumberoferrortasks" label="Total number of error tasks" :span="8">
-								</el-table-column>
+								<el-table-column label="Total number of error tasks" :span="8">
+				                  <template slot-scope="scope">
+				                    <span>
+				                      <a class="error_link" href="javascript:void(0);" @click="DailyJump(scope.row.Statistictime)">{{scope.row.Totalnumberoferrortasks}}</a>
+				                    </span>
+				                  </template>
+				                </el-table-column>
 							</el-table>
 						</el-tab-pane>
 						<el-tab-pane label="Weekly">
@@ -80,8 +88,13 @@
 								</el-table-column>
 								<el-table-column prop="Totalnumberoftasks" label="Total number of tasks" :span="8">
 								</el-table-column>
-								<el-table-column prop="Totalnumberoferrortasks" label="Total number of error tasks" :span="8">
-								</el-table-column>
+								<el-table-column label="Total number of error tasks" :span="8">
+				                  <template slot-scope="scope">
+				                    <span>
+				                      <a class="error_link" href="javascript:void(0);" @click="WeeklyJump(scope.row.Statistictime)">{{scope.row.Totalnumberoferrortasks}}</a>
+				                    </span>
+				                  </template>
+				                </el-table-column>
 							</el-table>
 						</el-tab-pane>
 						<el-tab-pane label="Monthly">
@@ -91,8 +104,13 @@
 								</el-table-column>
 								<el-table-column prop="Totalnumberoftasks" label="Total number of tasks" :span="8">
 								</el-table-column>
-								<el-table-column prop="Totalnumberoferrortasks" label="Total number of error tasks" :span="8">
-								</el-table-column>
+								<el-table-column label="Total number of error tasks" :span="8">
+				                  <template slot-scope="scope">
+				                    <span>
+				                      <a class="error_link" href="javascript:void(0);" @click="MonthlyJump(scope.row.Statistictime)">{{scope.row.Totalnumberoferrortasks}}</a>
+				                    </span>
+				                  </template>
+				                </el-table-column>
 							</el-table>	
 						</el-tab-pane>
 					</el-tabs>
@@ -115,9 +133,10 @@ export default {
 			tableData: [],
 			tableData1: [],
 			tableData2: [],
-			tableData6:[],
-	        tableData7:[],
-	        tableData8:[]
+			tableData6: [],
+	        tableData7: [],
+	        tableData8: [],
+	        sessionid: ''
 		}
 	},
 	components: { DailyBoard , WeeklyBoard , MonthlyBoard},
@@ -125,7 +144,8 @@ export default {
 		getTabWeeklyData() {
 			this.axios.get(this.$store.state.API + 'board/category_weekly_list',{
 			  params: {
-                  category: 'Lineitmes'
+                  category: 'Lineitmes',
+                  sessionid:this.sessionId
 			    }
 			  })
 			.then((response) => {
@@ -136,7 +156,8 @@ export default {
 		getTabMonthlyData() {
 			this.axios.get(this.$store.state.API + 'board/category_monthly_list',{
 			  params: {
-                  category: 'Lineitmes'
+                  category: 'Lineitmes',
+                  sessionid:this.sessionId
 			    }
 			  })
 			.then((response) => {
@@ -147,7 +168,8 @@ export default {
 		init() {
 			this.axios.get(this.$store.state.API + 'board/category_daily_list',{
 			  params: {
-                  category: 'Lineitmes'
+                  category: 'Lineitmes',
+                  sessionid:this.sessionId
 			    }
 			  })
 			.then((response) => {
@@ -161,7 +183,8 @@ export default {
 		get_fail_daily() {
 			this.axios.get(this.$store.state.API + 'board/category_daily_fail_list',{
 			  params: {
-                  category: 'Lineitmes'
+                  category: 'Lineitmes',
+                  sessionid:this.sessionId
 			    }
 			  })
 			.then((response) => {
@@ -172,7 +195,8 @@ export default {
 		get_fail_weekly() {
 			this.axios.get(this.$store.state.API + 'board/category_weekly_fail_list',{
 			  params: {
-                  category: 'Lineitmes'
+                  category: 'Lineitmes',
+                  sessionid:this.sessionId
 			    }
 			  })
 			.then((response) => {
@@ -183,22 +207,53 @@ export default {
 		get_fail_monthly() {
 			this.axios.get(this.$store.state.API + 'board/category_monthly_fail_list',{
 			  params: {
-                  category: 'Lineitmes'
+                  category: 'Lineitmes',
+                  sessionid:this.sessionId
 			    }
 			  })
 			.then((response) => {
 			  if(response.data.code == 200)
 			    this.tableData8 = response.data.data
 			})
+		},
+        Jump(row, event, column) {
+          this.$router.push({name: 'viewtaskmodule', params: { data: row.taskid }})
+        },
+		DailyJump(date) {
+          this.$router.push({name: 'errortask', params: { data: date,fre:'daily',specific:'1',module:'Lineitmes'}})
+		},
+		WeeklyJump(date) {
+		  this.$router.push({name: 'errortask', params: { data: date,fre:'weekly',specific:'1',module:'Lineitmes'}})
+		},
+		MonthlyJump(date) {
+		  this.$router.push({name: 'errortask', params: { data: date,fre:'monthly',specific:'1',module:'Lineitmes'}})
+		},
+		//获取cookie
+		getCookie(cname) {
+		  var name = cname + "=";
+		  var ca = document.cookie.split(';');
+		  for (var i = 0; i < ca.length; i++) {
+		      var c = ca[i];
+		      while (c.charAt(0) == ' ') 
+		          c = c.substring(1);
+		      if (c.indexOf(name) != -1) 
+		          return c.substring(name.length, c.length);
+		  }
+		  return "";
 		}
 	},
 	created: function() {
+	  if(this.getCookie('sessionid')){
+        this.sessionId = this.getCookie('sessionid')
 		this.init()
 		this.getTabWeeklyData()
 		this.getTabMonthlyData()
 		this.get_fail_daily()
         this.get_fail_weekly()
         this.get_fail_monthly()
+      } else {
+      	this.$router.push({name: 'login'})
+      }
 	}
 }
 </script>
@@ -217,8 +272,17 @@ export default {
 	width: 98%;
 	margin-bottom: 10px;
 }
+.error_link {
+    text-decoration:none;
+}
 .middle-card {
 	margin: 1%;
 	height:350px;
+}
+.el-card__body {
+    padding: 20px;
+}
+.instrument_table {
+    margin-top: 20px
 }
 </style>
