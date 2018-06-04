@@ -34,7 +34,6 @@ import qs from 'qs'
 		        .then((response) => {
 		          if(response.data.code === 200) {
 		          	this.setCookie('sessionid', response.data.data, 1)
-
 			        this.$notify({
 			          title: 'Successful',
 			          message: 'Login Successful',
