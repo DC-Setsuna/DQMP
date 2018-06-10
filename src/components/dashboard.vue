@@ -10,11 +10,11 @@
         <el-card class="box-card box-card-right" shadow="hover">
           <span height="15px">Results of today</span><hr>
             <el-table :data="tableData6" style="width: 100%" height="245px" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" @row-click='Jump' border :stripe="true">
-              <el-table-column prop="result_time" label="Result_Time" :span='8'>
+              <el-table-column prop="Module" label="Category" :span='8'>
               </el-table-column>
-              <el-table-column prop="taskname" label="TaskName" :span='8'>
+              <el-table-column prop="totalCount" label="TotalCount" :span='8'>
               </el-table-column>
-              <el-table-column prop="status" label="Status">
+              <el-table-column prop="failCount" label="FailCount">
               </el-table-column>
             </el-table>
         </el-card>
@@ -30,11 +30,11 @@
         <el-card class="box-card-right" shadow="hover">
           <span height="15px">Results this week</span><hr>
           <el-table :data="tableData7" style="width: 100%" height="245px" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" @row-click='Jump' border :stripe="true">
-            <el-table-column prop="result_time" label="Result_Time" :span='8'>
+            <el-table-column prop="Module" label="Category" :span='8'>
             </el-table-column>
-            <el-table-column prop="taskname" label="TaskName" :span='8'>
+            <el-table-column prop="totalCount" label="TotalCount" :span='8'>
             </el-table-column>
-            <el-table-column prop="status" label="Status" :span='8'>
+            <el-table-column prop="failCount" label="FailCount">
             </el-table-column>
           </el-table>
         </el-card>
@@ -50,11 +50,11 @@
         <el-card class="box-card-right" shadow="hover">
           <span height="15px">Results this month</span><hr>
           <el-table :data="tableData8" style="width: 100%" height="245px" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" @row-click='Jump' border :stripe="true">
-            <el-table-column prop="result_time" label="Result_Time" :span='8'>
+            <el-table-column prop="Module" label="Category" :span='8'>
             </el-table-column>
-            <el-table-column prop="taskname" label="TaskName" :span='8'>
+            <el-table-column prop="totalCount" label="TotalCount" :span='8'>
             </el-table-column>
-            <el-table-column prop="status" label="Status" :span='8'>
+            <el-table-column prop="failCount" label="FailCount">
             </el-table-column>
           </el-table>
         </el-card>
@@ -122,36 +122,56 @@
       <el-col :span="8">
         <el-card class="middle-card" shadow="hover">
           <div slot="header" class="clearfix">
-            <span>Job in queue</span>
+            <span>Jobs in queue</span>
           </div>
           <el-table :data="tableData3" height="270" border :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center','height':'5px'}" :cell-style="{'height':'10px'}" style="width: 100%" @row-click='showDetail'>
             <el-table-column type="index" :span="2"></el-table-column>
-            <el-table-column prop="id" label="Task Id" :span="11"></el-table-column>
-            <el-table-column prop="name" label="Task Name"></el-table-column>
+            <el-table-column prop="name" label="Task Name" :span="11"></el-table-column>
+            <el-table-column prop="description" label="Task Description"></el-table-column>
           </el-table>
         </el-card>
       </el-col>
       <el-col :span="8">
         <el-card class="middle-card" shadow="hover">
           <div slot="header" class="clearfix">
-            <span>The job being performed</span>
+            <span>Jobs being performed</span>
           </div>
           <el-table :data="tableData4" height="270" border :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center','height':'5px'}" :cell-style="{'height':'10px'}" style="width: 100%" @row-click='showDetail'>
             <el-table-column type="index" :span="2"></el-table-column>
-            <el-table-column prop="taskid" label="taskid" :span="11"></el-table-column>
-            <el-table-column prop="result" label="taskname"></el-table-column>
+            <el-table-column prop="name" label="Task Name" :span="11"></el-table-column>
+            <el-table-column prop="description" label="Task Description"></el-table-column>
           </el-table>
         </el-card>
       </el-col>
       <el-col :span="8">
         <el-card class="middle-card" shadow="hover">
           <div slot="header" class="clearfix">
-            <span>Job execution results</span>
+            <span>Error Task</span>
           </div>
           <el-table :data="tableData5" height="270" border :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center','height':'5px'}" :cell-style="{'height':'10px'}" style="width: 100%" @row-click='showDetail' >
             <el-table-column type="index" :span="2"></el-table-column>
-            <el-table-column prop="taskid" label="taskid" :span="11"></el-table-column>
-            <el-table-column prop="taskname" label="taskname"></el-table-column>
+            <el-table-column label="TaskName" :span='6'>
+              <template slot-scope="scope">
+                <span>
+                  <el-popover placement="left" title="TaskName:" width="100%" trigger="hover" :content="scope.row.taskname">
+                    <span class="description" slot="reference">
+                      {{scope.row.taskname}}
+                    </span>
+                  </el-popover>
+                </span>
+              </template>
+            </el-table-column>
+            <el-table-column label="Dscription" :span='6'>
+              <template slot-scope="scope">
+                <span>
+                  <el-popover placement="left" title="Description:" width="100%" trigger="hover" :content="scope.row.description">
+                    <span class="description" slot="reference">
+                      {{scope.row.description}}
+                    </span>
+                  </el-popover>
+                </span>
+              </template>
+            </el-table-column>
           </el-table>
         </el-card>
       </el-col>
@@ -219,7 +239,7 @@
         })
       },
       showDetail(row, event, column) {
-        this.$router.push({name: 'viewtaskmodule', params: { data: row.id }})
+        this.$router.push({name: 'viewtaskmodule', params: { data: row.taskid }})
       },
       get_job_tab() {
         this.axios.get(this.$store.state.API + 'scheduler/jobs')
@@ -271,8 +291,8 @@
             this.tableData4 = response.data.data
         })
       },
-      get_execution_results() {
-        this.axios.get(this.$store.state.API + 'board/execution_results',{
+      get_error_tasks() {
+        this.axios.get(this.$store.state.API + 'board/error_tasks',{
         params: {
               sessionid:this.sessionId
           }
@@ -292,7 +312,7 @@
         this.$router.push({name: 'errortask', params: { data: date,fre:'monthly',specific:'0'}})
       },
       Jump(row, event, column) {
-        this.$router.push({name: 'viewtaskmodule', params: { data: row.taskid }})
+      //   this.$router.push({name: 'viewtaskmodule', params: { data: row.taskid }})
       },
       //获取cookie
       getCookie(cname) {
@@ -319,7 +339,7 @@
         this.get_fail_weekly()
         this.get_fail_monthly()
         this.get_being_perform()
-        this.get_execution_results()
+        this.get_error_tasks()
       } else {
         this.$router.push({name: 'login'})
       }
@@ -358,5 +378,13 @@
   }
   .error_link {
     text-decoration:none;
+  }
+  .description {
+    width:90%;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    /*兼容性*/
+    -webkit-text-overflow:ellipsis;
   }
 </style>

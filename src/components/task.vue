@@ -11,7 +11,9 @@
              {{newTaskForm.taskid}}
             </el-form-item>
             <el-form-item label-width='120px' label="Task Name :" prop="taskname">
-              <el-input class="newtask_row_input" v-model="newTaskForm.taskname"></el-input>
+              <div class="newtask_row_input" >
+                <el-input v-model="newTaskForm.taskname"></el-input>
+              </div>
             </el-form-item>
             <el-form-item label-width='120px' label="Category :" prop="category">
               <el-select class="newtask_input" v-model="newTaskForm.category" placeholder="Please select a Category">
@@ -26,11 +28,15 @@
               </el-select>
             </el-form-item>
             <el-form-item label-width='120px' label="Owner :" prop="owner">
-              <el-input class="newtask_row_input" id="el-input" v-model="newTaskForm.owner"></el-input>
+              <div class="newtask_row_input">
+                <el-input id="el-input" v-model="newTaskForm.owner"></el-input>
+              </div>
             </el-form-item>
             <el-form-item label-width='120px' label="Email :" prop="email">
-              <el-input class="newtask_row_input" v-model="newTaskForm.email">
-              </el-input>
+              <div class="newtask_row_input">
+                <el-input v-model="newTaskForm.email">
+                </el-input>
+              </div>
             </el-form-item>
             <el-form-item label-width='120px' label="Description :" prop="description">
               <el-input class="newtask_text_input" type="textarea" :autosize="{ minRows: 3, maxRows: 5}" placeholder="Please enter content" v-model="newTaskForm.description"></el-input>
@@ -50,7 +56,7 @@
                 <el-option label="Weekly" value="weekly"></el-option>
                 <el-option label="Monthly" value="monthly"></el-option>
               </el-select>
-              <el-checkbox v-model="newTaskForm.run_now">Execute immediately after submission.</el-checkbox>
+              <el-checkbox v-model="newTaskForm.run_now">RUN NOW</el-checkbox>
             </el-form-item>
             <!-- <el-form-item label-width='120px'  label="Time Range :">
               <el-date-picker v-model="newTaskForm.date" type="datetimerange"
@@ -67,14 +73,17 @@
               <el-input-number class="newtask_input" v-model="newTaskForm.threshold" controls-position="right" :step='100' :min="100" :max="1000000000000"></el-input-number>
             </el-form-item>
             <el-form-item label-width='120px' label="Upload :">
-              <el-upload class="upload-demo" ref="upload" :show-file-list="true" drag action="/file/add" :on-success='UploadSuccess' :on-change="Change" :on-remove="Remove" :file-list='fileList' :multiple="false" :limit="1">
+              <el-upload class="upload-demo" ref="upload" :show-file-list="true" drag action="/file/add" :on-success='UploadSuccess' :on-remove="Remove" :file-list='fileList' :multiple="false" :limit="1">
                <i class="el-icon-upload"></i>
                <div class="el-upload__text">Drag the file here, or <em>click upload</em></div>
                <div class="el-upload__tip" slot="tip">Currently only SQL files are allowed. Upload one file</div>
+               <div class="el-upload__tip" slot="tip">
+                 Must be “SELECT COUNT”.  Don't have "SELECT *" and "DELETE" and "UPDATE" in the file.
+               </div>
               </el-upload>
             </el-form-item>
             <el-form-item label-width='120px' label="Content :" prop="content">
-              <el-input class="newtask_text_input" v-bind:disabled=disable type="textarea" :autosize="{ minRows: 5, maxRows: 10}" placeholder="Please enter content" v-model="newTaskForm.content"></el-input>
+              <el-input class="newtask_text_input" type="textarea" :autosize="{ minRows: 5, maxRows: 10}" placeholder="Please enter content" v-model="newTaskForm.content"></el-input>
             </el-form-item>
           </el-form>
           <span slot="footer" class="dialog-footer">
@@ -147,11 +156,11 @@
             <el-table-column prop="update_time" label="Last Update Date" width="180px"></el-table-column>
             <el-table-column prop="upload_time" label="Create Date" width="180px">
             </el-table-column>
-            <el-table-column label="Operation" fixed="right" width="100px">
+            <!-- <el-table-column label="Operation" fixed="right" width="100px">
                 <template slot-scope="scope">
                   <el-button size="mini" type="danger" @click="handleDelete(scope.row)">Delete</el-button>
                 </template>
-            </el-table-column>
+            </el-table-column> -->
           </el-table>
         </el-row>
       </el-row>
@@ -192,7 +201,6 @@ export default {
         sessionid: ''
       },
       fileList: [],
-      disable: false,
       multipleSelection: [],
       rules: {
           taskname: [
@@ -300,15 +308,15 @@ export default {
         };
         this.fileList = []
     },
-    Change(file, fileList) {
-      if(fileList != '' && fileList != null){
-        this.disable = true
-      }
-    },
+    // Change(file, fileList) {
+    //   if(fileList != '' && fileList != null){
+    //     this.disable = true
+    //   }
+    // },
     Remove(file, fileList) {
       this.axios.post(this.$store.state.API + 'file/remove',qs.stringify({filename:file.name})
         ).then((response) =>{
-          this.disable = false
+          this.newTaskForm.content = ''
         })
     },
     Submit(file) {
@@ -415,26 +423,34 @@ export default {
       return uuid.join('');
     },
     UploadSuccess(response,file,fileList) {
-      this.newTaskForm.file_path = response.data
+      if (response.code == 200) {
+        this.newTaskForm.file_path = response.data
+        this.newTaskForm.content = response.sql
+      } 
+      if (response.code == 300) {
+        this.$message.error(response.message);
+        this.fileList = []
+      }
     },
 
     handleSelectionChange(val) {
       this.multipleSelection = val;
       console.log(this.multipleSelection)
     },
-    handleDelete(row) {
-      this.axios.post(this.$store.state.API + 'task/delete/',qs.stringify({
-      taskid:row.taskid})).then((response) => {
-          if(response.data.code === 200) {
-            this.$message({
-              showClose: true,
-              message: 'Delect Success',
-              type: 'success'
-            })
-            this.getaccount_tab_data();
-          }
-      });
-    },
+    // 删除task函数
+    // handleDelete(row) {
+    //   this.axios.post(this.$store.state.API + 'task/delete/',qs.stringify({
+    //   taskid:row.taskid})).then((response) => {
+    //       if(response.data.code === 200) {
+    //         this.$message({
+    //           showClose: true,
+    //           message: 'Delect Success',
+    //           type: 'success'
+    //         })
+    //         this.getaccount_tab_data();
+    //       }
+    //   });
+    // },
     //获取cookie
     getCookie(cname) {
       var name = cname + "=";
@@ -473,11 +489,11 @@ export default {
   width: 72%;
 }
 .newtask_row_input {
-  width: 30%;
+  width: 35%;
   margin-right: 40px;
 }
 .newtask_input {
-  width: 30%;
+  width: 35%;
 }
 .task_button {
   margin-left: 20%;

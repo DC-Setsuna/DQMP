@@ -177,7 +177,7 @@ import qs from 'qs'
 }
 </script>
 <style type="text/css">
-  .newtask_text_input {
+  #newtask_text_input {
 		width: 60%;
 	}
 	.newtask_row_input {

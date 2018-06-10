@@ -8,9 +8,9 @@
     </div>
     <el-card class="history-box-card">
       <div slot="header" class="clearfix">
-       <div>Task ID：
+       <div>Task Name：
           <a href="javascript:void(0);" @click="Jump">
-            <span>{{taskid}}</span>
+            <span>{{taskname}}</span>
           </a>
         </div>
       </div>
@@ -55,7 +55,7 @@
               id:'',
               comment:''
             },
-            taskid:'',
+            taskname:'',
             category:'',
             description:''
 		  }
@@ -72,7 +72,7 @@
         this.axios.post(this.$store.state.API + 'log/select',qs.stringify({taskid:this.$route.params.data})).then((response) => {
             if(response.data.code == 200) {
     	        this.task = response.data.data
-              this.taskid = this.task[0].taskid
+              this.taskname = this.task[0].taskname
               this.category = this.task[0].category
               this.description = this.task[0].description
             }
