@@ -69,7 +69,7 @@
 	    </el-form>
       <div class="clearfix">
         <span class="dialog-footer">
-          <el-button>Run</el-button>
+          <el-button @click="runTask">Run</el-button>
           <el-button @click="Cancel">Cancel</el-button>
 	      <el-button @click="Submit">Submit</el-button>
         </span>
@@ -83,7 +83,8 @@
 		data() {
 			return {
         newTaskForm:{},
-        fileList:[]
+        fileList:[],
+        sessionId: ''
 			}
 		},
 		methods: {
@@ -103,23 +104,71 @@
 	      }
 	    },
 	    Remove(file, fileList) {
-	      this.axios.post(this.$store.state.API + 'file/remove',qs.stringify({filename:file.name})
+	      this.axios.post(this.$store.state.API + 'file/remove',qs.stringify({filename:file.name,sessionid: this.sessionId})
 	        ).then((response) =>{
 	          this.newTaskForm.content = ''
 	        })
 	    },
 	    Submit() {
-	      this.axios.post(this.$store.state.API + 'task/update/',qs.stringify(this.newTaskForm)).then((response) => {
-	        if(response.data.code == 200) {
-	          this.$router.push({name: 'viewtaskmodule', params: { data: this.newTaskForm.taskid }})
-	        }
-	      })
+        if(this.sessionId == '')
+        this.$router.push({name: 'login'})
+        else {
+          this.axios.post(this.$store.state.API + 'user/checkSession',qs.stringify({sessionid: this.sessionId}))
+          .then((response) => {
+            if(response.data.code === 401)
+              this.$router.push({name: 'login'})
+            if(response.data.code === 200)
+              this.newTaskForm.sessionid = this.sessionId
+              this.axios.post(this.$store.state.API + 'task/update/',qs.stringify(this.newTaskForm))
+              .then((response) => {
+                if(response.data.code == 200) {
+                  this.$router.push({name: 'viewtaskmodule', params: { data: this.newTaskForm.taskid }})
+                }
+              })
+          })
+      }
 	    },
+      runTask() {
+        if(this.sessionId == '')
+        this.$router.push({name: 'login'})
+        else {
+          this.axios.post(this.$store.state.API + 'user/checkSession',qs.stringify({sessionid: this.sessionId}))
+          .then((response) => {
+            if(response.data.code === 401)
+              this.$router.push({name: 'login'})
+            if(response.data.code === 200)
+              this.axios.post(this.$store.state.API + 'task/run/',qs.stringify(this.newTaskForm))
+              .then((response)=> {
+                if(response.data.code == 200) {
+                  this.$message({
+                    message: 'Run Task Success',
+                    type: 'success',
+                    duration:2000
+                  });
+                }
+              })
+          })
+        }
+      },
 	    Cancel() {
         this.$router.push({name: 'viewtaskmodule', params: { data: this.newTaskForm.taskid }})
-	    }
+	    },
+      //获取cookie
+      getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+          var c = ca[i];
+          while (c.charAt(0) == ' ') 
+            c = c.substring(1);
+          if (c.indexOf(name) != -1) 
+            return c.substring(name.length, c.length);
+        }
+        return "";
+      }
 		},
 		created: function() {
+      this.sessionId = this.getCookie('sessionid')
 			this.newTaskForm = this.$route.params.data
 		}
 	}

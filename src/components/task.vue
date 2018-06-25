@@ -320,14 +320,13 @@ export default {
         })
     },
     Submit(file) {
-      console.log(this.fileList)
       // this.newTaskForm.file_path = this.fileList[0]
       this.newTaskForm.upload_user_id = this.sessionid
       if(!this.newTaskForm.taskid || !this.newTaskForm.taskname ||
           !this.newTaskForm.category || !this.newTaskForm.owner ||
           !this.newTaskForm.email || !this.newTaskForm.enabled ||
           !this.newTaskForm.freqency || !this.newTaskForm.task_type ||
-          this.newTaskForm.threshold == 0 || !this.newTaskForm.file_path) {
+          this.newTaskForm.threshold == 0) {
         this.$message({
           showClose: true,
           message: 'You have some information not added.',
@@ -338,30 +337,41 @@ export default {
       if(this.newTaskForm.run_now!=true) {
         this.newTaskForm.run_now = 'False'
       } else {this.newTaskForm.run_now = 'True'}
-      this.axios.post(this.$store.state.API + 'task/add/',qs.stringify(this.newTaskForm)).then((response) => {
-        if(response.data.code == 200) {
-          this.newTaskForm={
-            taskid: this.uuid(12,16),
-            taskname: '',
-            category: '',
-            owner: '',
-            email: '',
-            description: '',
-            tag: '',
-            enabled: '',
-            freqency: '',
-            task_type: '',
-            threshold: 0,
-            content: '',
-            run_now: '',
-            file_path: '',
-            upload_user_id: this.sessionid
-          };
-          this.fileList = []
-          this.dialogVisible = false
-          this.getaccount_tab_data()
-        }
-      })
+
+      if(this.sessionid == '')
+        this.$router.push({name: 'login'})
+      else {
+        this.axios.post(this.$store.state.API + 'user/checkSession',qs.stringify({sessionid: this.sessionid}))
+        .then((response) => {
+          if(response.data.code === 401)
+            this.$router.push({name: 'login'})
+          if(response.data.code === 200)
+            this.axios.post(this.$store.state.API + 'task/add/',qs.stringify(this.newTaskForm)).then((response) => {
+              if(response.data.code == 200) {
+                this.newTaskForm={
+                  taskid: this.uuid(12,16),
+                  taskname: '',
+                  category: '',
+                  owner: '',
+                  email: '',
+                  description: '',
+                  tag: '',
+                  enabled: '',
+                  freqency: '',
+                  task_type: '',
+                  threshold: 0,
+                  content: '',
+                  run_now: '',
+                  file_path: '',
+                  upload_user_id: this.sessionid
+                };
+                this.fileList = []
+                this.dialogVisible = false
+                this.getaccount_tab_data()
+              }
+            })
+        })
+      }
     },
     Run() {
       this.axios.get(this.$store.state.API + 'add_task').then((response) => {
@@ -389,7 +399,7 @@ export default {
               sessionid:this.sessionid
           }
         }).then((response) => {
-        this.tableData = response.data.data;
+          this.tableData = response.data.data;
       })
     },
     filtrateTask() {
@@ -466,13 +476,9 @@ export default {
     }
   },
   created: function () {
-    if(this.getCookie('sessionid')){
       this.sessionid = this.getCookie('sessionid')
       this.getWindowSize();
       this.getaccount_tab_data();
-    } else {
-      this.$router.push({name: 'login'})
-    }
   },
   watch: {
     filtrateForm: {

@@ -57,19 +57,24 @@
             },
             taskname:'',
             category:'',
-            description:''
+            description:'',
+            sessionId: ''
 		  }
 		},
 		components:{ Resultchart, Totalvsresult},
 		methods:{
   	  init() {
-  			this.axios.post(this.$store.state.API + 'log/selctTaskLogById',qs.stringify({taskid:this.$route.params.data})).then((response) => {
+  			this.axios.post(this.$store.state.API + 'log/selctTaskLogById',qs.stringify({taskid:this.$route.params.data,sessionid: this.sessionId})).then((response) => {
+                if(response.data.code === 401)
+                  this.$router.push({name: 'login'})
                 if(response.data.code == 200) {
           	    this.tableData3 = response.data.data.tab_data
                 this.chart_data = response.data.data.chart_data
                 }
               })
-        this.axios.post(this.$store.state.API + 'log/select',qs.stringify({taskid:this.$route.params.data})).then((response) => {
+        this.axios.post(this.$store.state.API + 'log/select',qs.stringify({taskid:this.$route.params.data,sessionid: this.sessionId})).then((response) => {
+            if(response.data.code === 401)
+              this.$router.push({name: 'login'})
             if(response.data.code == 200) {
     	        this.task = response.data.data
               this.taskname = this.task[0].taskname
@@ -82,20 +87,45 @@
   		  this.$router.push({name: 'viewtaskmodule', params: { data: this.$route.params.data }})
   		},
       commentSubmit(row) {
-        this.axios.post(this.$store.state.API + 'log/updateComment',
-          qs.stringify({id: row.id , comments: row.comments})
-        ).then((response) => {
-          if(response.data.code == 200){
-            this.$message({
-              message: 'Comments add success',
-              type: 'success',
-              duration: 1000
-          });
+        if(this.sessionId == '')
+          this.$router.push({name: 'login'})
+        else {
+          this.axios.post(this.$store.state.API + 'user/checkSession',qs.stringify({sessionid: this.sessionId}))
+          .then((response) => {
+            if(response.data.code === 401)
+              this.$router.push({name: 'login'})
+            if(response.data.code === 200)
+              this.axios.post(this.$store.state.API + 'log/updateComment',
+                qs.stringify({id: row.id , comments: row.comments})
+              )
+            .then((response) => {
+              if(response.data.code == 200){
+                this.$message({
+                  message: 'Comments add success',
+                  type: 'success',
+                  duration:2000
+                });
+              }
+            })
+          })
+        }
+      },
+      //获取cookie
+      getCookie(cname) {
+          var name = cname + "=";
+          var ca = document.cookie.split(';');
+          for (var i = 0; i < ca.length; i++) {
+              var c = ca[i];
+              while (c.charAt(0) == ' ') 
+                  c = c.substring(1);
+              if (c.indexOf(name) != -1) 
+                  return c.substring(name.length, c.length);
           }
-        })
+          return "";
       }
 		},
 		created: function() {
+      this.sessionId = this.getCookie('sessionid')
 		  this.init()
 		}
 	}
