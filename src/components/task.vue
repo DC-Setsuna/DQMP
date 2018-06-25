@@ -7,9 +7,6 @@
         <!-- add task 模态框 -->
         <el-dialog id="1" title="ADD TASK" :visible.sync="dialogVisible" width="70%" :before-close="handleClose">
           <el-form :model="newTaskForm" :rules="rules" ref="newTaskForm" label-width="80px" size="small">
-            <el-form-item label-width='120px' label="Task ID :">
-             {{newTaskForm.taskid}}
-            </el-form-item>
             <el-form-item label-width='120px' label="Task Name :" prop="taskname">
               <div class="newtask_row_input" >
                 <el-input v-model="newTaskForm.taskname"></el-input>
@@ -175,7 +172,6 @@ export default {
       dialogVisible: false,
       dialogVisible1: false,
       newTaskForm: {
-        taskid: '',
         taskname: '',
         category: '',
         owner: '',
@@ -266,7 +262,6 @@ export default {
     handleClose(done) {
       this.$confirm('Confirm close?').then(_ => {
         this.newTaskForm={
-          taskid: '',
           taskname: '',
           category: '',
           owner: '',
@@ -290,7 +285,6 @@ export default {
     cancel() {
       this.dialogVisible = false
       this.newTaskForm={
-          taskid: this.uuid(12,16),
           taskname: '',
           category: '',
           owner: '',
@@ -320,13 +314,13 @@ export default {
         })
     },
     Submit(file) {
+      this.dialogVisible = false
       // this.newTaskForm.file_path = this.fileList[0]
       this.newTaskForm.upload_user_id = this.sessionid
-      if(!this.newTaskForm.taskid || !this.newTaskForm.taskname ||
-          !this.newTaskForm.category || !this.newTaskForm.owner ||
-          !this.newTaskForm.email || !this.newTaskForm.enabled ||
-          !this.newTaskForm.freqency || !this.newTaskForm.task_type ||
-          this.newTaskForm.threshold == 0) {
+      if(!this.newTaskForm.taskname || !this.newTaskForm.category 
+        || !this.newTaskForm.owner || !this.newTaskForm.email 
+        || !this.newTaskForm.enabled || !this.newTaskForm.freqency 
+        || !this.newTaskForm.task_type || this.newTaskForm.threshold == 0) {
         this.$message({
           showClose: true,
           message: 'You have some information not added.',
@@ -349,7 +343,6 @@ export default {
             this.axios.post(this.$store.state.API + 'task/add/',qs.stringify(this.newTaskForm)).then((response) => {
               if(response.data.code == 200) {
                 this.newTaskForm={
-                  taskid: this.uuid(12,16),
                   taskname: '',
                   category: '',
                   owner: '',
@@ -366,7 +359,6 @@ export default {
                   upload_user_id: this.sessionid
                 };
                 this.fileList = []
-                this.dialogVisible = false
                 this.getaccount_tab_data()
               }
             })
@@ -384,7 +376,6 @@ export default {
       this.$confirm('Are you sure refresh？').then(_ => {
        this.$refs[formName].resetFields()
        this.newTaskForm.email = ''
-       this.newTaskForm.taskid = this.uuid(12,16)
     }).catch(_ => {});
     },
     getWindowSize() {
@@ -409,29 +400,38 @@ export default {
       })
     },
     showmodule() {
-      this.newTaskForm.taskid = this.uuid(12,16)
-      this.dialogVisible = true
-    },
-    uuid(len, radix) {
-      var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');
-      var uuid = [], i;
-      radix = radix || chars.length;
-      if (len) {
-        // Compact form
-        for (i = 0; i < len; i++) uuid[i] = chars[0 | Math.random()*radix];
-      } else {
-        var r;
-        uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-';
-        uuid[14] = '4';
-        for (i = 0; i < 36; i++) {
-          if (!uuid[i]) {
-            r = 0 | Math.random()*16;
-            uuid[i] = chars[(i == 19) ? (r & 0x3) | 0x8 : r];
-          }
-        }
+      if(this.sessionid == '')
+        this.$router.push({name: 'login'})
+      else {
+        this.axios.post(this.$store.state.API + 'user/checkSession',qs.stringify({sessionid: this.sessionid}))
+        .then((response) => {
+          if(response.data.code === 401)
+            this.$router.push({name: 'login'})
+          if(response.data.code === 200)
+            this.dialogVisible = true
+        })
       }
-      return uuid.join('');
     },
+    // uuid(len, radix) {
+    //   var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');
+    //   var uuid = [], i;
+    //   radix = radix || chars.length;
+    //   if (len) {
+    //     // Compact form
+    //     for (i = 0; i < len; i++) uuid[i] = chars[0 | Math.random()*radix];
+    //   } else {
+    //     var r;
+    //     uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-';
+    //     uuid[14] = '4';
+    //     for (i = 0; i < 36; i++) {
+    //       if (!uuid[i]) {
+    //         r = 0 | Math.random()*16;
+    //         uuid[i] = chars[(i == 19) ? (r & 0x3) | 0x8 : r];
+    //       }
+    //     }
+    //   }
+    //   return uuid.join('');
+    // },
     UploadSuccess(response,file,fileList) {
       if (response.code == 200) {
         this.newTaskForm.file_path = response.data

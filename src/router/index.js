@@ -18,12 +18,12 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/homeapge',
+      path: '/',
       name: 'homepage',
       component: Homepage,
       children: [
         {
-          path: 'dashboard',
+          path: '/',
           name: 'dashboard',
           component: DashBoard
         },
@@ -80,7 +80,7 @@ export default new Router({
       ]
     },
     {
-      path: '/',
+      path: '/login',
       name: 'login',
       component: Login,
     }

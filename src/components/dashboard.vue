@@ -124,10 +124,10 @@
           <div slot="header" class="clearfix">
             <span>Jobs in queue</span>
           </div>
-          <el-table :data="tableData3" height="270" border :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center','height':'5px'}" :cell-style="{'height':'10px'}" style="width: 100%" @row-click='showDetail'>
+          <el-table :data="tableData3" height="270" border :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center','height':'5px'}" :cell-style="{'height':'10px'}" style="width: 100%" @row-click='showDetailInQueue'>
             <el-table-column type="index" :span="2"></el-table-column>
             <el-table-column prop="name" label="Task Name" :span="11"></el-table-column>
-            <el-table-column prop="description" label="Task Description"></el-table-column>
+            <el-table-column prop="next_run_time" label="Next Run Time"></el-table-column>
           </el-table>
         </el-card>
       </el-col>
@@ -240,6 +240,9 @@
       },
       showDetail(row, event, column) {
         this.$router.push({name: 'viewtaskmodule', params: { data: row.taskid }})
+      },
+      showDetailInQueue(row, event, column) {
+        this.$router.push({name: 'viewtaskmodule', params: { data: row.kwargs.taskid }})
       },
       get_job_tab() {
         this.axios.get(this.$store.state.API + 'scheduler/jobs')

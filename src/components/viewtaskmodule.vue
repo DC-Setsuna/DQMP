@@ -7,10 +7,10 @@
         </el-breadcrumb>
       </div>
     <el-card class="box-card">
-      <label>Enabled :</label>
+      <!-- <label>Enabled :</label>
       <el-switch style="display: block" v-model="value4" active-color="#ff4949"
         inactive-color="#13ce66" active-text="NO" inactive-text="YES">
-      </el-switch>
+      </el-switch> -->
       <el-form ref="form" :model="newTaskForm" label-width="80px" size="small" v-bind:disabled='true'>
 		    <el-form-item label-width='120px' label="Task ID :">
 		      {{newTaskForm.taskid}}
