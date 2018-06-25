@@ -197,6 +197,7 @@ export default {
 	        tableData6: [],
 	        tableData7: [],
 	        tableData8: [],
+	        username : this.$store.state.username,
 	        sessionId: ''
 			}
 	},
@@ -206,7 +207,7 @@ export default {
 			this.axios.get(this.$store.state.API + 'board/category_weekly_list',{
 			  params: {
                   category: 'Account',
-                  sessionid:this.sessionId
+                  sessionid: this.sessionId
 			    }
 			  })
 			.then((response) => {
@@ -218,7 +219,7 @@ export default {
 			this.axios.get(this.$store.state.API + 'board/category_monthly_list',{
 			  params: {
                   category: 'Account',
-                  sessionid:this.sessionId
+                  sessionid: this.sessionId
 			    }
 			  })
 			.then((response) => {
@@ -230,7 +231,7 @@ export default {
 			this.axios.get(this.$store.state.API + 'board/category_daily_list',{
 			  params: {
                   category: 'Account',
-                  sessionid:this.sessionId
+                  sessionid: this.sessionId
 			    }
 			  })
 			.then((response) => {
@@ -245,7 +246,7 @@ export default {
 			this.axios.get(this.$store.state.API + 'board/category_daily_fail_list',{
 			  params: {
                   category: 'Account',
-                  sessionid:this.sessionId
+                  sessionid: this.sessionId
 			    }
 			  })
 			.then((response) => {
@@ -257,19 +258,19 @@ export default {
 			this.axios.get(this.$store.state.API + 'board/category_weekly_fail_list',{
 			  params: {
                   category: 'Account',
-                  sessionid:this.sessionId
+                  sessionid: this.sessionId
 			    }
 			  })
 			.then((response) => {
-			  if(response.data.code == 200)
-			    this.tableData7 = response.data.data
+			    if(response.data.code == 200)
+			      this.tableData7 = response.data.data
 			})
 		},
 		get_fail_monthly() {
 			this.axios.get(this.$store.state.API + 'board/category_monthly_fail_list',{
 			  params: {
                   category: 'Account',
-                  sessionid:this.sessionId
+                  sessionid: this.sessionId
 			    }
 			  })
 			.then((response) => {
@@ -290,21 +291,20 @@ export default {
 		  this.$router.push({name: 'errortask', params: { data: date,fre:'monthly',specific:'1',module:'Account'}})
 		},
 		//获取cookie
-		getCookie(cname) {
-		  var name = cname + "=";
-		  var ca = document.cookie.split(';');
-		  for (var i = 0; i < ca.length; i++) {
-		      var c = ca[i];
-		      while (c.charAt(0) == ' ') 
-		          c = c.substring(1);
-		      if (c.indexOf(name) != -1) 
-		          return c.substring(name.length, c.length);
-		  }
-		  return "";
-		}
+	    getCookie(cname) {
+	      var name = cname + "=";
+	      var ca = document.cookie.split(';');
+	      for (var i = 0; i < ca.length; i++) {
+	        var c = ca[i];
+	        while (c.charAt(0) == ' ') 
+	          c = c.substring(1);
+	        if (c.indexOf(name) != -1) 
+	          return c.substring(name.length, c.length);
+	      }
+	      return "";
+	    }
 	},
 	created: function() {
-	  if(this.getCookie('sessionid')){
         this.sessionId = this.getCookie('sessionid')
 		this.init()
 		this.getTabWeeklyData()
@@ -312,9 +312,6 @@ export default {
 		this.get_fail_daily()
         this.get_fail_weekly()
         this.get_fail_monthly()
-      } else {
-      	this.$router.push({name: 'login'})
-      }
 	}
 }
 </script>

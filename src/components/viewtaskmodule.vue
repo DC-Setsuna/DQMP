@@ -53,7 +53,7 @@
   		    </el-select>
   		  </el-form-item>
   		  <el-form-item label-width='120px' label="Result Verify :">
-  		  	<el-input-number class="newtask_input" v-model="newTaskForm.threshold" controls-position="right" :min="1" :max="100000"></el-input-number>
+  		  	<el-input-number class="newtask_input" v-model="newTaskForm.threshold" controls-position="right" :min="1" :max="1000000000000"></el-input-number>
   		  </el-form-item>
   		  <el-form-item label-width='120px' label="Upload :" v-bind:class="{active:isActive}">
   			<el-upload class="upload-demo" ref="upload" :show-file-list="true" drag action="/file/add" :file-list='newTaskForm.fileList' :multiple="false" :limit="1">
@@ -69,7 +69,7 @@
 	    </el-form>
       <div class="clearfix">
         <span class="dialog-footer">
-          <el-button>Run</el-button>
+          <el-button @click="runTask">Run</el-button>
           <el-button @click="Edit">Edit</el-button>
           <el-button @click="History">History</el-button>
         </span>
@@ -115,15 +115,16 @@ import qs from 'qs'
         threshold: 0,
         content: '',
         run_now: '',
-        file_path: '',
-        upload_user_id: '1233333',
+        filepath: '',
+        upload_user_id: '',
         fileList: []
       },
       tableData3: [],
       commentsForm: {
         id:'',
-        comment:''
-      }
+        comment: ''
+      },
+      sessionId: ''
 	  }
   },
   methods: {
@@ -131,42 +132,103 @@ import qs from 'qs'
       console.log(file,fileList)
     },
     init() {
-      this.axios.post(this.$store.state.API + 'log/select',qs.stringify({taskid:this.$route.params.data})).then((response) => {
+      this.axios.post(this.$store.state.API + 'log/select',qs.stringify({taskid:this.$route.params.data,sessionid: this.sessionId})).then((response) => {
+        if(response.data.code === 401)
+          this.$router.push({name: 'login'})
       	if(response.data.code == 200) {
           this.newTaskForm = response.data.data[0];
           if(this.newTaskForm.run_now === "True") this.newTaskForm.run_now = true
           if(this.newTaskForm.run_now === "False") this.newTaskForm.run_now = false
-          this.file_path = this.newTaskForm.filepath.substring(16,25)
+          this.filepath = this.newTaskForm.filepath.substring(16,25)
           this.newTaskForm.fileList = [{name: this.newTaskForm.filepath.substring(16,25), url: this.newTaskForm.filepath}]
         }
       })
-      this.axios.post(this.$store.state.API + 'log/selctTaskLogById',qs.stringify({taskid:this.$route.params.data})).then((response) => {
+      this.axios.post(this.$store.state.API + 'log/selctTaskLogById',qs.stringify({taskid:this.$route.params.data,sessionid: this.sessionId})).then((response) => {
+        if(response.data.code === 401)
+          this.$router.push({name: 'login'})
         if(response.data.code == 200) {
         	this.tableData3 = response.data.data.tab_data
         }
       })
     },
+    runTask() {
+      if(this.sessionId == '')
+        this.$router.push({name: 'login'})
+      else {
+        this.axios.post(this.$store.state.API + 'user/checkSession',qs.stringify({sessionid: this.sessionId}))
+        .then((response) => {
+          if(response.data.code === 401)
+            this.$router.push({name: 'login'})
+          if(response.data.code === 200)
+            this.axios.post(this.$store.state.API + 'task/run/',qs.stringify(this.newTaskForm))
+            .then((response)=> {
+              if(response.data.code == 200) {
+                this.$message({
+                  message: 'Run Task Success',
+                  type: 'success',
+                  duration:2000
+                });
+              }
+            })
+        })
+      }
+    },
     Edit() {
-      this.$router.push({name: 'updatetask', params: { data: this.newTaskForm}})
+      if(this.sessionId == '')
+        this.$router.push({name: 'login'})
+      else {
+        this.axios.post(this.$store.state.API + 'user/checkSession',qs.stringify({sessionid: this.sessionId}))
+        .then((response) => {
+          if(response.data.code === 401)
+            this.$router.push({name: 'login'})
+          if(response.data.code === 200)
+          this.$router.push({name: 'updatetask', params: { data: this.newTaskForm}})
+        })
+      }
     },
     History() {
       this.$router.push({name: 'history', params: { data: this.newTaskForm.taskid }})
     },
     commentSubmit(row) {
-      this.axios.post(this.$store.state.API + 'log/updateComment',
-        qs.stringify({id: row.id , comments: row.comments})
-      ).then((response) => {
-        if(response.data.code == 200){
-          this.$message({
-          message: 'Comments add success',
-          type: 'success',
-          duration:2000
-        });
-        }
-      })
+      if(this.sessionId == '')
+        this.$router.push({name: 'login'})
+      else {
+        this.axios.post(this.$store.state.API + 'user/checkSession',qs.stringify({sessionid: this.sessionId}))
+        .then((response) => {
+          if(response.data.code === 401)
+            this.$router.push({name: 'login'})
+          if(response.data.code === 200)
+            this.axios.post(this.$store.state.API + 'log/updateComment',
+              qs.stringify({id: row.id , comments: row.comments})
+            )
+          .then((response) => {
+            if(response.data.code == 200){
+              this.$message({
+                message: 'Comments add success',
+                type: 'success',
+                duration:2000
+              });
+            }
+          })
+        })
+      }
+    },
+    //获取cookie
+    getCookie(cname) {
+      var name = cname + "=";
+      var ca = document.cookie.split(';');
+      for (var i = 0; i < ca.length; i++) {
+          var c = ca[i];
+          while (c.charAt(0) == ' ') 
+              c = c.substring(1);
+          if (c.indexOf(name) != -1) 
+              return c.substring(name.length, c.length);
+      }
+      return "";
     }
   },
   created: function(){
+    this.sessionId = this.getCookie('sessionid')
   	this.init()
   },
   watch: {

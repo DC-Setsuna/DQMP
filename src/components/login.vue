@@ -39,7 +39,7 @@ import qs from 'qs'
 			          message: 'Login Successful',
 			          type: 'success'
 			        });
-		          	this.$router.push({name: 'homepage'})
+		          	this.$router.push({name: 'dashboard'})
 		          }
 		          if(response.data.code === 300) {
 		          	this.$notify.error({

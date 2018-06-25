@@ -206,7 +206,7 @@
       getTabWeeklyData() {
         this.axios.get(this.$store.state.API + 'board/weekly_list',{
         params: {
-              sessionid:this.sessionId
+              sessionid: this.sessionId
           }
         })
         .then((response) => {
@@ -217,7 +217,7 @@
       getTabMonthlyData() {
         this.axios.get(this.$store.state.API + 'board/monthly_list',{
         params: {
-              sessionid:this.sessionId
+              sessionid: this.sessionId 
           }
         })
         .then((response) => {
@@ -228,7 +228,7 @@
       init() {
         this.axios.get(this.$store.state.API + 'board/daily_list',{
         params: {
-              sessionid:this.sessionId
+              sessionid: this.sessionId
           }
         })
         .then((response) => {
@@ -250,7 +250,7 @@
       get_fail_daily() {
         this.axios.get(this.$store.state.API + 'board/daily_fail_list',{
         params: {
-              sessionid:this.sessionId
+              sessionid: this.sessionId
           }
         })
         .then((response) => {
@@ -261,7 +261,7 @@
       get_fail_weekly() {
         this.axios.get(this.$store.state.API + 'board/weekly_fail_list',{
         params: {
-              sessionid:this.sessionId
+              sessionid: this.sessionId
           }
         })
         .then((response) => {
@@ -272,7 +272,7 @@
       get_fail_monthly() {
         this.axios.get(this.$store.state.API + 'board/monthly_fail_list',{
         params: {
-              sessionid:this.sessionId
+              sessionid: this.sessionId
           }
         })
         .then((response) => {
@@ -283,7 +283,7 @@
       get_being_perform() {
         this.axios.get(this.$store.state.API + 'board/being_performed',{
         params: {
-              sessionid:this.sessionId
+              sessionid: this.sessionId
           }
         })
         .then((response) => {
@@ -294,7 +294,7 @@
       get_error_tasks() {
         this.axios.get(this.$store.state.API + 'board/error_tasks',{
         params: {
-              sessionid:this.sessionId
+              sessionid: this.sessionId
           }
         })
         .then((response) => {
@@ -329,7 +329,6 @@
       }
     },
     created: function() {
-      if(this.getCookie('sessionid')){
         this.sessionId = this.getCookie('sessionid')
         this.init()
         this.getTabWeeklyData()
@@ -340,9 +339,6 @@
         this.get_fail_monthly()
         this.get_being_perform()
         this.get_error_tasks()
-      } else {
-        this.$router.push({name: 'login'})
-      }
     }
   }
 </script>

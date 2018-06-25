@@ -205,9 +205,9 @@ export default {
 			this.axios.get(this.$store.state.API + 'board/category_weekly_list',{
 			  params: {
                   category: 'Lineitmes',
-                  sessionid:this.sessionId
-			    }
-			  })
+                  sessionid: this.sessionId
+              }
+			})
 			.then((response) => {
 				this.tableData1 = response.data.data.tabData
 				this.chartData1 = response.data.data.chartData
@@ -217,7 +217,7 @@ export default {
 			this.axios.get(this.$store.state.API + 'board/category_monthly_list',{
 			  params: {
                   category: 'Lineitmes',
-                  sessionid:this.sessionId
+                  sessionid: this.sessionId
 			    }
 			  })
 			.then((response) => {
@@ -229,7 +229,7 @@ export default {
 			this.axios.get(this.$store.state.API + 'board/category_daily_list',{
 			  params: {
                   category: 'Lineitmes',
-                  sessionid:this.sessionId
+                  sessionid: this.sessionId
 			    }
 			  })
 			.then((response) => {
@@ -244,7 +244,7 @@ export default {
 			this.axios.get(this.$store.state.API + 'board/category_daily_fail_list',{
 			  params: {
                   category: 'Lineitmes',
-                  sessionid:this.sessionId
+                  sessionid: this.sessionId
 			    }
 			  })
 			.then((response) => {
@@ -256,7 +256,7 @@ export default {
 			this.axios.get(this.$store.state.API + 'board/category_weekly_fail_list',{
 			  params: {
                   category: 'Lineitmes',
-                  sessionid:this.sessionId
+                  sessionid: this.sessionId
 			    }
 			  })
 			.then((response) => {
@@ -268,7 +268,7 @@ export default {
 			this.axios.get(this.$store.state.API + 'board/category_monthly_fail_list',{
 			  params: {
                   category: 'Lineitmes',
-                  sessionid:this.sessionId
+                  sessionid: this.sessionId
 			    }
 			  })
 			.then((response) => {
@@ -303,7 +303,6 @@ export default {
 		}
 	},
 	created: function() {
-	  if(this.getCookie('sessionid')){
         this.sessionId = this.getCookie('sessionid')
 		this.init()
 		this.getTabWeeklyData()
@@ -311,9 +310,6 @@ export default {
 		this.get_fail_daily()
         this.get_fail_weekly()
         this.get_fail_monthly()
-      } else {
-      	this.$router.push({name: 'login'})
-      }
 	}
 }
 </script>
