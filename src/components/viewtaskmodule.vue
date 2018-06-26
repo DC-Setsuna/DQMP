@@ -70,7 +70,7 @@
       <div class="clearfix">
         <span class="dialog-footer">
           <el-button @click="runTask">Run</el-button>
-          <el-button @click="Edit">Edit</el-button>
+          <el-button @click="Edit" disabled>Edit</el-button>
           <el-button @click="History">History</el-button>
         </span>
       </div>

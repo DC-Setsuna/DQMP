@@ -247,6 +247,10 @@
       get_job_tab() {
         this.axios.get(this.$store.state.API + 'scheduler/jobs')
         .then((response) => {
+          for(let i=0;i<response.data.length;i++) {
+            let date = new Date(response.data[i]["next_run_time"])
+            response.data[i]["next_run_time"] = date.toLocaleString()
+          }
           this.tableData3 = response.data
         })
       },

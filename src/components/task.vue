@@ -16,7 +16,7 @@
               <el-select class="newtask_input" v-model="newTaskForm.category" placeholder="Please select a Category">
                 <el-option label="Account" value="Account"></el-option>
                 <el-option label="Opportunities" value="Opportunities"></el-option>
-                <el-option label="LineItmes" value="LineItmes"></el-option>
+                <el-option label="LineItmes" value="Lineitmes"></el-option>
                 <el-option label="Forecast" value="Forecast"></el-option>
                 <el-option label="MgrForecast" value="MgrForecast"></el-option>
                 <el-option label="Leads" value="Leads"></el-option>
@@ -130,18 +130,18 @@
         <el-row class="account-row">
           <el-table :data="tableData" border :height="window_height" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" style="width: 96%" @selection-change="handleSelectionChange">
             <el-table-column type="selection" width="55"></el-table-column>
-            <el-table-column fixed label="Task ID" width="180px">
+            <el-table-column fixed label="Task Name" width="220px">
               <template slot-scope="scope">
                 <span>
-                  <a class="error_link" href="javascript:void(0);" @click="showDetail(scope.row.taskid)">{{scope.row.taskid}}</a>
+                  <a class="error_link" href="javascript:void(0);" @click="showDetail(scope.row.taskid)">{{scope.row.taskname}}</a>
                 </span>
               </template>
             </el-table-column>
-            <el-table-column prop="owner" label="Owner" width="150px">
+            <el-table-column prop="owner" label="Owner" width="180px">
             </el-table-column>
-            <el-table-column prop="description" label="Description" width="180px">
+            <el-table-column prop="description" label="Description" width="220px">
             </el-table-column>
-            <el-table-column prop="last_runtime" label="Last Run Date" width="180px"></el-table-column>
+            <el-table-column prop="last_runtime" label="Last Run Date" width="200px"></el-table-column>
             <el-table-column prop="enabled" label="Enabled" width="100px">
             </el-table-column>
             <el-table-column prop="freqency" label="Freqency" width="120px">
