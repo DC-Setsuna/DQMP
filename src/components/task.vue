@@ -139,7 +139,16 @@
             </el-table-column>
             <el-table-column prop="owner" label="Owner" width="180px">
             </el-table-column>
-            <el-table-column prop="description" label="Description" width="220px">
+            <el-table-column label="Description" width="220px">
+              <template slot-scope="scope">
+                <span>
+                  <el-popover placement="left" title="Description:" width="100%" trigger="hover" :content="scope.row.description">
+                  <span class="task_description" slot="reference">
+                    {{scope.row.description}}
+                  </span>
+                  </el-popover>
+                </span>
+              </template>
             </el-table-column>
             <el-table-column prop="last_runtime" label="Last Run Date" width="200px"></el-table-column>
             <el-table-column prop="enabled" label="Enabled" width="100px">
@@ -524,5 +533,13 @@ export default {
 }
 .error_link {
   text-decoration:none;
+}
+.task_description {
+  max-width:90%;
+  overflow:hidden;
+  white-space:nowrap !important;
+  text-overflow:ellipsis;
+  /*兼容性*/
+  -webkit-text-overflow:ellipsis;
 }
 </style>

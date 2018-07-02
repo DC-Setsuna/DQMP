@@ -10,7 +10,7 @@
 				<el-card class="box-card box-card-right" shadow="hover">
 					<span height="15px">Results of today</span><hr>
 					<el-table :data="tableData6" style="width: 100%" height="255px" :header-cell-style="{'text-align':'center'}" border :row-style="{'text-align':'center'}" @row-click='Jump' :stripe="true">
-			            <el-table-column prop="result_time" label="Result_Time" :span='6'>
+			            <el-table-column prop="result_time" label="ResultTime" :span='6'>
 			            </el-table-column>
 			            <el-table-column label="TaskName" :span='6'>
 			              <template slot-scope="scope">
@@ -51,7 +51,7 @@
 			  <el-card class="box-card-right" shadow="hover">
 				<span height="15px">Results this week</span><hr>
 				<el-table :data="tableData7" style="width: 100%" height="255px" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" @row-click='Jump' border :stripe="true">
-				  <el-table-column prop="result_time" label="Result_Time" :span='6'>
+				  <el-table-column prop="result_time" label="ResultTime" :span='6'>
 				  </el-table-column>
 				  <el-table-column label="TaskName" :span='6'>
 				    <template slot-scope="scope">
@@ -91,7 +91,7 @@
 				<el-card class="box-card-right" shadow="hover">
 					<span height="15px">Results this month</span><hr>
 					<el-table :data="tableData8" style="width: 100%" height="255px" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" @row-click='Jump' border :stripe="true">
-			            <el-table-column prop="result_time" label="Result_Time" :span='8'>
+			            <el-table-column prop="result_time" label="ResultTime" :span='8'>
 			            </el-table-column>
 			            <el-table-column label="TaskName" :span='6'>
 			              <template slot-scope="scope">
@@ -143,20 +143,23 @@
 							</el-table>
 						</el-tab-pane>
 						<el-tab-pane label="Weekly">
-							<el-table :data="tableData1" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" style="width: 90%" height="400px">
-								<el-table-column fixed type="index" width="50"></el-table-column>
-								<el-table-column prop="Statistictime" label="Statistic time" :span="8">
-								</el-table-column>
-								<el-table-column prop="Totalnumberoftasks" label="Total number of tasks" :span="8">
-								</el-table-column>
-								<el-table-column label="Total number of error tasks" :span="8">
-				                  <template slot-scope="scope">
-				                    <span>
-				                      <a class="error_link" href="javascript:void(0);" @click="WeeklyJump(scope.row.Statistictime)">{{scope.row.Totalnumberoferrortasks}}</a>
-				                    </span>
-				                  </template>
-				                </el-table-column>
-							</el-table>
+						  <el-table :data="tableData1" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" style="width: 90%" height="400px">
+							<el-table-column fixed type="index" width="50"></el-table-column>
+							<el-table-column prop="Statistictime" label="Statistic time" :span="8">
+							</el-table-column>
+							<el-table-column prop="Totalnumberoftasks" label="Total number of tasks" :span="8">
+							</el-table-column>
+							<el-table-column label="Total number of error tasks" :span="8">
+				              <template slot-scope="scope">
+				                <span v-if="scope.row.Totalnumberoferrortasks != 0">
+				                  <a class="error_link" href="javascript:void(0);" @click="WeeklyJump(scope.row.Statistictime)">{{scope.row.Totalnumberoferrortasks}}</a>
+				                </span>
+				                <span v-if="scope.row.Totalnumberoferrortasks == 0">
+				                  <a class="error_link" href="javascript:void(0);">{{scope.row.Totalnumberoferrortasks}}</a>
+				                </span>
+				              </template>
+				            </el-table-column>
+						  </el-table>
 						</el-tab-pane>
 						<el-tab-pane label="Monthly">
 							<el-table :data="tableData2" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" style="width: 90%" height="400px">
@@ -349,11 +352,17 @@ export default {
     margin-top: 20px
 }
 .account_description {
-	width:90%;
+	max-width:90%;
 	overflow:hidden;
-	white-space:nowrap;
+	white-space:nowrap !important;
 	text-overflow:ellipsis;
 	/*兼容性*/
 	-webkit-text-overflow:ellipsis;
+}
+.el-table__body-wrapper {
+	font-size: 12px;
+}
+.el-table__header-wrapper {
+	font-size: 13px;
 }
 </style>

@@ -9,18 +9,29 @@
 		<el-row>
 		    <el-card class="box-card">
 			  <el-table :data="tableData" border :height="window_height" :header-cell-style="{'text-align':'center'}" @row-click='showDetail' :row-style="{'text-align':'center'}" style="width: 96%">
-	            <el-table-column fixed prop="taskid" label="Task ID" :span="3">
-	            </el-table-column>
-	            <el-table-column prop="taskname" label="Task Name" :span="4">
-	            </el-table-column>
-	            <el-table-column prop="owner" label="Owner" :span="4">
-	            </el-table-column>
-	            <el-table-column prop="description" label="Description" :span="4">
-                </el-table-column>
-	            <el-table-column prop="last_runtime" label="Last Run Date" :span="3"></el-table-column>
-	            <el-table-column prop="update_time" label="Last Update Date" :span="3"></el-table-column>
-	            <el-table-column prop="upload_time" label="Create Date" :span="3">
-	            </el-table-column>
+			  	<a href="javascript:void(0);">
+	              <el-table-column fixed prop="taskname" label="Task Name" :span="4">
+	              </el-table-column>
+	              <el-table-column prop="owner" label="Owner" :span="4">
+	              </el-table-column>
+	              <el-table-column label="Description" :span="4">
+	              	<template slot-scope="scope">
+	        		  <span>
+	        			<el-popover placement="left" title="Description:" width="100%" trigger="hover" :content="scope.row.description">
+					      <span class="error_description" slot="reference">
+							{{scope.row.description}}
+						  </span>
+						</el-popover>
+	        	      </span>
+	      			</template>
+                  </el-table-column>
+	              <el-table-column prop="last_runtime" label="Last Run Date" :span="3">
+	              </el-table-column>
+	              <el-table-column prop="update_time" label="Last Update Date" :span="3">
+	              </el-table-column>
+	              <el-table-column prop="upload_time" label="Create Date" :span="3">
+	              </el-table-column>
+	            </a>
             </el-table>
 		  </el-card>
 		</el-row>
@@ -85,5 +96,13 @@
 	}
 	.crumbs {
 	  margin: 10px 0px;
+	}
+	.error_description {
+		width:90%;
+		overflow:hidden;
+		white-space:nowrap !important;
+		text-overflow:ellipsis;
+		/*兼容性*/
+		-webkit-text-overflow:ellipsis;
 	}
 </style>

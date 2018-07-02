@@ -10,7 +10,7 @@
 		<el-card class="box-card box-card-right" shadow="hover">
 		  <span height="15px">Results of today</span><hr>
 		  <el-table :data="tableData6" style="width: 100%" height="255px" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" border :stripe="true" @row-click='Jump'>
-	        <el-table-column prop="result_time" label="Result_Time" :span='8'>
+	        <el-table-column prop="result_time" label="ResultTime" :span='8'>
 	        </el-table-column>
 	        <el-table-column label="TaskName" :span='6'>
 	          <template slot-scope="scope">
@@ -50,7 +50,7 @@
 	    <el-card class="box-card-right" shadow="hover">
 	      <span height="15px">Results of week</span><hr>
 	      <el-table :data="tableData7" style="width: 100%" height="255px" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" border :stripe="true" @row-click='Jump'>
-	        <el-table-column prop="result_time" label="Result_Time" :span='8'>
+	        <el-table-column prop="result_time" label="ResultTime" :span='8'>
 	        </el-table-column>
 	        <el-table-column label="TaskName" :span='6'>
 	          <template slot-scope="scope">
@@ -90,7 +90,7 @@
 	    <el-card class="box-card-right" shadow="hover">
 		  <span height="15px">Results of month</span><hr>
 		  <el-table :data="tableData8" style="width: 100%" height="255px" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" border :stripe="true" @row-click='Jump'>
-		    <el-table-column prop="result_time" label="Result_Time" :span='8'>
+		    <el-table-column prop="result_time" label="ResultTime" :span='8'>
 		    </el-table-column>
 		    <el-table-column label="TaskName" :span='6'>
 	          <template slot-scope="scope">
@@ -134,8 +134,11 @@
 				  </el-table-column>
 				  <el-table-column label="Total number of error tasks" :span="8">
 	                <template slot-scope="scope">
-	                  <span>
+	                  <span v-if="scope.row.Totalnumberoferrortasks != 0">
 	                    <a class="error_link" href="javascript:void(0);" @click="DailyJump(scope.row.Statistictime)">{{scope.row.Totalnumberoferrortasks}}</a>
+	                  </span>
+	                  <span v-if="scope.row.Totalnumberoferrortasks == 0">
+	                    <a class="error_link" href="javascript:void(0);">{{scope.row.Totalnumberoferrortasks}}</a>
 	                  </span>
 	                </template>
 	              </el-table-column>
@@ -150,8 +153,11 @@
 				</el-table-column>
 				<el-table-column label="Total number of error tasks" :span="8">
 	              <template slot-scope="scope">
-	                <span>
+	                <span v-if="scope.row.Totalnumberoferrortasks != 0">
 	                  <a class="error_link" href="javascript:void(0);" @click="WeeklyJump(scope.row.Statistictime)">{{scope.row.Totalnumberoferrortasks}}</a>
+	                </span>
+	                <span v-if="scope.row.Totalnumberoferrortasks == 0">
+	                  <a class="error_link" href="javascript:void(0);">{{scope.row.Totalnumberoferrortasks}}</a>
 	                </span>
 	              </template>
 	            </el-table-column>
@@ -166,8 +172,11 @@
 				</el-table-column>
 				<el-table-column label="Total number of error tasks" :span="8">
 	              <template slot-scope="scope">
-	                <span>
+	                <span v-if="scope.row.Totalnumberoferrortasks != 0">
 	                  <a class="error_link" href="javascript:void(0);" @click="MonthlyJump(scope.row.Statistictime)">{{scope.row.Totalnumberoferrortasks}}</a>
+	                </span>
+	                <span v-if="scope.row.Totalnumberoferrortasks == 0">
+	                  <a class="error_link" href="javascript:void(0);">{{scope.row.Totalnumberoferrortasks}}</a>
 	                </span>
 	              </template>
 	            </el-table-column>
@@ -349,9 +358,15 @@ export default {
 .opportunities_description {
 	width:90%;
 	overflow:hidden;
-	white-space:nowrap;
+	white-space:nowrap !important;
 	text-overflow:ellipsis;
 	/*兼容性*/
 	-webkit-text-overflow:ellipsis;
+}
+.el-table__body-wrapper {
+	font-size: 12px;
+}
+.el-table__header-wrapper {
+	font-size: 13px;
 }
 </style>

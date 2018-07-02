@@ -46,30 +46,25 @@
 			  }
 	        },
 	        grid: {
-	          top: '12%',
-	          left: '2%',
-	          right: '1%',
-	          containLabel: true
-	        },
-	        xAxis: [
-	          {
-	            type : 'category',
-	            data : this.datas[0]
-	          }
-	        ],
-	        yAxis: {},
-	        dataZoom: [
-	          {
-	            show: true,
-	            start: 0,
-	            end: 100
-	          },
-	          {
-	            type: 'inside',
-	            start: 0,
-	            end: 100
-	          }
-	        ],
+              top: '12%',
+              left: '2%',
+              right: '1%',
+              containLabel: true
+            },
+            xAxis: [
+              {
+                type : 'category',
+                data : this.datas[0]
+              }
+            ],
+            yAxis: {},
+            dataZoom: [
+              {
+                show: true,
+                start: 0,
+                end: 100
+              }
+            ],
 	        series : [
 	          {
 	            name: 'Totals tasks',
