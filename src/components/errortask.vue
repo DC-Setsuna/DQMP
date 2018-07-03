@@ -10,7 +10,8 @@
 		    <el-card class="box-card">
 			  <el-table :data="tableData" border :height="window_height" :header-cell-style="{'text-align':'center'}" @row-click='showDetail' :row-style="{'text-align':'center'}" style="width: 96%">
 			  	<a href="javascript:void(0);">
-	              <el-table-column fixed prop="taskname" label="Task Name" :span="4">
+			  	  <el-table-column fixed type="index" width="50"></el-table-column>
+	              <el-table-column prop="taskname" label="Task Name" :span="4">
 	              </el-table-column>
 	              <el-table-column prop="owner" label="Owner" :span="4">
 	              </el-table-column>

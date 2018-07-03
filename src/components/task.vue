@@ -341,8 +341,14 @@ export default {
         this.newTaskForm.run_now = 'False'
       } else {this.newTaskForm.run_now = 'True'}
 
-      if(this.sessionid == '')
-        this.$router.push({name: 'login'})
+      if(this.sessionid == '') {
+        this.$message({
+          showClose: true,
+          message: 'You need to log in first',
+          type: 'warning'
+        });
+        return
+      }
       else {
         this.axios.post(this.$store.state.API + 'user/checkSession',qs.stringify({sessionid: this.sessionid}))
         .then((response) => {
@@ -409,8 +415,15 @@ export default {
       })
     },
     showmodule() {
-      if(this.sessionid == '')
-        this.$router.push({name: 'login'})
+      if(this.sessionid == '') {
+        // this.$router.push({name: 'login'})
+        this.$message({
+          showClose: true,
+          message: 'You need to log in first',
+          type: 'warning'
+        });
+        return
+      }
       else {
         this.axios.post(this.$store.state.API + 'user/checkSession',qs.stringify({sessionid: this.sessionid}))
         .then((response) => {

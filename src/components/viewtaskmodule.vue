@@ -35,7 +35,7 @@
   		    <span>Email : </span><el-input class="newtask_row_input" v-model="newTaskForm.email"></el-input>
   		  </el-form-item>
   		  <el-form-item label-width='120px' label="Description :">
-  		    <el-input class="newtask_text_input" type="textarea" :autosize="{ minRows: 3, maxRows: 5}" placeholder="请输入内容" v-model="newTaskForm.description"></el-input>
+  		    <el-input class="newtask_text_input" type="textarea" :autosize="{ minRows: 3, maxRows: 5}" placeholder="Please enter the content" v-model="newTaskForm.description"></el-input>
   		  </el-form-item>
   		  <el-form-item label-width='120px' label="Tag :">
   		    <el-input class="newtask_text_input" v-model="newTaskForm.tag"></el-input>
@@ -152,8 +152,14 @@ import qs from 'qs'
       })
     },
     runTask() {
-      if(this.sessionId == '')
-        this.$router.push({name: 'login'})
+      if(this.sessionId == '') {
+        this.$message({
+          showClose: true,
+          message: 'You need to log in first',
+          type: 'warning'
+        });
+        return
+      }
       else {
         this.axios.post(this.$store.state.API + 'user/checkSession',qs.stringify({sessionid: this.sessionId}))
         .then((response) => {
@@ -190,13 +196,27 @@ import qs from 'qs'
       this.$router.push({name: 'history', params: { data: this.newTaskForm.taskid }})
     },
     commentSubmit(row) {
-      if(this.sessionId == '')
-        this.$router.push({name: 'login'})
+      if(this.sessionId == '') {
+        // this.$router.push({name: 'login'})
+        this.$message({
+          showClose: true,
+          message: 'You need to log in first',
+          type: 'warning'
+        });
+        return
+      }
       else {
         this.axios.post(this.$store.state.API + 'user/checkSession',qs.stringify({sessionid: this.sessionId}))
         .then((response) => {
-          if(response.data.code === 401)
-            this.$router.push({name: 'login'})
+          if(response.data.code === 401) {
+            // this.$router.push({name: 'login'})
+            this.$message({
+              showClose: true,
+              message: 'You need to log in first',
+              type: 'warning'
+            });
+            return
+          }
           if(response.data.code === 200)
             this.axios.post(this.$store.state.API + 'log/updateComment',
               qs.stringify({id: row.id , comments: row.comments})
