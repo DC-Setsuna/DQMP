@@ -356,7 +356,7 @@ export default {
 	overflow:hidden;
 	white-space:nowrap !important;
 	text-overflow:ellipsis;
-	/*兼容性*/
+	/*兼容性1*/
 	-webkit-text-overflow:ellipsis;
 }
 .el-table__body-wrapper {
