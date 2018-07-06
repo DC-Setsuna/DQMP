@@ -1,187 +1,189 @@
 <template>
-	<div>
-		<el-row class="board-row row-bg" justify="center">
-			<el-col :span="16">
-				<el-card class="box-card box-card-left" shadow="hover">
-					<DailyBoard :datas="chartData" class="board-board"/>
-				</el-card>
-			</el-col>
-			<el-col :span="8">
-				<el-card class="box-card box-card-right" shadow="hover">
-					<span height="15px">Results of today</span><hr>
-					<el-table :data="tableData6" style="width: 100%" height="255px" :header-cell-style="{'text-align':'center'}" border :row-style="{'text-align':'center'}" @row-click='Jump' :stripe="true">
-			            <el-table-column prop="result_time" label="ResultTime" :span='6'>
-			            </el-table-column>
-			            <el-table-column label="TaskName" :span='6'>
-			              <template slot-scope="scope">
-                		    <span>
-                			  <el-popover placement="left" title="TaskName:" width="100%" trigger="hover" :content="scope.row.taskname">
-  							    <span class="account_description" slot="reference">
-  								  {{scope.row.taskname}}
-  								</span>
-							  </el-popover>
-                			</span>
-              			  </template>
-			            </el-table-column>
-			            <el-table-column label="Description" :span='6'>
-			              <template slot-scope="scope">
-                		    <span>
-                			  <el-popover placement="left" title="Description:" width="100%" trigger="hover" :content="scope.row.description">
-  							    <span class="account_description" slot="reference">
-  								  {{scope.row.description}}
-  								</span>
-							  </el-popover>
-                			</span>
-              			  </template>
-			            </el-table-column>
-			            <el-table-column prop="status" label="Status" :span='6'>
-			            </el-table-column>
-			            
-		          </el-table>
-				</el-card>
-			</el-col>
-		</el-row>
-		<el-row class="board-row row-bg" justify="center">
-			<el-col :span="16">
-				<el-card class="box-card-left" shadow="hover">
-					<WeeklyBoard :datas="chartData1" class="board-board"/>
-				</el-card>
-			</el-col>
-			<el-col :span="8">
-			  <el-card class="box-card-right" shadow="hover">
-				<span height="15px">Results this week</span><hr>
-				<el-table :data="tableData7" style="width: 100%" height="255px" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" @row-click='Jump' border :stripe="true">
-				  <el-table-column prop="result_time" label="ResultTime" :span='6'>
-				  </el-table-column>
-				  <el-table-column label="TaskName" :span='6'>
-				    <template slot-scope="scope">
-				      <span>
-				        <el-popover placement="left" title="TaskName:" width="100%" trigger="hover" :content="scope.row.taskname">
-				          <span class="account_description" slot="reference">
-				            {{scope.row.taskname}}
-				          </span>
-				        </el-popover>
-				      </span>
-				    </template>
-				  </el-table-column>
-				  <el-table-column label="Description" :span='6'>
-				    <template slot-scope="scope">
-				      <span>
-				        <el-popover placement="left" title="Description:" width="100%" trigger="hover" :content="scope.row.description">
-				          <span class="account_description" slot="reference">
-				            {{scope.row.description}}
-				          </span>
-				        </el-popover>
-				      </span>
-				    </template>
-				  </el-table-column>
-				  <el-table-column prop="status" label="Status" :span='6'>
-				  </el-table-column>
-				</el-table>
-			  </el-card>
-			</el-col>
-		</el-row>
-		<el-row class="board-row row-bg" justify="center">
-			<el-col :span="16">
-				<el-card class="box-card-left" shadow="hover">
-					<MonthlyBoard :datas="chartData2" class="board-board"/>
-				</el-card>
-			</el-col>
-			<el-col :span="8">
-				<el-card class="box-card-right" shadow="hover">
-					<span height="15px">Results this month</span><hr>
-					<el-table :data="tableData8" style="width: 100%" height="255px" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" @row-click='Jump' border :stripe="true">
-			            <el-table-column prop="result_time" label="ResultTime" :span='8'>
-			            </el-table-column>
-			            <el-table-column label="TaskName" :span='6'>
-			              <template slot-scope="scope">
-                		    <span>
-                			  <el-popover placement="left" title="TaskName:" width="100%" trigger="hover" :content="scope.row.taskname">
-  							    <span class="account_description" slot="reference">
-  								  {{scope.row.taskname}}
-  								</span>
-							  </el-popover>
-                			</span>
-              			  </template>
-			            </el-table-column>
-			            <el-table-column label="Description" :span='6'>
-			              <template slot-scope="scope">
-                		    <span>
-                			  <el-popover placement="left" title="Description:" width="100%" trigger="hover" :content="scope.row.description">
-  							    <span class="account_description" slot="reference">
-  								  {{scope.row.description}}
-  								</span>
-							  </el-popover>
-                			</span>
-              			  </template>
-			            </el-table-column>
-			            <el-table-column prop="status" label="Status" :span='8'>
-			            </el-table-column>
-			          </el-table>
-				</el-card>
-			</el-col>
-		</el-row>
+  <div>
+	<el-row class="board-row row-bg" justify="center">
+	  <el-col :span="16">
+		<el-card class="box-card box-card-left" shadow="hover">
+		  <DailyBoard :datas="chartData" class="board-board"/>
+	    </el-card>
+	  </el-col>
+	  <el-col :span="8">
+		<el-card class="box-card box-card-right" shadow="hover">
+		  <span height="15px">Results of today</span><hr>
+		  <el-table :data="tableData6" style="width: 100%" height="255px" :header-cell-style="{'text-align':'center'}" border :row-style="{'text-align':'center'}" @row-click='Jump' :stripe="true">
+	        <el-table-column prop="result_time" label="ResultTime" :span='6'>
+	        </el-table-column>
+	        <el-table-column label="TaskName" :span='6'>
+	          <template slot-scope="scope">
+			    <span>
+				  <el-popover placement="left" title="TaskName:" width="100%" trigger="hover" :content="scope.row.taskname">
+				    <span class="account_description" slot="reference">
+					  {{scope.row.taskname}}
+					</span>
+				  </el-popover>
+				</span>
+			  </template>
+	        </el-table-column>
+	        <el-table-column label="Description" :span='6'>
+	          <template slot-scope="scope">
+			    <span>
+				  <el-popover placement="left" title="Description:" width="100%" trigger="hover" :content="scope.row.description">
+				    <span class="account_description" slot="reference">
+					  {{scope.row.description}}
+					</span>
+				  </el-popover>
+				</span>
+		      </template>
+	        </el-table-column>
+	        <el-table-column prop="status" label="Status" :span='6'>
+	        </el-table-column>
+		  </el-table>
+		</el-card>
+	  </el-col>
+	</el-row>
+	<el-row class="board-row row-bg" justify="center">
+	  <el-col :span="16">
+		<el-card class="box-card-left" shadow="hover">
+			<WeeklyBoard :datas="chartData1" class="board-board"/>
+		</el-card>
+	  </el-col>
+	  <el-col :span="8">
+	    <el-card class="box-card-right" shadow="hover">
+		  <span height="15px">Results this week</span><hr>
+		  <el-table :data="tableData7" style="width: 100%" height="255px" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" @row-click='Jump' border :stripe="true">
+		    <el-table-column prop="result_time" label="ResultTime" :span='6'>
+		    </el-table-column>
+		    <el-table-column label="TaskName" :span='6'>
+		      <template slot-scope="scope">
+		        <span>
+		          <el-popover placement="left" title="TaskName:" width="100%" trigger="hover" :content="scope.row.taskname">
+		            <span class="account_description" slot="reference">
+		              {{scope.row.taskname}}
+		            </span>
+		          </el-popover>
+		        </span>
+		      </template>
+		    </el-table-column>
+		    <el-table-column label="Description" :span='6'>
+		      <template slot-scope="scope">
+		        <span>
+		          <el-popover placement="left" title="Description:" width="100%" trigger="hover" :content="scope.row.description">
+		            <span class="account_description" slot="reference">
+		              {{scope.row.description}}
+		            </span>
+		          </el-popover>
+		        </span>
+		      </template>
+		    </el-table-column>
+		    <el-table-column prop="status" label="Status" :span='6'>
+		    </el-table-column>
+		  </el-table>
+	    </el-card>
+      </el-col>
+	</el-row>
+	<el-row class="board-row row-bg" justify="center">
+	  <el-col :span="16">
+		<el-card class="box-card-left" shadow="hover">
+			<MonthlyBoard :datas="chartData2" class="board-board"/>
+		</el-card>
+	  </el-col>
+	  <el-col :span="8">
+		<el-card class="box-card-right" shadow="hover">
+		  <span height="15px">Results this month</span><hr>
+		  <el-table :data="tableData8" style="width: 100%" height="255px" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" @row-click='Jump' border :stripe="true">
+	        <el-table-column prop="result_time" label="ResultTime" :span='8'>
+	        </el-table-column>
+	        <el-table-column label="TaskName" :span='6'>
+	          <template slot-scope="scope">
+        		<span>
+           		  <el-popover placement="left" title="TaskName:" width="100%" trigger="hover" :content="scope.row.taskname">
+					<span class="account_description" slot="reference">
+				      {{scope.row.taskname}}
+					</span>
+			      </el-popover>
+        		</span>
+      		  </template>
+	        </el-table-column>
+	        <el-table-column label="Description" :span='6'>
+	          <template slot-scope="scope">
+        		<span>
+        		  <el-popover placement="left" title="Description:" width="100%" trigger="hover" :content="scope.row.description">
+				    <span class="account_description" slot="reference">
+					  {{scope.row.description}}
+					</span>
+			      </el-popover>
+        	    </span>
+      	      </template>
+	        </el-table-column>
+	        <el-table-column prop="status" label="Status" :span='8'>
+	        </el-table-column>
+	      </el-table>
+		</el-card>
+	  </el-col>
+	</el-row>
 
-		<el-row class="table-row row-bg" justify="center">
-			<el-col :span="24">
-				<div class="el-card is-hover-shadow grid-content bg-purple-dark">
-					<el-tabs :tab-position="tabPosition" style="height: 400px;">
-						<el-tab-pane label="Daily">
-							<el-table :data="tableData" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" style="width: 90%" height="400px">
-								<el-table-column fixed type="index" width="50"></el-table-column>
-								<el-table-column prop="Statistictime" label="Statistic time" :span="8">
-								</el-table-column>
-								<el-table-column prop="Totalnumberoftasks" label="Total number of tasks" :span="8">
-								</el-table-column>
-								<el-table-column label="Total number of error tasks" :span="8">
-				                  <template slot-scope="scope">
-				                    <span>
-				                      <a class="error_link" href="javascript:void(0);" @click="DailyJump(scope.row.Statistictime)">{{scope.row.Totalnumberoferrortasks}}</a>
-				                    </span>
-				                  </template>
-				                </el-table-column>
-							</el-table>
-						</el-tab-pane>
-						<el-tab-pane label="Weekly">
-						  <el-table :data="tableData1" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" style="width: 90%" height="400px">
-							<el-table-column fixed type="index" width="50"></el-table-column>
-							<el-table-column prop="Statistictime" label="Statistic time" :span="8">
-							</el-table-column>
-							<el-table-column prop="Totalnumberoftasks" label="Total number of tasks" :span="8">
-							</el-table-column>
-							<el-table-column label="Total number of error tasks" :span="8">
-				              <template slot-scope="scope">
-				                <span v-if="scope.row.Totalnumberoferrortasks != 0">
-				                  <a class="error_link" href="javascript:void(0);" @click="WeeklyJump(scope.row.Statistictime)">{{scope.row.Totalnumberoferrortasks}}</a>
-				                </span>
-				                <span v-if="scope.row.Totalnumberoferrortasks == 0">
-				                  <a class="error_link" href="javascript:void(0);">{{scope.row.Totalnumberoferrortasks}}</a>
-				                </span>
-				              </template>
-				            </el-table-column>
-						  </el-table>
-						</el-tab-pane>
-						<el-tab-pane label="Monthly">
-							<el-table :data="tableData2" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" style="width: 90%" height="400px">
-								<el-table-column fixed type="index" width="50"></el-table-column>
-								<el-table-column prop="Statistictime" label="Statistic time" :span="8">
-								</el-table-column>
-								<el-table-column prop="Totalnumberoftasks" label="Total number of tasks" :span="8">
-								</el-table-column>
-								<el-table-column label="Total number of error tasks" :span="8">
-				                  <template slot-scope="scope">
-				                    <span>
-				                      <a class="error_link" href="javascript:void(0);" @click="MonthlyJump(scope.row.Statistictime)">{{scope.row.Totalnumberoferrortasks}}</a>
-				                    </span>
-				                  </template>
-				                </el-table-column>
-							</el-table>	
-						</el-tab-pane>
-					</el-tabs>
-				</div>
-			</el-col>
-		</el-row>
-	</div>
+	<el-row class="table-row row-bg" justify="center">
+	  <el-col :span="24">
+		<div class="el-card is-hover-shadow grid-content bg-purple-dark">
+		  <el-tabs :tab-position="tabPosition" style="height: 400px;">
+			<el-tab-pane label="Daily">
+			  <el-table :data="tableData" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" style="width: 90%" height="400px">
+				<el-table-column fixed type="index" width="50"></el-table-column>
+				<el-table-column prop="Statistictime" label="Statistic time" :span="8">
+				</el-table-column>
+				<el-table-column prop="Totalnumberoftasks" label="Total number of tasks" :span="8">
+				</el-table-column>
+				<el-table-column label="Total number of error tasks" :span="8">
+	              <template slot-scope="scope">
+	                <span v-if="scope.row.Totalnumberoferrortasks != 0">
+	                  <a class="error_link" href="javascript:void(0);" @click="DailyJump(scope.row.Statistictime)">{{scope.row.Totalnumberoferrortasks}}</a>
+	                </span>
+	                <span v-if="scope.row.Totalnumberoferrortasks == 0">
+	                  <a class="error_link" href="javascript:void(0);">{{scope.row.Totalnumberoferrortasks}}</a>
+	                </span>
+	              </template>
+	            </el-table-column>
+			  </el-table>
+		    </el-tab-pane>
+		    <el-tab-pane label="Weekly">
+		    <el-table :data="tableData1" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" style="width: 90%" height="400px">
+			  <el-table-column fixed type="index" width="50"></el-table-column>
+			  <el-table-column prop="Statistictime" label="Statistic time" :span="8">
+			  </el-table-column>
+			  <el-table-column prop="Totalnumberoftasks" label="Total number of tasks" :span="8">
+			  </el-table-column>
+			  <el-table-column label="Total number of error tasks" :span="8">
+                <template slot-scope="scope">
+                  <span v-if="scope.row.Totalnumberoferrortasks != 0">
+                    <a class="error_link" href="javascript:void(0);" @click="WeeklyJump(scope.row.Statistictime)">{{scope.row.Totalnumberoferrortasks}}</a>
+                  </span>
+                  <span v-if="scope.row.Totalnumberoferrortasks == 0">
+                    <a class="error_link" href="javascript:void(0);">{{scope.row.Totalnumberoferrortasks}}</a>
+                  </span>
+                </template>
+              </el-table-column>
+		    </el-table>
+		  </el-tab-pane>
+		  <el-tab-pane label="Monthly">
+			<el-table :data="tableData2" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" style="width: 90%" height="400px">
+			  <el-table-column fixed type="index" width="50"></el-table-column>
+			  <el-table-column prop="Statistictime" label="Statistic time" :span="8">
+			  </el-table-column>
+			  <el-table-column prop="Totalnumberoftasks" label="Total number of tasks" :span="8">
+			  </el-table-column>
+			  <el-table-column label="Total number of error tasks" :span="8">
+			    <template slot-scope="scope">
+				  <span>
+				    <a class="error_link" href="javascript:void(0);" @click="MonthlyJump(scope.row.Statistictime)">{{scope.row.Totalnumberoferrortasks}}</a>
+				  </span>
+				</template>
+			  </el-table-column>
+			</el-table>	
+		  </el-tab-pane>
+		  </el-tabs>
+	    </div>
+	  </el-col>
+	</el-row>
+  </div>
 </template>
 <script type="text/javascript">
 import DailyBoard from "./dailyboard"
@@ -364,5 +366,8 @@ export default {
 }
 .el-table__header-wrapper {
 	font-size: 13px;
+}
+.el-table .cell {
+	word-break: normal !important;
 }
 </style>
