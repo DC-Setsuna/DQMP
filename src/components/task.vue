@@ -117,7 +117,7 @@
                <el-option label="ALL" value=""></el-option>
                <el-option label="Account" value="Account"></el-option>
                <el-option label="Opportunities" value="Opportunities"></el-option>
-               <el-option label="LineItmes" value="LineItmes"></el-option>
+               <el-option label="LineItmes" value="Lineitmes"></el-option>
                <el-option label="Forecast" value="Forecast"></el-option>
                <el-option label="MgrForecast" value="MgrForecast"></el-option>
                <el-option label="Leads" value="Leads"></el-option>
@@ -341,7 +341,7 @@ export default {
         this.newTaskForm.run_now = 'False'
       } else {this.newTaskForm.run_now = 'True'}
 
-      if(this.sessionid == '') {
+      if(this.getCookie('sessionid') == '') {
         this.$message({
           showClose: true,
           message: 'You need to log in first',
@@ -415,7 +415,7 @@ export default {
       })
     },
     showmodule() {
-      if(this.sessionid == '') {
+      if(this.getCookie('sessionid') == '') {
         // this.$router.push({name: 'login'})
         this.$message({
           showClose: true,

@@ -87,7 +87,7 @@
   		  this.$router.push({name: 'viewtaskmodule', params: { data: this.$route.params.data }})
   		},
       commentSubmit(row) {
-        if(this.sessionId == '')
+        if(this.getCookie('sessionid') == '')
           this.$router.push({name: 'login'})
         else {
           this.axios.post(this.$store.state.API + 'user/checkSession',qs.stringify({sessionid: this.sessionId}))

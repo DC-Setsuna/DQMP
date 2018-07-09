@@ -33,7 +33,7 @@
             <el-input id="username_input" v-model="userLoginInfo.username"></el-input>
           </el-form-item>
           <el-form-item label="PassWord :">
-            <el-input id="password_input" type="password" v-model="userLoginInfo.password"></el-input>
+            <el-input id="password_input" type="password" v-model="userLoginInfo.password" @keyup.enter.native="submit"></el-input>
           </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">

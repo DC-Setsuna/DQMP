@@ -8,10 +8,10 @@
 			</div>
 			<el-form ref="form" :model="form" label-width="80px">
 				<input class="login-input" type="text" v-model="form.username" placeholder="Username" />
-				<input class="login-input" type="password" v-model="form.password" placeholder="Password" />
+				<input class="login-input" type="password" v-model="form.password" placeholder="Password"/>
 			</el-form>
 			<div>
-				<input class="login-button" type="submit" value="Login" @click="submit">
+				<input class="login-button" value="Login" @click="submit">
 			</div>
 		</div>
 	</div>
