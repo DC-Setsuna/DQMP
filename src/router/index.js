@@ -12,6 +12,7 @@ import Task from '@/components/task'
 import Errortask from '@/components/errortask'
 import updatetask from '@/components/updateTask'
 import Login from '@/components/login'
+import Dataflow from '@/components/dataflow'
 
 Vue.use(Router)
 
@@ -76,6 +77,11 @@ export default new Router({
           path: '/updatetask',
           name: 'updatetask',
           component: updatetask
+        },
+        {
+          path: '/dataflow',
+          name: 'dataflow',
+          component: Dataflow
         }
       ]
     },
