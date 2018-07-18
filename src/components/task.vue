@@ -343,7 +343,7 @@ export default {
         this.newTaskForm.run_now = 'False'
       } else {this.newTaskForm.run_now = 'True'}
 
-      if(this.getCookie('sessionid') == '') {
+      if(this.getCookie('sessionid') == '' && this.$store.state.sessionId == '') {
         this.$message({
           showClose: true,
           message: 'You need to log in first',
@@ -417,7 +417,7 @@ export default {
       })
     },
     showmodule() {
-      if(this.getCookie('sessionid') == '') {
+      if(this.getCookie('sessionid') == '' && this.$store.state.sessionId == '') {
         // this.$router.push({name: 'login'})
         this.$message({
           showClose: true,
@@ -427,10 +427,15 @@ export default {
         return
       }
       else {
+        this.sessionid = this.getCookie('sessionid')
         this.axios.post(this.$store.state.API + 'user/checkSession',qs.stringify({sessionid: this.sessionid}))
         .then((response) => {
           if(response.data.code === 401)
-            this.$router.push({name: 'login'})
+            this.$message({
+              showClose: true,
+              message: 'You need to log in first',
+              type: 'warning'
+            });
           if(response.data.code === 200)
             this.dialogVisible = true
         })

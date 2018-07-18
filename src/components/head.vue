@@ -67,6 +67,7 @@ export default {
         if(response.data.code === 200)
         {
           this.clearCookie("sessionid")
+          this.$store.commit('islogin','')
           this.isLogin = false
         }
       })
@@ -100,6 +101,7 @@ export default {
       .then((response) => {
         if(response.data.code === 200) {
           this.setCookie('sessionid', response.data.data, 1)
+          this.$store.commit('islogin', response.data.data)
           this.$notify({
             title: 'Successful',
             message: 'Login Successful',
