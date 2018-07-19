@@ -20,70 +20,63 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'homepage',
-      component: Homepage,
-      children: [
-        {
-          path: '/',
-          name: 'dashboard',
-          component: DashBoard
-        },
-        {
-          path: '/dashboard',
-          name: 'dashboard',
-          component: DashBoard
-        },
-        {
-          path: '/accounts',
-          name: 'accounts',
-          component: Accounts
-        },
-        {
-          path: '/opportunities',
-          name: 'opportunities',
-          component: Opportunities
-        },
-        {
-          path: '/lineitmes',
-          name: 'lineitmes',
-          component: Lineitmes
-        },
-        {
-          path: '/forecast',
-          name: 'forecast',
-          component: Forecast
-        },
-        {
-          path: '/viewtaskmodule/:data',
-          name: 'viewtaskmodule',
-          component: ViewTaskModule
-        },
-        {
-          path: '/history/:data',
-          name: 'history',
-          component: History
-        },
-        {
-          path: '/task',
-          name: 'task',
-          component: Task
-        },
-        {
-          path: '/errortask',
-          name: 'errortask',
-          component: Errortask
-        },
-        {
-          path: '/updatetask',
-          name: 'updatetask',
-          component: updatetask
-        },
-        {
-          path: '/dataflow',
-          name: 'dataflow',
-          component: Dataflow
-        }
-      ]
+      name: 'dashboard',
+      component: DashBoard
+    },
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      component: DashBoard
+    },
+    {
+      path: '/accounts',
+      name: 'accounts',
+      component: Accounts
+    },
+    {
+      path: '/opportunities',
+      name: 'opportunities',
+      component: Opportunities
+    },
+    {
+      path: '/lineitmes',
+      name: 'lineitmes',
+      component: Lineitmes
+    },
+    {
+      path: '/forecast',
+      name: 'forecast',
+      component: Forecast
+    },
+    {
+      path: '/viewtaskmodule/:data',
+      name: 'viewtaskmodule',
+      component: ViewTaskModule
+    },
+    {
+      path: '/history/:data',
+      name: 'history',
+      component: History
+    },
+    {
+      path: '/task',
+      name: 'task',
+      component: Task
+    },
+    {
+      path: '/errortask',
+      name: 'errortask',
+      component: Errortask
+    },
+    {
+      path: '/updatetask',
+      name: 'updatetask',
+      component: updatetask
+    },
+    {
+      path: '/dataflow',
+      name: 'dataflow',
+      component: Dataflow
     },
     {
       path: '/login',

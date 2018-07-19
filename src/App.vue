@@ -1,12 +1,14 @@
 <template>
   <div id="app">
-    <router-view/>
+    <homepage />
   </div>
 </template>
 
 <script>
 import qs from 'qs'
+import homepage from './components/homepage'
 export default {
+  components: {homepage},
   methods: {
   	//获取cookie
     getCookie(cname) {
