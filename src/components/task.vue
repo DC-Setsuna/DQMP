@@ -23,6 +23,7 @@
                 <el-option label="Contacts" value="Contacts"></el-option>
                 <el-option label="Winplan" value="Winplan"></el-option>
                 <el-option label="dataflow" value="dataflow"></el-option>
+                <el-option label="Dataflow" value="Dataflow"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label-width='120px' label="Owner :" prop="owner">
@@ -125,6 +126,7 @@
                <el-option label="Contacts" value="Contacts"></el-option>
                <el-option label="Winplan" value="Winplan"></el-option>
                <el-option label="dataflow" value="dataflow"></el-option>
+               <el-option label="Dataflow" value="Dataflow"></el-option>
               </el-select>
             </el-col>
           </el-form>
@@ -343,7 +345,7 @@ export default {
         this.newTaskForm.run_now = 'False'
       } else {this.newTaskForm.run_now = 'True'}
 
-      if(this.getCookie('sessionid') == '') {
+      if(this.getCookie('sessionid') == '' && this.$store.state.sessionId == '') {
         this.$message({
           showClose: true,
           message: 'You need to log in first',
@@ -417,7 +419,7 @@ export default {
       })
     },
     showmodule() {
-      if(this.getCookie('sessionid') == '') {
+      if(this.getCookie('sessionid') == '' && this.$store.state.sessionId == '') {
         // this.$router.push({name: 'login'})
         this.$message({
           showClose: true,
@@ -427,10 +429,15 @@ export default {
         return
       }
       else {
+        this.sessionid = this.getCookie('sessionid')
         this.axios.post(this.$store.state.API + 'user/checkSession',qs.stringify({sessionid: this.sessionid}))
         .then((response) => {
           if(response.data.code === 401)
-            this.$router.push({name: 'login'})
+            this.$message({
+              showClose: true,
+              message: 'You need to log in first',
+              type: 'warning'
+            });
           if(response.data.code === 200)
             this.dialogVisible = true
         })

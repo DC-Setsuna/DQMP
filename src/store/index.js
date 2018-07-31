@@ -11,16 +11,16 @@ export default new Vuex.Store({
 	  dailydata: [],
       // API: 'http://192.168.1.106:5000/',
       // API: 'http://localhost:5000/',
-      username: '',
-      API: '/'
+      sessionId: '',
+      // API: '/'
+      API: 'http://9.119.106.52:5000/'
 	},
   mutations: {
       dailydata(state, dailydata) {
         state.dailydata = dailydata
       },
-      islogin(state, username) {
-        state.islogin = true
-        state.username = username
+      islogin(state, sessionId) {
+        state.sessionId = sessionId
       }
 	}
 })

@@ -5,14 +5,14 @@
         Data Quality Monitor Platform
       </span>
       <div class="Vheader-nav">
-        <el-menu class="el-menu-demo" text-color="#a4a4a4" mode="horizontal" style="background-color: transparent;" :router="true">
-          <el-menu-item id="el-menu-item" style="height: 40px;line-height: 40px;" index="/dashboard">Dash board</el-menu-item>
-          <el-menu-item id="el-menu-item" style="height: 40px;line-height: 40px;" index="/accounts">Accounts</el-menu-item>
-          <el-menu-item id="el-menu-item" style="height: 40px;line-height: 40px;" index="/opportunities">Opportunities</el-menu-item>
-          <el-menu-item id="el-menu-item" style="height: 40px;line-height: 40px;" index="/lineitmes">Lineitmes</el-menu-item>
-          <el-menu-item id="el-menu-item" style="height: 40px;line-height: 40px;" index="/forecast">Forecast</el-menu-item>
-          <el-menu-item id="el-menu-item" style="height: 40px;line-height: 40px;" index="/dataflow">DataFlow</el-menu-item>
-          <el-menu-item id="el-menu-item" style="height: 40px;line-height: 40px;" index="/task">Task</el-menu-item>
+        <el-menu class="el-menu-demo" mode="horizontal" :router="true">
+          <el-menu-item style="height: 40px;line-height: 40px;" index="/dashboard">Dash board</el-menu-item>
+          <el-menu-item style="height: 40px;line-height: 40px;" index="/accounts">Accounts</el-menu-item>
+          <el-menu-item style="height: 40px;line-height: 40px;" index="/opportunities">Opportunities</el-menu-item>
+          <el-menu-item style="height: 40px;line-height: 40px;" index="/lineitmes">Lineitmes</el-menu-item>
+          <el-menu-item style="height: 40px;line-height: 40px;" index="/forecast">Forecast</el-menu-item>
+          <el-menu-item style="height: 40px;line-height: 40px;" index="/dataflow">DataFlow</el-menu-item>
+          <el-menu-item style="height: 40px;line-height: 40px;" index="/task">Task</el-menu-item>
         </el-menu>
       </div>
       <span v-if="isLogin" class="el-dropdown-link user_img">
@@ -67,6 +67,7 @@ export default {
         if(response.data.code === 200)
         {
           this.clearCookie("sessionid")
+          this.$store.commit('islogin','')
           this.isLogin = false
         }
       })
@@ -77,9 +78,9 @@ export default {
       var ca = document.cookie.split(';');
       for (var i = 0; i < ca.length; i++) {
           var c = ca[i];
-          while (c.charAt(0) == ' ') 
+          while (c.charAt(0) == ' ')
               c = c.substring(1);
-          if (c.indexOf(name) != -1) 
+          if (c.indexOf(name) != -1)
               return c.substring(name.length, c.length);
       }
       return "";
@@ -91,15 +92,16 @@ export default {
       var expires = "expires=" + d.toUTCString();
       document.cookie = cname + "=" + cvalue + "; " + expires;
     },
-    //清除cookie    
-    clearCookie(name) {    
-      this.setCookie(name, "", -1);    
+    //清除cookie
+    clearCookie(name) {
+      this.setCookie(name, "", -1);
     },
     submit() {
       this.axios.post(this.$store.state.API + 'login',qs.stringify(this.userLoginInfo))
       .then((response) => {
         if(response.data.code === 200) {
           this.setCookie('sessionid', response.data.data, 1)
+          this.$store.commit('islogin', response.data.data)
           this.$notify({
             title: 'Successful',
             message: 'Login Successful',
@@ -157,7 +159,7 @@ export default {
   margin-right: 150px;
   padding: 0 30px;
 }
-#el-menu-item:hover {
+/*#el-menu-item:hover {
   background-color: #2b2b2b ! important;
   color: #fff ! important;
 }
@@ -165,7 +167,7 @@ export default {
   background-color: #2b2b2b ! important;
   color: #fff ! important;
   border-bottom: 2px solid #fff ! important;
-}
+}*/
 .user-logo {
   position: absolute;
   top: 3px;
@@ -182,7 +184,7 @@ export default {
   font-size: 20px;
   line-height: 40px;
 }
-.euiContextMenuItem {
+/*.euiContextMenuItem {
     padding: 8px;
     width: 100%;
     text-align: center;
@@ -191,7 +193,7 @@ export default {
 }
 .euiContextMenuItem:hover {
     text-decoration: underline;
-}
+}*/
 #username_input {
   width: 80%;
 }
