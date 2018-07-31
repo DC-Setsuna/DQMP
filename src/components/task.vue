@@ -152,7 +152,7 @@
                 </span>
               </template>
             </el-table-column>
-            <el-table-column prop="last_runtime" label="Last Run Date" width="200px"></el-table-column>
+            <el-table-column prop="count" label="Count" width="200px"></el-table-column>
             <el-table-column prop="enabled" label="Enabled" width="100px">
             </el-table-column>
             <el-table-column prop="freqency" label="Freqency" width="120px">
@@ -430,12 +430,14 @@ export default {
         this.sessionid = this.getCookie('sessionid')
         this.axios.post(this.$store.state.API + 'user/checkSession',qs.stringify({sessionid: this.sessionid}))
         .then((response) => {
-          if(response.data.code === 401)
+          if(response.data.code === 401) {
             this.$message({
               showClose: true,
               message: 'You need to log in first',
               type: 'warning'
             });
+            return;
+          }
           if(response.data.code === 200)
             this.dialogVisible = true
         })

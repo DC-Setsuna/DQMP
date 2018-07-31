@@ -1,6 +1,10 @@
 <template>
-  <div>
-	  <el-row class="board-row row-bg" justify="center">
+  <div><!-- 
+    <el-row>
+      <el-switch v-model="value3" active-text="显示" inactive-text="隐藏">
+      </el-switch>
+    </el-row> -->
+	  <el-row class="board-row row-bg" justify="center" v-if="show">
       <el-col :span="16">
         <el-card class="box-card box-card-left" shadow="hover">
       	  <DailyBoard :datas="chartData" class="board-board"/>
@@ -207,7 +211,9 @@
         tableData6:[],
         tableData7:[],
         tableData8:[],
-        sessionId:''
+        sessionId:'',
+        value3: true,
+        show: true
       }
     },
     components: { DailyBoard , WeeklyBoard , MonthlyBoard},

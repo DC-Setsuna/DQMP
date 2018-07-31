@@ -42,8 +42,8 @@
   </div>
 </template>
 <script type="text/javascript">
-    import qs from 'qs'
-    import Resultchart from "./resultchart"
+  import qs from 'qs'
+  import Resultchart from "./resultchart"
 	import Totalvsresult from "./totalvsresult"
 	export default {
 		data() {
@@ -61,7 +61,7 @@
             sessionId: ''
 		  }
 		},
-		components:{ Resultchart, Totalvsresult},
+		components: { Resultchart, Totalvsresult},
 		methods:{
   	  init() {
   			this.axios.post(this.$store.state.API + 'log/selctTaskLogById',qs.stringify({taskid:this.$route.params.data,sessionid: this.sessionId})).then((response) => {

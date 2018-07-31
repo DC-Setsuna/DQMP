@@ -12,6 +12,7 @@
           <el-menu-item id="el-menu-item" style="height: 40px;line-height: 40px;" index="/lineitmes">Lineitmes</el-menu-item>
           <el-menu-item id="el-menu-item" style="height: 40px;line-height: 40px;" index="/forecast">Forecast</el-menu-item>
           <el-menu-item id="el-menu-item" style="height: 40px;line-height: 40px;" index="/dataflow">DataFlow</el-menu-item>
+          <el-menu-item id="el-menu-item" style="height: 40px;line-height: 40px;" index="/mike">Mike</el-menu-item>
           <el-menu-item id="el-menu-item" style="height: 40px;line-height: 40px;" index="/task">Task</el-menu-item>
         </el-menu>
       </div>
