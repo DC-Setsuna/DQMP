@@ -5,6 +5,7 @@
         Data Quality Monitor Platform
       </span>
       <div class="Vheader-nav">
+<<<<<<< HEAD
         <el-menu class="el-menu-demo" mode="horizontal" :router="true">
           <el-menu-item style="height: 40px;line-height: 40px;" index="/dashboard">Dash board</el-menu-item>
           <el-menu-item style="height: 40px;line-height: 40px;" index="/accounts">Accounts</el-menu-item>
@@ -13,6 +14,17 @@
           <el-menu-item style="height: 40px;line-height: 40px;" index="/forecast">Forecast</el-menu-item>
           <el-menu-item style="height: 40px;line-height: 40px;" index="/dataflow">DataFlow</el-menu-item>
           <el-menu-item style="height: 40px;line-height: 40px;" index="/task">Task</el-menu-item>
+=======
+        <el-menu class="el-menu-demo" text-color="#a4a4a4" mode="horizontal" style="background-color: transparent;" :router="true">
+          <el-menu-item id="el-menu-item" style="height: 40px;line-height: 40px;" index="/dashboard">Dash board</el-menu-item>
+          <el-menu-item id="el-menu-item" style="height: 40px;line-height: 40px;" index="/accounts">Accounts</el-menu-item>
+          <el-menu-item id="el-menu-item" style="height: 40px;line-height: 40px;" index="/opportunities">Opportunities</el-menu-item>
+          <el-menu-item id="el-menu-item" style="height: 40px;line-height: 40px;" index="/lineitmes">Lineitmes</el-menu-item>
+          <el-menu-item id="el-menu-item" style="height: 40px;line-height: 40px;" index="/forecast">Forecast</el-menu-item>
+          <el-menu-item id="el-menu-item" style="height: 40px;line-height: 40px;" index="/dataflow">DataFlow</el-menu-item>
+          <el-menu-item id="el-menu-item" style="height: 40px;line-height: 40px;" index="/mike">Mike</el-menu-item>
+          <el-menu-item id="el-menu-item" style="height: 40px;line-height: 40px;" index="/task">Task</el-menu-item>
+>>>>>>> 3c3f16c0f0df6c4a4b67e67ee76d67a61f396e65
         </el-menu>
       </div>
       <span v-if="isLogin" class="el-dropdown-link user_img">
