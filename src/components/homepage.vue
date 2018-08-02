@@ -26,6 +26,7 @@
     padding: 0 2%;
   }
   #header {
-    padding: 0px;
+    /*padding: 0px;*/
+    min-width: 1136px;
   }
 </style>

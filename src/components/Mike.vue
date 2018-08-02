@@ -3,7 +3,7 @@
 	<el-card class="box-card mike-card">
 		<h1>Mike's Task</h1>
 	  <el-collapse　:data="tableData3" accordion>
-      <el-dialog v-for="item1 in tableData3" title="TASK INFORMATION" :visible.sync="item1.visible">
+      <el-dialog v-for="item1 in tableData3" key="item1.id" title="TASK INFORMATION" :visible.sync="item1.visible">
         <taskinfo :datas="item1"/>
       </el-dialog>
 		  <div v-for="item in tableData3" style="border-bottom:1px solid #ebeef5" @click="Click(item.taskid)">
@@ -164,9 +164,9 @@
 	      var ca = document.cookie.split(';');
 	      for (var i = 0; i < ca.length; i++) {
 	        var c = ca[i];
-	          while (c.charAt(0) == ' ') 
+	          while (c.charAt(0) == ' ')
 	            c = c.substring(1);
-	          if (c.indexOf(name) != -1) 
+	          if (c.indexOf(name) != -1)
 	            return c.substring(name.length, c.length);
 	      }
 	      return "";
