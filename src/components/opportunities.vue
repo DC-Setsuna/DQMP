@@ -16,7 +16,7 @@
 	          <template slot-scope="scope">
 	    		<span>
 	    	      <el-popover placement="left" title="TaskName:" width="100%" trigger="hover" :content="scope.row.taskname">
-					<span class="opportunities_description" slot="reference">
+					<span class="opportunities_description" slot="reference" style="display: block">
 				      {{scope.row.taskname}}
 					</span>
 				  </el-popover>
@@ -27,7 +27,7 @@
 	          <template slot-scope="scope">
 	    		<span>
 	    		  <el-popover placement="left" title="Description:" width="100%" trigger="hover" :content="scope.row.description">
-				    <span class="opportunities_description" slot="reference">
+				    <span class="opportunities_description" slot="reference" style="display: block">
 					  {{scope.row.description}}
 					</span>
 				  </el-popover>

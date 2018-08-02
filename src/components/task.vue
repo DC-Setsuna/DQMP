@@ -131,8 +131,8 @@
         </el-row>
         <el-row class="account-row">
           <el-table :data="tableData" border :height="window_height" :header-cell-style="{'text-align':'center'}" :row-style="{'text-align':'center'}" style="width: 96%" @selection-change="handleSelectionChange">
-            <el-table-column type="selection" width="55"></el-table-column>
-            <el-table-column fixed label="Task Name" width="220px">
+            <el-table-column fixed="left" type="selection" width="55"></el-table-column>
+            <el-table-column fixed="left" label="Task Name" width="220px">
               <template slot-scope="scope">
                 <span>
                   <a class="error_link" href="javascript:void(0);" @click="showDetail(scope.row.taskid)">{{scope.row.taskname}}</a>
@@ -143,12 +143,10 @@
             </el-table-column>
             <el-table-column label="Description" width="220px">
               <template slot-scope="scope">
-                <span>
-                  <el-popover placement="left" title="Description:" width="100%" trigger="hover" :content="scope.row.description">
-                  <span class="task_description" slot="reference">
-                    {{scope.row.description}}
-                  </span>
-                  </el-popover>
+                <el-popover placement="left" title="Description:" width="100%" trigger="hover" :content="scope.row.description">
+                </el-popover>
+                <span class="task_description" slot="reference" style="display: block">
+                  {{scope.row.description}}
                 </span>
               </template>
             </el-table-column>
@@ -557,11 +555,21 @@ export default {
   text-decoration:none;
 }
 .task_description {
-  max-width:90%;
+  /*max-width:90%;
   overflow:hidden;
   white-space:nowrap !important;
-  text-overflow:ellipsis;
+  text-overflow:ellipsis;*/
   /*兼容性*/
-  -webkit-text-overflow:ellipsis;
+  /*-webkit-text-overflow:ellipsis;*/
+  width: 180px;
+  course: hand;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis; /* for IE */
+  -o-text-overflow: ellipsis; /* for Opera */
+  -icab-text-overflow: ellipsis; /* for iCab */
+  -khtml-text-overflow: ellipsis; /* for Konqueror Safari */
+  -moz-text-overflow: ellipsis; /* for Firefox,mozilla */
+  -webkit-text-overflow: ellipsis; /* for Safari,Swift*/
 }
 </style>

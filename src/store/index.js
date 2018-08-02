@@ -9,9 +9,9 @@ export default new Vuex.Store({
 	state: {
 	  dailydata: [],
       // API: 'http://192.168.1.106:5000/',
-      // API: 'http://localhost:5000/',
+      API: 'http://localhost:5000/',
       sessionId: '',
-      API: '/'
+      // API: '/'
 	},
   mutations: {
       dailydata(state, dailydata) {

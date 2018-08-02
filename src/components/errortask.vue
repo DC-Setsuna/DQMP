@@ -19,7 +19,7 @@
 	              	<template slot-scope="scope">
 	        		  <span>
 	        			<el-popover placement="left" title="Description:" width="100%" trigger="hover" :content="scope.row.description">
-					      <span class="error_description" slot="reference">
+					      <span class="error_description" slot="reference" style="display: block">
 							{{scope.row.description}}
 						  </span>
 						</el-popover>
@@ -99,11 +99,21 @@
 	  margin: 10px 0px;
 	}
 	.error_description {
-		width:90%;
+		/*width:90%;
 		overflow:hidden;
 		white-space:nowrap !important;
 		text-overflow:ellipsis;
 		/*兼容性*/
-		-webkit-text-overflow:ellipsis;
+		/*-webkit-text-overflow:ellipsis;*/
+		width: 180px;
+		course: hand;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis; /* for IE */
+		-o-text-overflow: ellipsis; /* for Opera */
+		-icab-text-overflow: ellipsis; /* for iCab */
+		-khtml-text-overflow: ellipsis; /* for Konqueror Safari */
+		-moz-text-overflow: ellipsis; /* for Firefox,mozilla */
+		-webkit-text-overflow: ellipsis; /* for Safari,Swift*/
 	}
 </style>

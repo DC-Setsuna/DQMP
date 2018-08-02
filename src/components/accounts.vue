@@ -9,14 +9,14 @@
 	  <el-col :span="8">
 		<el-card class="box-card box-card-right" shadow="hover">
 		  <span height="15px">Results of today</span><hr>
-		  <el-table :data="tableData6" style="width: 100%" height="255px" :header-cell-style="{'text-align':'center'}" border :row-style="{'text-align':'center'}" @row-click='Jump' :stripe="true">
+		  <el-table :data="tableData6" style="width: 100%" height="255px" :header-cell-style="{'text-align':'center'}" border :row-style="{'text-align':'center'}" :stripe="true" :fix="false">
 	        <el-table-column prop="result_time" label="ResultTime" :span='6'>
 	        </el-table-column>
 	        <el-table-column label="TaskName" :span='6'>
 	          <template slot-scope="scope">
 			    <span>
 				  <el-popover placement="left" title="TaskName:" width="100%" trigger="hover" :content="scope.row.taskname">
-				    <span class="account_description" slot="reference">
+				    <span class="account_description" slot="reference" style="display: block">
 					  {{scope.row.taskname}}
 					</span>
 				  </el-popover>
@@ -25,13 +25,11 @@
 	        </el-table-column>
 	        <el-table-column label="Description" :span='6'>
 	          <template slot-scope="scope">
-			    <span>
 				  <el-popover placement="left" title="Description:" width="100%" trigger="hover" :content="scope.row.description">
-				    <span class="account_description" slot="reference">
-					  {{scope.row.description}}
-					</span>
 				  </el-popover>
-				</span>
+				  <span class="account_description" slot="reference" style="display: block;">
+					  {{scope.row.description}}
+				  </span>
 		      </template>
 	        </el-table-column>
 	        <el-table-column prop="status" label="Status" :span='6'>
@@ -56,7 +54,7 @@
 		      <template slot-scope="scope">
 		        <span>
 		          <el-popover placement="left" title="TaskName:" width="100%" trigger="hover" :content="scope.row.taskname">
-		            <span class="account_description" slot="reference">
+		            <span class="account_description" slot="reference" style="display: block">
 		              {{scope.row.taskname}}
 		            </span>
 		          </el-popover>
@@ -67,7 +65,7 @@
 		      <template slot-scope="scope">
 		        <span>
 		          <el-popover placement="left" title="Description:" width="100%" trigger="hover" :content="scope.row.description">
-		            <span class="account_description" slot="reference">
+		            <span class="account_description" slot="reference" style="display: block">
 		              {{scope.row.description}}
 		            </span>
 		          </el-popover>
@@ -96,7 +94,7 @@
 	          <template slot-scope="scope">
         		<span>
            		  <el-popover placement="left" title="TaskName:" width="100%" trigger="hover" :content="scope.row.taskname">
-					<span class="account_description" slot="reference">
+					<span class="account_description" slot="reference" style="display: block">
 				      {{scope.row.taskname}}
 					</span>
 			      </el-popover>
@@ -105,13 +103,11 @@
 	        </el-table-column>
 	        <el-table-column label="Description" :span='6'>
 	          <template slot-scope="scope">
-        		<span>
-        		  <el-popover placement="left" title="Description:" width="100%" trigger="hover" :content="scope.row.description">
-				    <span class="account_description" slot="reference">
-					  {{scope.row.description}}
-					</span>
-			      </el-popover>
-        	    </span>
+        		<el-popover placement="left" title="Description:" width="100%" trigger="hover" :content="scope.row.description">
+			    </el-popover>
+			    <span class="account_description" slot="reference" style="display: block">
+				  {{scope.row.description}}
+				</span>
       	      </template>
 	        </el-table-column>
 	        <el-table-column prop="status" label="Status" :span='8'>
@@ -354,12 +350,22 @@ export default {
     margin-top: 20px
 }
 .account_description {
-	max-width:90%;
+	/*max-width:90%;
 	overflow:hidden;
 	white-space:nowrap !important;
 	text-overflow:ellipsis;
 	/*兼容性1*/
-	-webkit-text-overflow:ellipsis;
+	/*-webkit-text-overflow:ellipsis;*/
+	width: 90%;
+	course: hand;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis; /* for IE */
+	-o-text-overflow: ellipsis; /* for Opera */
+	-icab-text-overflow: ellipsis; /* for iCab */
+	-khtml-text-overflow: ellipsis; /* for Konqueror Safari */
+	-moz-text-overflow: ellipsis; /* for Firefox,mozilla */
+	-webkit-text-overflow: ellipsis; /* for Safari,Swift*/
 }
 .el-table__body-wrapper {
 	font-size: 12px;

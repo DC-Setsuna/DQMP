@@ -14,6 +14,7 @@ import updatetask from '@/components/updateTask'
 import Login from '@/components/login'
 import Dataflow from '@/components/dataflow'
 import Mike from '@/components/Mike'
+import Work from '@/components/work'
 
 Vue.use(Router)
 
@@ -83,6 +84,11 @@ export default new Router({
       path: '/mike',
       name: 'mike',
       component: Mike
+    },
+    {
+      path: '/work',
+      name: 'work',
+      component: Work
     },
     {
       path: '/login',
