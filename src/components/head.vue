@@ -4,7 +4,7 @@
       Data Quality Monitor Platform
     </span>
     <div class="Vheader-nav">
-      <el-menu class="el-menu-demo" mode="horizontal" style="background-color: transparent;" :router="true">
+      <el-menu class="el-menu-demo" mode="horizontal" :router="true">
         <el-menu-item style="height: 40px;line-height: 40px;" index="/dashboard">Dash board</el-menu-item>
         <el-menu-item style="height: 40px;line-height: 40px;" index="/accounts">Accounts</el-menu-item>
         <el-menu-item style="height: 40px;line-height: 40px;" index="/opportunities">Opportunities</el-menu-item>
@@ -12,7 +12,7 @@
         <el-menu-item style="height: 40px;line-height: 40px;" index="/forecast">Forecast</el-menu-item>
         <el-menu-item style="height: 40px;line-height: 40px;" index="/dataflow">DataFlow</el-menu-item>
         <el-menu-item style="height: 40px;line-height: 40px;" index="/mike">Mike</el-menu-item>
-        <el-submenu index="/task">
+        <el-submenu index="/task" style="height: 40px; line-height: 40px;">
           <template slot="title">TASK</template>
           <el-menu-item style="height: 40px;line-height: 40px;" index="/task">Task</el-menu-item>
           <el-menu-item style="height: 40px;line-height: 40px;" index="/work">Work</el-menu-item>
@@ -73,8 +73,8 @@ export default {
           this.$store.commit('islogin','')
           this.isLogin = false
         }
-      })
-    },
+      }
+      )},
     //获取cookie
     getCookie(cname) {
       var name = cname + "=";
@@ -143,32 +143,36 @@ export default {
   }
 }
 </script>
+
 <style>
 .Vheader {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  /*background: linear-gradient(left,#365ab2,#0029f2);*/
   background-color: #2b2b2b;
   height: 40px;
   width: 100%;
 }
 .Vheader-nav {
-  padding-left: 50px;
+  padding-left: 30px;
   float: left;
   height: 40px;
-  width: 65%;
+  width: 66%;
 }
-
+#menu-login {
+  float: left;
+}
 .user-logo {
-  padding-top: 3px;
+  padding-top: 5px;
   width: 34px;
   height: 34px;
   border-radius: 50%;
 }
 .user_img {
-
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
 }
 .title {
   float: left;
@@ -176,9 +180,6 @@ export default {
   color: #FFF;
   font-size: 20px;
   line-height: 40px;
-}
-#menu-login {
-  float: left;
 }
 #username_input {
   width: 80%;
