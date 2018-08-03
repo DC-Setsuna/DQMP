@@ -13,12 +13,13 @@
                 <span>
                 <el-popover placement="right" title="Task Name:" width="100%" trigger="hover" :content="scope.row.taskname">
                   <span class="account_description" slot="reference" style="display: block">
-                  {{scope.row.taskname}}
-                </span>
+                    <a class="error_link" href="javascript:void(0);" @click="showDetail(scope.row.taskid)">{{scope.row.taskname}}</a>
+                  </span>
                 </el-popover>
               </span>
               </template>
             </el-table-column>
+
             <el-table-column fixed="left" label="Description" width="240">
               <template slot-scope="scope">
                 <span>
@@ -100,6 +101,9 @@
             if(response.data.code == 200)
               this.workLog = response.data.result
         })
+      },
+      showDetail(taskid) {
+        this.$router.push({name: 'viewtaskmodule', params: { data: taskid }})
       },
       init() {
         this.axios.get(this.$store.state.API + 'log/getCategoryByUsername',{

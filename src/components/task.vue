@@ -22,6 +22,7 @@
                 <el-option label="Leads" value="Leads"></el-option>
                 <el-option label="Contacts" value="Contacts"></el-option>
                 <el-option label="Winplan" value="Winplan"></el-option>
+                <el-option label="dataflow" value="dataflow"></el-option>
                 <el-option label="Dataflow" value="Dataflow"></el-option>
               </el-select>
             </el-form-item>
@@ -124,6 +125,7 @@
                <el-option label="Leads" value="Leads"></el-option>
                <el-option label="Contacts" value="Contacts"></el-option>
                <el-option label="Winplan" value="Winplan"></el-option>
+               <el-option label="dataflow" value="dataflow"></el-option>
                <el-option label="Dataflow" value="Dataflow"></el-option>
               </el-select>
             </el-col>
