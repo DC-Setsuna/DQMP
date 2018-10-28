@@ -152,9 +152,12 @@
                 </span>
               </template>
             </el-table-column>
-            <el-table-column prop="count" label="Count" width="200px"></el-table-column>
-            <el-table-column prop="enabled" label="Enabled" width="100px">
+            <el-table-column prop="count" label="Count" width="200px">
             </el-table-column>
+            <el-table-column prop="run_time" label="Result_Runtime" width="200px">
+            </el-table-column>
+            <!-- <el-table-column prop="enabled" label="Enabled" width="100px">
+            </el-table-column> -->
             <el-table-column prop="freqency" label="Freqency" width="120px">
             </el-table-column>
             <el-table-column prop="totalrun" label="Total Ran" width="100px">
@@ -557,21 +560,15 @@ export default {
   text-decoration:none;
 }
 .task_description {
-  /*max-width:90%;
-  overflow:hidden;
-  white-space:nowrap !important;
-  text-overflow:ellipsis;*/
-  /*兼容性*/
-  /*-webkit-text-overflow:ellipsis;*/
-  width: 180px;
+  width: 100%;
   course: hand;
   overflow: hidden;
   white-space: nowrap;
-  text-overflow: ellipsis; /* for IE */
-  -o-text-overflow: ellipsis; /* for Opera */
-  -icab-text-overflow: ellipsis; /* for iCab */
-  -khtml-text-overflow: ellipsis; /* for Konqueror Safari */
-  -moz-text-overflow: ellipsis; /* for Firefox,mozilla */
-  -webkit-text-overflow: ellipsis; /* for Safari,Swift*/
+  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis; 
+  -icab-text-overflow: ellipsis;
+  -khtml-text-overflow: ellipsis;
+  -moz-text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis;
 }
 </style>
